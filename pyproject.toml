@@ -1,7 +1,7 @@
 [project]
 name = "langgate"
 version = "0.1.0"
-description = "Lightweight AI model serving gateway with Envoy edge proxy and a FastAPI registry."
+description = "Lightweight AI model serving gateway with Envoy proxy and a FastAPI registry."
 readme = "README.md"
 requires-python = ">=3.13"
 authors = [{ name = "Tanantor Ltd." }]
