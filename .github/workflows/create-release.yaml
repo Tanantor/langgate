@@ -16,7 +16,7 @@ on:
       draft:
         description: "Create as draft release"
         type: boolean
-        default: false
+        default: true
       generate_notes:
         description: "Auto-generate release notes"
         type: boolean
