@@ -1,0 +1,67 @@
+# Sample configuration for LangGate
+# Copy this file to langgate_config.yaml in your working directory
+# or set the LANGGATE_CONFIG environment variable to point to this file.
+# e.g. export LANGGATE_CONFIG=path/to/langgate_config.yaml
+
+# Global default parameters (applied to all models)
+default_params:
+  temperature: 0.7
+
+# Service provider configurations
+services:
+  openai:
+    api_key: "${OPENAI_API_KEY}"
+    base_url: "https://api.openai.com/v1"
+    model_patterns:
+      # match any o-series model
+      openai/o:
+        remove_params:
+          - temperature
+
+  anthropic:
+    api_key: "${ANTHROPIC_API_KEY}"
+    base_url: "https://api.anthropic.com"
+    model_patterns:
+      # match any model with reasoning in the id
+      reasoning:
+        override_params:
+          thinking:
+            type: enabled
+        remove_params:
+          - temperature
+
+# Model-specific configurations
+models:
+  - id: openai/gpt-4o
+    service:
+      provider: openai
+      model_id: gpt-4o
+
+  - id: openai/o1
+    service:
+      provider: openai
+      model_id: o1
+
+  - id: openai/o1-high
+    service:
+      provider: openai
+      model_id: o1
+    name: o1-high
+    description: o1-high applies high-effort reasoning for the o1 model
+    override_params:
+      reasoning_effort: high
+
+  - id: anthropic/claude-3-7-sonnet
+    service:
+      provider: anthropic
+      model_id: claude-3-7-sonnet-20250219
+
+  - id: anthropic/claude-3-7-sonnet-reasoning
+    service:
+      provider: anthropic
+      model_id: claude-3-7-sonnet-20250219
+    name: Claude-3.7 Sonnet R
+    description: "Claude-3.7 Sonnet with reasoning capabilities."
+    override_params:
+      thinking:
+        budget_tokens: 1024

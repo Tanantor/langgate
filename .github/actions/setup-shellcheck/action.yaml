@@ -1,0 +1,33 @@
+name: Setup Shellcheck
+description: Install Shellcheck binary for linting shell scripts
+
+runs:
+  using: "composite"
+  steps:
+    - name: Get Shellcheck Version
+      run: |
+        SHELLCHECK_LATEST=$(curl -s https://api.github.com/repos/koalaman/shellcheck/releases/latest)
+        if [ $? -eq 0 ]; then
+            SHELLCHECK_VERSION=$(echo "$SHELLCHECK_LATEST" | grep '"tag_name":' | awk '{print substr($2, 2, length($2)-3)}')
+            echo "SHELLCHECK_VERSION=$SHELLCHECK_VERSION" >> $GITHUB_ENV
+        else
+            echo "Failed to fetch ShellCheck version"
+            exit 1
+        fi
+      shell: bash
+
+    - name: Cache Shellcheck Binary
+      uses: actions/cache@v4
+      id: shellcheck-cache
+      with:
+        path: /usr/local/bin/shellcheck
+        key: ${{ runner.os }}-shellcheck-${{ env.SHELLCHECK_VERSION }}
+
+    - name: Install Shellcheck
+      if: steps.shellcheck-cache.outputs.cache-hit != 'true'
+      run: |
+        URL="https://github.com/koalaman/shellcheck/releases/download/${{ env.SHELLCHECK_VERSION }}/shellcheck-${{ env.SHELLCHECK_VERSION }}.linux.x86_64.tar.xz"
+        wget -qO- "$URL" | tar -xJv
+        cp "shellcheck-${{ env.SHELLCHECK_VERSION }}/shellcheck" /usr/local/bin/
+        shellcheck --version
+      shell: bash

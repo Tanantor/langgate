@@ -1,0 +1,60 @@
+name: Publish to PyPI
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Dry run (build but do not publish)"
+        type: boolean
+        default: false
+
+jobs:
+  publish-python:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Python
+        uses: ./.github/actions/setup-python
+
+      - name: Verify version consistency
+        run: |
+          echo "Verifying that tag version matches package versions..."
+
+          # Extract version from tag (without v prefix)
+          if [[ "${{ github.ref }}" == refs/tags/* ]]; then
+            TAG_VERSION="${{ github.ref_name }}"
+            TAG_VERSION="${TAG_VERSION#v}"
+          else
+            TAG_VERSION="manual-run"
+          fi
+
+          # Read version from pyproject.toml
+          PACKAGE_VERSION=$(grep '^version = ' pyproject.toml | cut -d '"' -f2)
+
+          echo "Tag version: $TAG_VERSION"
+          echo "Package version: $PACKAGE_VERSION"
+
+          # Skip check for manual workflow run
+          if [[ "${{ github.event_name }}" == "release" && "$TAG_VERSION" != "$PACKAGE_VERSION" ]]; then
+            echo "Error: Tag version ($TAG_VERSION) does not match package version ($PACKAGE_VERSION)"
+            exit 1
+          fi
+
+      - name: Build packages
+        run: make uv-build
+
+      - name: Publish to PyPI
+        if: ${{ github.event.inputs.dry_run != 'true' }}
+        env:
+          PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
+        run: make uv-publish

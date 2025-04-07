@@ -1,0 +1,11 @@
+apiVersion: v2
+name: langgate-server
+description: Server component for LangGate AI Gateway
+type: application
+version: 0.1.0
+appVersion: "0.1.0"
+
+dependencies:
+  - name: langgate-helpers
+    repository: file://../library/langgate-helpers
+    version: 0.1.0

@@ -1,0 +1,256 @@
+# langgate_config.yaml
+
+# Global default parameters that apply to all models unless overridden
+default_params:
+  temperature: 0.7
+
+# Inference API provider service-specific configurations
+services:
+  openai:
+    api_key: "${OPENAI_API_KEY}"
+    base_url: "https://api.openai.com/v1"
+    default_params: {}
+    model_patterns:
+      # match any o-series model
+      openai/o:
+        remove_params:
+          - temperature
+
+  anthropic:
+    api_key: "${ANTHROPIC_API_KEY}"
+    base_url: "https://api.anthropic.com"
+    model_patterns:
+      # match any model with reasoning in the id
+      reasoning:
+        override_params:
+          max_tokens: 64000
+          thinking:
+            type: enabled
+        remove_params:
+          - temperature
+
+  fireworks_ai:
+    api_key: "${FIREWORKS_API_KEY}"
+    base_url: "https://api.fireworks.ai/inference/v1"
+    default_params:
+      tiktoken_model_name: gpt-4o
+
+  gemini:
+    api_key: "${GEMINI_API_KEY}"
+    # TODO use vertex
+    # base_url: "${GEMINI_BASE_URL}"
+
+  eleutheria/vllm:
+    api_key: "${ELEUTHERIA_VLLM_API_KEY}"
+    base_url: "${ELEUTHERIA_VLLM_BASE_URL}"
+    tiktoken_model_name: gpt-4o
+
+  xai:
+    api_key: "${XAI_API_KEY}"
+    base_url: "https://api.x.ai/v1"
+
+# Model-specific configurations
+models:
+  - id: openai/gpt-4o
+    service:
+      provider: openai # API service provider
+      model_id: gpt-4o # ID to send to service provider
+
+  - id: openai/gpt-4o-mini
+    service:
+      provider: openai
+      model_id: gpt-4o-mini
+
+
+  - id: openai/gpt-4.5
+    service:
+      provider: openai
+      model_id: gpt-4.5-preview
+
+  - id: openai/o1
+    service:
+      provider: openai
+      model_id: o1
+
+  - id: openai/o1-high
+    service:
+      provider: openai
+      model_id: o1
+    name: o1-high
+    description: "o1-high applies high-effort reasoning for the o1 model, improving results for the most complex demanding tasks at higher cost and longer latency."
+    override_params:
+      reasoning_effort: high
+
+  - id: openai/o1-fast
+    service:
+      provider: openai
+      model_id: o1
+    name: o1-fast
+    description: "o1-fast provides faster responses using lower reasoning effort, suitable for moderate reasoning tasks that require quicker replies and lower costs."
+    override_params:
+      reasoning_effort: low
+
+  - id: openai/o3-mini
+    service:
+      provider: openai
+      model_id: o3-mini
+
+  - id: openai/o3-mini-high
+    service:
+      provider: openai
+      model_id: o3-mini
+    name: o3-mini-high
+    description: "o3-mini-high enhances the o3-mini model with high reasoning effort, delivering improved results at higher latency and cost."
+    override_params:
+      reasoning_effort: high
+
+  - id: openai/o3-mini-fast
+    service:
+      provider: openai
+      model_id: o3-mini
+    name: o3-mini-fast
+    description: "o3-mini-fast prioritizes quick responses with lower reasoning effort, ideal for high-speed reasoning and cost-sensitive scenarios."
+    override_params:
+      reasoning_effort: low
+
+  - id: anthropic/claude-3-7-sonnet
+    service:
+      provider: anthropic
+      model_id: claude-3-7-sonnet-20250219
+
+  - id: anthropic/claude-3-7-sonnet-reasoning
+    service:
+      provider: anthropic
+      model_id: claude-3-7-sonnet-20250219
+    name: Claude-3.7 Sonnet R
+    description: "Claude-3.7 Sonnet with standard reasoning capabilities optimized for complex problem-solving."
+    override_params:
+      thinking:
+        budget_tokens: 1024
+
+  - id: anthropic/claude-3-7-sonnet-reasoning-high
+    service:
+      provider: anthropic
+      model_id: claude-3-7-sonnet-20250219
+    name: Claude-3.7 Sonnet R-high
+    description: "Claude-3.7 Sonnet with high reasoning effort for superior accuracy in complex tasks at the expense of higher latency and cost."
+    override_params:
+      thinking:
+        budget_tokens: 10000
+
+  - id: anthropic/claude-3-5-sonnet
+    service:
+      provider: anthropic
+      model_id: claude-3-5-sonnet-20240620
+
+  - id: anthropic/claude-3-5-haiku
+    service:
+      provider: anthropic
+      model_id: claude-3-5-haiku-20241022
+
+  - id: anthropic/claude-3-opus
+    service:
+      provider: anthropic
+      model_id: claude-3-opus-20240229
+
+  - id: eleutheria/el-1
+    service:
+      provider: eleutheria/vllm
+      model_id: el-1
+
+  - id: deepseek/deepseek-r1
+    service:
+      provider: fireworks_ai
+      model_id: accounts/fireworks/models/deepseek-r1
+
+  - id: deepseek/deepseek-v3
+    service:
+      provider: fireworks_ai
+      model_id: accounts/fireworks/models/deepseek-v3
+
+  - id: meta/llama-3.3-70b
+    service:
+      provider: fireworks_ai
+      model_id: accounts/fireworks/models/llama-v3p3-70b-instruct
+
+  - id: meta/llama-3.2-90b-vision
+    service:
+      provider: fireworks_ai
+      model_id: accounts/fireworks/models/llama-v3p2-90b-vision-instruct
+
+  - id: meta/llama-3.1-405b
+    service:
+      provider: fireworks_ai
+      model_id: accounts/fireworks/models/llama-v3p1-405b-instruct
+
+  - id: meta/llama-3.1-8b
+    service:
+      provider: fireworks_ai
+      model_id: accounts/fireworks/models/llama-v3p1-8b-instruct
+
+  - id: meta/llama-3.2-3b
+    service:
+      provider: fireworks_ai
+      model_id: accounts/fireworks/models/llama-v3p2-3b-instruct
+
+  - id: google/gemini-2.0-pro
+    service:
+      provider: gemini
+      model_id: gemini-2.0-pro-exp-02-05
+
+  - id: google/gemini-2.0-flash-thinking
+    service:
+      provider: gemini
+      model_id: gemini-2.0-flash-thinking-exp-01-21
+
+  - id: google/gemini-2.0-flash
+    service:
+      provider: gemini
+      model_id: gemini-2.0-flash
+
+  - id: google/gemini-2.0-flash-lite
+    service:
+      provider: gemini
+      model_id: gemini-2.0-flash-lite
+
+  - id: google/gemini-1.5-pro
+    service:
+      provider: gemini
+      model_id: gemini-1.5-pro
+
+  - id: google/gemini-1.5-flash
+    service:
+      provider: gemini
+      model_id: gemini-1.5-flash
+
+  - id: google/gemini-1.5-flash-8b
+    service:
+      provider: gemini
+      model_id: gemini-1.5-flash-8b
+
+  - id: alibaba/qwen-2.5-72b
+    service:
+      provider: fireworks_ai
+      model_id: accounts/fireworks/models/qwen2p5-72b-instruct
+
+  - id: alibaba/qwen-2.5-coder-32b
+    service:
+      provider: fireworks_ai
+      model_id: accounts/fireworks/models/qwen2p5-coder-32b-instruct
+
+  - id: xai/grok-2
+    service:
+      provider: xai
+      model_id: grok-2-latest
+
+  - id: xai/grok-2-vision
+    service:
+      provider: xai
+      model_id: grok-2-vision-latest
+
+
+app_config:
+  CORS_ORIGINS: ["*"]
+  HTTPS: false
+  JSON_LOGS: false
+  LOG_LEVEL: info

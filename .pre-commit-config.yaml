@@ -1,0 +1,51 @@
+fail_fast: true
+
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+        exclude: ^(.*/)?uv\.lock$|.*models\.json$
+      - id: check-toml
+      - id: check-json
+        exclude: "\\.vscode/.*"
+      - id: pretty-format-json
+        args: [--autofix]
+        files: '.*\.json'
+        exclude: ".*models.json|^\\.vscode/.*"
+      - id: check-yaml
+        args: [--unsafe]
+        exclude: '^.*/templates/.*\.yaml$'
+      - id: check-added-large-files
+        exclude: ".*tiktoken_cache/.*"
+      - id: check-merge-conflict
+
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.11.2
+    hooks:
+      - id: ruff
+        args: [--fix, --exit-non-zero-on-fix]
+      - id: ruff-format
+
+  - repo: local
+    hooks:
+      - id: uv-lock-check
+        name: Check uv.lock is up to date
+        entry: uv lock --check
+        language: system
+        files: ^(pyproject\.toml|uv\.lock)$
+        pass_filenames: false
+
+      - id: hadolint
+        name: Lint Dockerfiles
+        description: Runs hadolint to lint Dockerfiles
+        language: system
+        types: ["dockerfile"]
+        entry: make hadolint
+        pass_filenames: false
+
+  - repo: https://github.com/gruntwork-io/pre-commit
+    rev: v0.1.23
+    hooks:
+      - id: shellcheck

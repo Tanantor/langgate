@@ -1,0 +1,28 @@
+# .github/workflows/update_model_costs_json.yaml
+name: Update Model Costs
+
+on:
+  schedule:
+    - cron: "0 0 * * 0" # Run every Sunday at midnight
+  workflow_dispatch: # Allow manual triggering
+
+jobs:
+  update-costs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: ./.github/actions/setup-python
+
+      - name: Update model costs
+        run: make update-model-costs
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v5
+        with:
+          commit-message: Update model costs
+          title: Update LLM model costs
+          body: Automated update of model costs
+          branch: update-model-costs

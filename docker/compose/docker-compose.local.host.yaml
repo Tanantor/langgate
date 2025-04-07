@@ -1,0 +1,13 @@
+services:
+  # LOCAL DEVELOPMENT ONLY
+  # This configuration is a workaround for Docker-to-host networking issues
+  # when running the Python server on the host and Envoy in Docker.
+  envoy:
+    environment:
+      DEBUG: 1
+      LANGGATE_HOST: ${HOST_IP}
+    ports:
+      - "10000:10000"
+    # Setting thw below and setting `LANGGATE_HOST=host.docker.internal` is not working
+    # extra_hosts:
+    #   - "host.docker.internal:host-gateway"

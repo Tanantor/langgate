@@ -1,0 +1,81 @@
+# Compose profiles:
+#   - a: all
+#   - s: server
+#   - p: processor
+#   - e: envoy
+#   - m: monitoring
+
+x-common: &common
+  restart: unless-stopped
+
+x-langgate-service: &langgate-service
+  environment:
+    APP_ENV: local:docker
+    LOG_LEVEL: ${LOG_LEVEL:-info}
+    PYTHONPATH: /home/langgate
+    # LANGGATE_CONFIG: /home/langgate/langgate_config.yaml
+
+services:
+
+  # LANGGATE SERVER
+
+  langgate:
+    <<: [*common, *langgate-service]
+    container_name: langgate
+    build:
+      context: ../..
+      dockerfile: services/server/Dockerfile
+    image: langgate-server:${VERSION:-latest}
+    environment:
+      LANGGATE_HOST: "langgate"
+      LANGGATE_PORT: "4000"
+      # LANGGATE_MODELS: /home/langgate/langgate_models.json
+    healthcheck:
+      test: |
+        python -c '
+        import os, sys, urllib.request;
+        sys.exit(urllib.request.urlopen("http://"+os.environ["LANGGATE_HOST"]+":"+os.environ["LANGGATE_PORT"]+"/api/v1/health").getcode() != 200)
+        '
+      start_period: 10s
+      start_interval: 2s
+      interval: 60s
+    profiles: ["a", "s"]
+    expose:
+      - "4000"
+
+  # LANGGATE PROCESSOR
+
+  processor:
+    <<: [*common, *langgate-service]
+    container_name: processor
+    build:
+      context: ../..
+      dockerfile: services/processor/Dockerfile
+    image: langgate-processor:${VERSION:-latest}
+    environment:
+      LANGGATE_PROC_PORT: "50051"
+    profiles: ["a", "p"]
+    expose:
+      - "50051"
+
+  # ENVOY PROXY
+
+  envoy:
+    <<: *common
+    container_name: envoy
+    build:
+      context: ../..
+      dockerfile: services/envoy/Dockerfile
+    profiles: ["a", "e"]
+
+  # PROMETHEUS
+
+  prometheus:
+    <<: *common
+    container_name: prometheus
+    image: prom/prometheus
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+      - "--storage.tsdb.path=/prometheus"
+      - "--storage.tsdb.retention.time=15d"
+    profiles: ["a", "m"]

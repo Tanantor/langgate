@@ -1,0 +1,39 @@
+name: Install Hadolint
+description: Install Hadolint binary for linting Dockerfiles
+
+inputs:
+  version:
+    description: Hadolint version to install
+    required: false
+    default: v2.12.0
+
+runs:
+  using: "composite"
+  steps:
+    - name: Get Latest Hadolint Version
+      run: |
+        HADOLINT_VERSION=$(curl -s curl -s https://api.github.com/repos/hadolint/hadolint/releases/latest | grep '"tag_name":' | awk '{print substr($2, 2, length($2)-3)}')
+        echo "HADOLINT_VERSION=$HADOLINT_VERSION" >> $GITHUB_ENV
+      shell: bash
+
+    - name: Cache Hadolint Installation
+      uses: actions/cache@v4
+      id: hadolint-cache
+      with:
+        path: /usr/local/bin/hadolint
+        key: ${{ runner.os }}-hadolint-binary-${{ inputs.version }}
+
+    - name: Install Hadolint
+      if: steps.hadolint-cache.outputs.cache-hit != 'true'
+      run: |
+        wget -O /usr/local/bin/hadolint https://github.com/hadolint/hadolint/releases/download/${{ inputs.version }}/hadolint-Linux-x86_64
+        sudo chmod +x /usr/local/bin/hadolint
+      shell: bash
+
+    - name: Fail if not on Latest Hadolint Version
+      run: |
+        if [ "$HADOLINT_VERSION" != "${{ inputs.version }}" ]; then
+          echo "Hadolint version ${{ inputs.version }} is not the latest version. Please update to $HADOLINT_VERSION." >&2
+          exit 1
+        fi
+      shell: bash

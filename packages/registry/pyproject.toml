@@ -1,0 +1,32 @@
+[project]
+name = "langgate-registry"
+version = "0.1.0"
+description = "Model registry implementation for LangGate AI Gateway"
+readme = "README.md"
+requires-python = ">=3.13"
+authors = [{ name = "Tanantor Ltd." }]
+maintainers = [{ name = "Saran Connoly", email = "saran@tanantor.com" }]
+license = { text = "MIT" }
+dependencies = [
+    "langgate-core",
+    "langgate-client",
+    "aiofiles (>=24.1.0,<25.0.0)",
+    "pydantic-settings (>=2.8.1,<3.0.0)",
+    "python-dotenv (>=0.21.1,<0.22.0)",
+    "simplejson (>=3.20.1,<4.0.0)",
+    "pyyaml (>=6.0.1,<7.0.0)",
+]
+
+[tool.uv.sources]
+langgate-core = { workspace = true }
+langgate-client = { workspace = true }
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/langgate"]
+
+[tool.hatch.build.targets.wheel.package-data]
+"langgate.registry" = ["data/*.json"]

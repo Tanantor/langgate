@@ -1,0 +1,48 @@
+services:
+
+  # LANGGATE SERVER
+
+  langgate:
+    extends:
+      file: ./docker/compose/docker-compose.base.yaml
+      service: langgate
+    env_file:
+      - .env
+
+  # LANGGATE PROCESSOR
+
+  processor:
+    extends:
+      file: ./docker/compose/docker-compose.base.yaml
+      service: processor
+    env_file:
+      - .env
+
+  # ENVOY PROXY
+
+  envoy:
+    extends:
+      file: ./docker/compose/docker-compose.base.yaml
+      service: envoy
+    ports:
+      - "10000:10000"
+    volumes:
+      - ./services/envoy/config/envoy.yaml:/etc/envoy/envoy.yaml
+    env_file:
+      - .env
+
+  # PROMETHEUS
+#   prometheus:
+#     extends:
+#       file: ./docker/compose/base.yaml
+#       service: prometheus
+#     ports:
+#       - "9090:9090"
+#     volumes:
+#       - prometheus_data:/prometheus
+#       - ./prometheus.yml:/etc/prometheus/prometheus.yml
+#     command: ["--config.file=/etc/prometheus/prometheus.yml"]
+
+# volumes:
+#   prometheus_data:
+#     driver: local

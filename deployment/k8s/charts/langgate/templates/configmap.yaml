@@ -1,0 +1,25 @@
+{{- if not .Values.config.existingConfigMap }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Values.config.name }}
+  namespace: {{ .Values.global.namespace | default .Release.Namespace }}
+  labels:
+    {{- include "langgate-helpers.labels" (dict "name" .Chart.Name "Release" .Release "Chart" .Chart) | nindent 4 }}
+data:
+  {{- if .Values.config.data }}
+
+  {{- if .Values.config.data.langgate_config }}
+  {{/* Use inline string content (works with --set-file and values.yaml) */}}
+  langgate_config.yaml: |
+{{ .Values.config.data.langgate_config | indent 4 }}
+  {{- end }}
+
+  {{- if .Values.config.data.langgate_models }}
+  {{/* Use inline string content (works with --set-file and values.yaml) */}}
+  langgate_models.json: |
+{{ .Values.config.data.langgate_models | indent 4 }}
+  {{- end }}
+
+  {{- end }}
+{{- end }}

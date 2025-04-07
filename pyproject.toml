@@ -1,0 +1,232 @@
+[project]
+name = "langgate"
+version = "0.1.0"
+description = "Lightweight AI model serving gateway with Envoy edge proxy and a FastAPI registry."
+readme = "README.md"
+requires-python = ">=3.13"
+authors = [{ name = "Tanantor Ltd." }]
+maintainers = [{ name = "Saran Connoly", email = "saran@tanantor.com" }]
+keywords = [
+    "llm",
+    "envoy",
+    "model-serving",
+    "gateway",
+    "proxy",
+    "registry",
+    "fastapi",
+]
+license = { text = "MIT" }
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.13",
+]
+
+# Meta package with minimal dependencies
+dependencies = [
+    "langgate-core",
+]
+
+# Optional dependencies for different use cases
+[project.optional-dependencies]
+client = [
+    "langgate-client",
+]
+registry = [
+    "langgate-registry",
+]
+transform = [
+    "langgate-transform",
+]
+processor = [
+    "langgate-processor",
+]
+server = [
+    "langgate-server",
+]
+sdk = [
+    "langgate-sdk",
+]
+all = [
+    "langgate-client",
+    "langgate-core",
+    "langgate-registry",
+    "langgate-transform",
+    "langgate-processor",
+    "langgate-sdk",
+]
+dev = [
+    "factory-boy>=3.3.3",
+    "genbadge[coverage]>=1.1.2,<2.0",
+    "gevent>=24.11.1",
+    "ipykernel>=6.29.5",
+    "jinja2 (>=3.1.6,<4.0)",
+    "mypy>=1.15.0",
+    "openai>=1.67.0",
+    "pre-commit>=4.1.0",
+    "pytest>=8.3.5",
+    "pytest-asyncio>=0.25.3",
+    "pytest-cov>=6.0.0",
+    "pytest-env>=1.1.5",
+    "pytest-flakefinder>=1.1.0",
+    "pytest-randomly>=3.16.0",
+    "pytest-recording>=0.13.2",
+    "pytest-timeout>=2.3.1",
+    "pytest-xdist>=3.6.1",
+    "ruff>=0.11.2",
+    "types-aiofiles>=24.1.0.20241221",
+    "types-Jinja2 (>=2.11.9,<3.0.0)",
+    "types-pyyaml>=6.0.12.20241230",
+    "types-simplejson>=3.20.0.20250218",
+    "vcrpy>=6.0.2",
+    "watchfiles>=1.0.4",
+]
+
+[project.scripts]
+update_costs = "langgate.registry.scripts.update_model_costs:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project.urls]
+Homepage = "https://github.com/Tanantor/langgate"
+Repository = "https://github.com/Tanantor/langgate"
+Issues = "https://github.com/Tanantor/langgate/issues"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/langgate"]
+
+# uv workspace configuration
+[tool.uv]
+environments = [
+    "sys_platform == 'darwin'",
+    "sys_platform == 'linux'",
+]
+required-environments = [
+    "sys_platform == 'linux' and platform_machine == 'x86_64'",
+]
+resolution = "lowest-direct"
+
+[tool.uv.workspace]
+members = ["packages/*", "examples/*"]
+
+[tool.uv.sources]
+langgate-client = { workspace = true }
+langgate-core = { workspace = true }
+langgate-registry = { workspace = true }
+langgate-transform = { workspace = true }
+langgate-processor = { workspace = true }
+langgate-server = { workspace = true }
+langgate-sdk = { workspace = true }
+
+[tool.mypy]
+python_version = "3.13"
+mypy_path = "./mypy"
+namespace_packages = false
+warn_redundant_casts = true
+warn_unused_ignores = true
+warn_unused_configs = true
+strict_equality = true
+extra_checks = true
+check_untyped_defs = true
+plugins = ["pydantic.mypy"]
+exclude = "(tests/target)/.*"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = 'auto'
+addopts = "--import-mode=importlib --cov . --cov-report=term-missing:skip-covered --cov-report=xml --cov-report html --no-cov-on-fail"
+timeout = 10
+filterwarnings = []
+xfail_strict = true
+env = ["IS_TEST=true"]
+asyncio_default_fixture_loop_scope = "function"
+
+[tool.ruff]
+src = ["src/*"]
+exclude = [
+    ".git",
+    ".mypy_cache",
+    ".pytest_cache",
+    ".ruff_cache",
+    ".venv",
+    "__pycache__",
+    "stubs",
+]
+target-version = "py313"
+line-length = 88
+indent-width = 4
+
+[tool.ruff.lint]
+exclude = [".git", "__pycache__"]
+ignore = [
+    "E501", # conflicts with black line length
+    "E203", # conflicts with black space before :
+    "E402", # allow imports anywhere in file
+    "ERA001", # allow commented out code
+    "RET504", # allow assignment before return statements
+    "C408", # allow dict call instead of dict literal for readability
+]
+extend-select = [
+    "B",      # bugbear
+    "E",      # pycodestyle errors
+    "W",      # pycodestyle warnings
+    "F",      # pyflakes
+    "I001",   # isort
+    "UP",     # pyupgrade
+    "RUF100", # unused-noqa
+    "T2",     # flake8-typing-imports
+    "T201",   # flake8-print
+    "T203",   # flake8-pprint
+    "PIE",    # flake8-pie
+    "ERA",    # flake8-eradicate
+    "SIM",    # flake8-simplify
+    "TID",    # flake8-tidy-imports
+    "RET",    # flake8-return
+    "RSE",    # flake8-raise
+    "ISC",    # flake8-implicit-str-concat
+    "C4",     # flake8-comprehensions
+    "PLE",    # pylint-errors
+    "PLW",    # pylint-warnings
+]
+
+[tool.ruff.lint.isort]
+known-first-party = ["langgate", "tests"]
+
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = [
+    "F401", # intentionally unused imports
+    "F403", # allow wildcard imports
+]
+
+[tool.ruff.lint.extend-per-file-ignores]
+"__init__.py" = [
+    "F401", # intentionally unused imports
+    "F403", # allow wildcard imports
+]
+"*.ipynb" = [
+    "B018", # unused variables
+    "F401", # Allow unused imports in examples
+    "T201", # allow print statements
+    "T203", # allow pprint statements
+    "I001", # allow imports anywhere in file
+]
+"services/**/scripts/**/*" = [
+    "T201", # allow print statements for script output
+]
+"examples/*" = [
+    "T201", # allow print statements
+    "T203", # allow pprint statements
+]
+
+[tool.ruff.lint.flake8-bugbear]
+extend-immutable-calls = [
+    "fastapi.Body",
+    "fastapi.Depends",
+    "fastapi.params.Depends",
+    "fastapi.Query",
+    "fastapi.params.Query",
+]

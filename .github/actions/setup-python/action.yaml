@@ -1,0 +1,42 @@
+name: "Setup Python Environment"
+description: "Setup a Python project, install and cache dependencies with uv."
+
+inputs:
+  python_version_file:
+    description: "The version of Python to install - defaults to the .python-version file"
+    required: false
+    default: ".python-version"
+  project_directory:
+    description: "The directory containing the Python project"
+    required: false
+    default: ""
+  install_dependencies:
+    description: "Whether to install dependencies"
+    default: "true"
+  install_deps_command:
+    description: "Command to install dependencies"
+    default: "uv sync --frozen --all-extras --dev --all-packages"
+
+runs:
+  using: "composite"
+  steps:
+    - name: Install uv
+      uses: astral-sh/setup-uv@v5
+      with:
+        version: "0.6.9"
+        enable-cache: true
+        cache-dependency-glob: "**/uv.lock"
+
+    - name: Install Python
+      uses: actions/setup-python@v5
+      with:
+        python-version-file: ${{ inputs.python_version_file }}
+
+    - name: Install Python Dependencies
+      if: inputs.install_dependencies == 'true'
+      run: |
+        if [ -n "${{ inputs.project_directory }}" ]; then
+          cd "${{ github.workspace }}/${{ inputs.project_directory }}"
+        fi
+        ${{ inputs.install_deps_command }}
+      shell: bash

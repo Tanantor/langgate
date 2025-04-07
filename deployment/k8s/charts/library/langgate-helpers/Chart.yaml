@@ -1,0 +1,6 @@
+apiVersion: v2
+name: langgate-helpers
+description: Helper templates for LangGate charts
+type: library
+version: 0.1.0
+appVersion: "0.1.0"

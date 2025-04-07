@@ -1,0 +1,110 @@
+name: Create GitHub Release
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Version to release (without v prefix, e.g. 0.1.1)"
+        required: true
+      prerelease:
+        description: "Mark as pre-release"
+        type: boolean
+        default: false
+      draft:
+        description: "Create as draft release"
+        type: boolean
+        default: false
+      generate_notes:
+        description: "Auto-generate release notes"
+        type: boolean
+        default: true
+
+jobs:
+  verify-version:
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.version-check.outputs.version }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Determine version
+        id: version-check
+        run: |
+          # Get version either from tag or from input
+          if [[ "${{ github.ref_type }}" == "tag" ]]; then
+            VERSION="${{ github.ref_name }}"
+            VERSION="${VERSION#v}"
+            echo "Using version from tag: $VERSION"
+          else
+            VERSION="${{ github.event.inputs.version }}"
+            echo "Using version from input: $VERSION"
+          fi
+
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+
+          # Read version from pyproject.toml
+          PACKAGE_VERSION=$(grep '^version = ' pyproject.toml | cut -d '"' -f2)
+
+          # Read chart version
+          CHART_VERSION=$(grep '^version:' deployment/k8s/charts/langgate/Chart.yaml | awk '{print $2}')
+
+          echo "Package version: $PACKAGE_VERSION"
+          echo "Chart version: $CHART_VERSION"
+
+          # Skip tag creation for tag-based releases - they've already been pushed
+          if [[ "${{ github.ref_type }}" != "tag" ]]; then
+            if [[ "$VERSION" != "$PACKAGE_VERSION" ]]; then
+              echo "::error::Version mismatch: Input version ($VERSION) doesn't match package version ($PACKAGE_VERSION)"
+              exit 1
+            fi
+
+            if [[ "$VERSION" != "$CHART_VERSION" ]]; then
+              echo "::error::Version mismatch: Input version ($VERSION) doesn't match chart version ($CHART_VERSION)"
+              exit 1
+            fi
+
+            # Check tag doesn't already exist
+            if git tag | grep -q "v$VERSION"; then
+              echo "::error::Tag v$VERSION already exists"
+              exit 1
+            fi
+          fi
+
+  create-release:
+    needs: verify-version
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      # Only create tag if this is a manual workflow run
+      - name: Create tag
+        if: ${{ github.ref_type != 'tag' }}
+        run: |
+          git tag "v${{ needs.verify-version.outputs.version }}"
+          git push origin "v${{ needs.verify-version.outputs.version }}"
+
+      - name: Create Release
+        id: create-release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: "v${{ needs.verify-version.outputs.version }}"
+          tag_name: ${{ github.ref_type == 'tag' && github.ref_name || format('v{0}', needs.verify-version.outputs.version) }}
+          draft: ${{ github.event.inputs.draft || false }}
+          prerelease: ${{ github.event.inputs.prerelease || false }}
+          generate_release_notes: ${{ github.event.inputs.generate_notes || true }}
+
+      - name: Release URL
+        run: |
+          echo "Release created successfully at ${{ steps.create-release.outputs.url }}"
+          echo "This will trigger the publishing workflows for PyPI packages, Docker images, and Helm charts."

@@ -1,0 +1,966 @@
+{
+  "eleutheria/vllm/el-1": {
+    "name": "El-1",
+    "mode": "chat",
+    "service_provider": "eleutheria/vllm",
+    "model_provider": "eleutheria",
+    "model_provider_name": "Eleutheria",
+    "context": {
+      "max_input_tokens": 4096,
+      "max_output_tokens": 4096
+    },
+    "costs": {
+      "input_cost_per_token": "0",
+      "output_cost_per_token": "0"
+    },
+    "description": "Eleutheria's flagship language model, trained to respond without bias or censorship.",
+    "source": "https://eleutheria.ai/pricing"
+  },
+  "openai/gpt-4o": {
+    "name": "GPT-4o",
+    "mode": "chat",
+    "service_provider": "openai",
+    "model_provider": "openai",
+    "model_provider_name": "OpenAI",
+    "capabilities": {
+      "supports_tools": true,
+      "supports_parallel_tool_calls": true,
+      "supports_vision": true,
+      "supports_prompt_caching": true,
+      "supports_response_schema": true,
+      "supports_system_messages": true,
+      "supports_tool_choice": true
+    },
+    "context": {
+      "max_input_tokens": 128000,
+      "max_output_tokens": 16384
+    },
+    "costs": {
+      "input_cost_per_token": "0.0000025",
+      "output_cost_per_token": "0.00001",
+      "input_cost_per_token_batches": "0.00000125",
+      "output_cost_per_token_batches": "0.000005",
+      "cache_read_input_token_cost": "0.00000125",
+      "input_cost_per_image": "0.003613"
+    },
+    "description": "The GPT-4o (omni) model from OpenAI builds upon the GPT-4 series with improved performance and multimodal capabilities. GPT-4o is great for most tasks.",
+    "_last_updated": "2025-03-21T21:40:54.742453+00:00",
+    "_data_source": "openrouter",
+    "_last_updated_from_id": "openai/gpt-4o"
+  },
+  "openai/gpt-4.5-preview": {
+    "name": "GPT-4.5",
+    "mode": "chat",
+    "service_provider": "openai",
+    "model_provider": "openai",
+    "model_provider_name": "OpenAI",
+    "capabilities": {
+      "supports_tools": true,
+      "supports_parallel_tool_calls": true,
+      "supports_vision": true,
+      "supports_prompt_caching": true,
+      "supports_response_schema": true,
+      "supports_system_messages": true,
+      "supports_tool_choice": true
+    },
+    "context": {
+      "max_input_tokens": 128000,
+      "max_output_tokens": 16384
+    },
+    "costs": {
+      "input_cost_per_token": "0.000075",
+      "output_cost_per_token": "0.00015",
+      "input_cost_per_token_batches": "0.0000375",
+      "output_cost_per_token_batches": "0.000075",
+      "cache_read_input_token_cost": "0.0000375",
+      "input_cost_per_image": "0.108375"
+    },
+    "description": "GPT-4.5 from OpenAI has broad general knowledge and a warm personality, designed for creative tasks and agentic planning.",
+    "_last_updated": "2025-03-21T21:40:54.742716+00:00",
+    "_data_source": "openrouter",
+    "_last_updated_from_id": "openai/gpt-4.5-preview"
+  },
+  "openai/gpt-4o-mini": {
+    "name": "GPT-4o mini",
+    "mode": "chat",
+    "service_provider": "openai",
+    "model_provider": "openai",
+    "model_provider_name": "OpenAI",
+    "capabilities": {
+      "supports_tools": true,
+      "supports_parallel_tool_calls": true,
+      "supports_vision": true,
+      "supports_prompt_caching": true,
+      "supports_response_schema": true,
+      "supports_system_messages": true,
+      "supports_tool_choice": true
+    },
+    "context": {
+      "max_input_tokens": 128000,
+      "max_output_tokens": 16384
+    },
+    "costs": {
+      "input_cost_per_token": "1.5E-7",
+      "output_cost_per_token": "6E-7",
+      "input_cost_per_token_batches": "7.5E-8",
+      "output_cost_per_token_batches": "3E-7",
+      "cache_read_input_token_cost": "7.5E-8",
+      "input_cost_per_image": "0.000217"
+    },
+    "description": "A smaller version of GPT-4o optimized for efficiency.",
+    "_last_updated": "2025-03-21T21:40:54.742889+00:00",
+    "_data_source": "openrouter",
+    "_last_updated_from_id": "openai/gpt-4o-mini"
+  },
+  "openai/o1": {
+    "name": "o1",
+    "mode": "chat",
+    "service_provider": "openai",
+    "model_provider": "openai",
+    "model_provider_name": "OpenAI",
+    "capabilities": {
+      "supports_tools": true,
+      "supports_parallel_tool_calls": true,
+      "supports_vision": true,
+      "supports_prompt_caching": true,
+      "supports_response_schema": true,
+      "supports_system_messages": true,
+      "supports_tool_choice": true
+    },
+    "context": {
+      "max_input_tokens": 200000,
+      "max_output_tokens": 100000
+    },
+    "costs": {
+      "input_cost_per_token": "0.000015",
+      "output_cost_per_token": "0.00006",
+      "cache_read_input_token_cost": "0.0000075",
+      "input_cost_per_image": "0.021675"
+    },
+    "description": "o1 is the first generation reasoning model from OpenAI. o1 spends additional time thinking (generating a chain of thought) before generating an answer, which makes it better for complex reasoning tasks, particularly in science, mathematics and coding.",
+    "_last_updated": "2025-03-21T21:40:54.743007+00:00",
+    "_data_source": "openrouter",
+    "_last_updated_from_id": "openai/o1"
+  },
+  "openai/o3-mini": {
+    "name": "o3-mini",
+    "mode": "chat",
+    "service_provider": "openai",
+    "model_provider": "openai",
+    "model_provider_name": "OpenAI",
+    "capabilities": {
+      "supports_tools": true,
+      "supports_parallel_tool_calls": false,
+      "supports_prompt_caching": true,
+      "supports_response_schema": true,
+      "supports_tool_choice": true,
+      "supports_vision": false
+    },
+    "context": {
+      "max_input_tokens": 200000,
+      "max_output_tokens": 100000
+    },
+    "costs": {
+      "input_cost_per_token": "0.0000011",
+      "output_cost_per_token": "0.0000044",
+      "cache_read_input_token_cost": "5.5E-7"
+    },
+    "description": "o3-mini is a cost-efficient reasoning model from OpenAI. o3-mini excels at STEM, especially math and coding. As an alternative to o1-pro, it has a lower cost and lower latency.",
+    "_last_updated": "2025-03-21T21:40:54.743209+00:00",
+    "_data_source": "openrouter",
+    "_last_updated_from_id": "openai/o3-mini"
+  },
+  "anthropic/claude-3-7-sonnet-latest": {
+    "name": "Claude-3.7 Sonnet",
+    "mode": "chat",
+    "service_provider": "anthropic",
+    "model_provider": "anthropic",
+    "model_provider_name": "Anthropic",
+    "capabilities": {
+      "supports_tools": true,
+      "supports_vision": true,
+      "supports_prompt_caching": true,
+      "supports_response_schema": true,
+      "supports_assistant_prefill": true,
+      "supports_tool_choice": true
+    },
+    "context": {
+      "max_input_tokens": 200000,
+      "max_output_tokens": 128000
+    },
+    "costs": {
+      "input_cost_per_token": "0.000003",
+      "output_cost_per_token": "0.000015",
+      "cache_read_input_token_cost": "3E-7",
+      "cache_creation_input_token_cost": "0.00000375",
+      "input_cost_per_image": "0.0048"
+    },
+    "description": "Claude 3.7 Sonnet is Anthropic's hybrid reasoning model, featuring new 'extended thinking' capabilities. It excels at complex coding, STEM tasks, and multimodal data analysis with large context windows.",
+    "openrouter_model_id": "anthropic/claude-3.7-sonnet",
+    "_last_updated": "2025-03-21T21:40:54.743326+00:00",
+    "_data_source": "openrouter",
+    "_last_updated_from_id": "anthropic/claude-3.7-sonnet"
+  },
+  "anthropic/claude-3-7-sonnet-20250219": {
+    "name": "Claude-3.7 Sonnet",
+    "mode": "chat",
+    "service_provider": "anthropic",
+    "model_provider": "anthropic",
+    "model_provider_name": "Anthropic",
+    "capabilities": {
+      "supports_assistant_prefill": true,
+      "supports_tools": true,
+      "supports_pdf_input": true,
+      "supports_prompt_caching": true,
+      "supports_response_schema": true,
+      "supports_tool_choice": true,
+      "supports_vision": true
+    },
+    "context": {
+      "max_input_tokens": 200000,
+      "max_output_tokens": 128000
+    },
+    "costs": {
+      "cache_creation_input_token_cost": "0.00000375",
+      "cache_read_input_token_cost": "3E-7",
+      "input_cost_per_token": "0.000003",
+      "output_cost_per_token": "0.000015",
+      "input_cost_per_image": "0.0048"
+    },
+    "description": "Claude 3.7 Sonnet is Anthropic's hybrid reasoning model, featuring new 'extended thinking' capabilities. It excels at complex coding, STEM tasks, and multimodal data analysis with large context windows.",
+    "tool_use_system_prompt_tokens": 159,
+    "openrouter_model_id": "anthropic/claude-3.7-sonnet-20250219"
+  },
+  "anthropic/claude-3-5-sonnet-latest": {
+    "name": "Claude-3.5 Sonnet",
+    "mode": "chat",
+    "service_provider": "anthropic",
+    "model_provider": "anthropic",
+    "model_provider_name": "Anthropic",
+    "capabilities": {
+      "supports_tools": true,
+      "supports_vision": true,
+      "supports_prompt_caching": true,
+      "supports_response_schema": true,
+      "supports_assistant_prefill": true,
+      "supports_tool_choice": true
+    },
+    "context": {
+      "max_input_tokens": 200000,
+      "max_output_tokens": 8192
+    },
+    "costs": {
+      "input_cost_per_token": "0.000003",
+      "output_cost_per_token": "0.000015",
+      "cache_read_input_token_cost": "3E-7",
+      "cache_creation_input_token_cost": "0.00000375",
+      "input_cost_per_image": "0.0048"
+    },
+    "description": "Claude 3.5 Sonnet strikes the ideal balance between intelligence and speed, particularly for enterprise workloads. It delivers strong performance at a lower cost compared to its peers, and is engineered for high endurance in large-scale AI deployments.",
+    "deprecation_date": "2025-06-01",
+    "tool_use_system_prompt_tokens": 159,
+    "openrouter_model_id": "anthropic/claude-3.5-sonnet",
+    "_last_updated": "2025-03-21T21:40:54.743622+00:00",
+    "_data_source": "openrouter",
+    "_last_updated_from_id": "anthropic/claude-3.5-sonnet"
+  },
+  "anthropic/claude-3-5-sonnet-20240620": {
+    "name": "Claude-3.5 Sonnet",
+    "mode": "chat",
+    "service_provider": "anthropic",
+    "model_provider": "anthropic",
+    "model_provider_name": "Anthropic",
+    "capabilities": {
+      "supports_tools": true,
+      "supports_vision": true,
+      "supports_prompt_caching": true,
+      "supports_response_schema": true,
+      "supports_assistant_prefill": true,
+      "supports_tool_choice": true
+    },
+    "context": {
+      "max_input_tokens": 200000,
+      "max_output_tokens": 8192
+    },
+    "costs": {
+      "input_cost_per_token": "0.000003",
+      "output_cost_per_token": "0.000015",
+      "cache_read_input_token_cost": "3E-7",
+      "cache_creation_input_token_cost": "0.00000375",
+      "input_cost_per_image": "0.0048"
+    },
+    "description": "Claude 3.5 Sonnet strikes the ideal balance between intelligence and speed, particularly for enterprise workloads. It delivers strong performance at a lower cost compared to its peers, and is engineered for high endurance in large-scale AI deployments.",
+    "deprecation_date": "2025-06-01",
+    "tool_use_system_prompt_tokens": 159,
+    "openrouter_model_id": "anthropic/claude-3.5-sonnet-20240620",
+    "_last_updated": "2025-03-21T21:40:54.743728+00:00",
+    "_data_source": "openrouter",
+    "_last_updated_from_id": "anthropic/claude-3.5-sonnet-20240620"
+  },
+  "anthropic/claude-3-5-haiku-latest": {
+    "name": "Claude 3.5 Haiku",
+    "mode": "chat",
+    "service_provider": "anthropic",
+    "model_provider": "anthropic",
+    "model_provider_name": "Anthropic",
+    "capabilities": {
+      "supports_vision": true,
+      "supports_prompt_caching": true,
+      "supports_response_schema": true,
+      "supports_assistant_prefill": true,
+      "supports_tools": true,
+      "supports_tool_choice": true
+    },
+    "context": {
+      "max_input_tokens": 200000,
+      "max_output_tokens": 8192
+    },
+    "costs": {
+      "input_cost_per_token": "8E-7",
+      "output_cost_per_token": "0.000004",
+      "cache_read_input_token_cost": "1E-7",
+      "cache_creation_input_token_cost": "0.00000125",
+      "input_cost_per_image": "0.0004"
+    },
+    "description": "Claude 3 Haiku is Anthropic's fastest model yet, designed for enterprise workloads which often involve longer prompts. Haiku quickly analyzes large volumes of documents, such as quarterly filings, contracts, or legal cases, for half the cost of other models in its performance tier.",
+    "deprecation_date": "2025-10-01",
+    "tool_use_system_prompt_tokens": 264,
+    "openrouter_model_id": "anthropic/claude-3.5-haiku",
+    "_last_updated": "2025-03-21T21:40:54.743896+00:00",
+    "_data_source": "openrouter",
+    "_last_updated_from_id": "anthropic/claude-3.5-haiku"
+  },
+  "anthropic/claude-3-5-haiku-20241022": {
+    "name": "Claude 3.5 Haiku",
+    "mode": "chat",
+    "service_provider": "anthropic",
+    "model_provider": "anthropic",
+    "model_provider_name": "Anthropic",
+    "capabilities": {
+      "supports_vision": true,
+      "supports_prompt_caching": true,
+      "supports_response_schema": true,
+      "supports_assistant_prefill": true,
+      "supports_tools": true,
+      "supports_tool_choice": true
+    },
+    "context": {
+      "max_input_tokens": 200000,
+      "max_output_tokens": 8192
+    },
+    "costs": {
+      "input_cost_per_token": "8E-7",
+      "output_cost_per_token": "0.000004",
+      "cache_read_input_token_cost": "1E-7",
+      "cache_creation_input_token_cost": "0.00000125",
+      "input_cost_per_image": "0.0004"
+    },
+    "description": "Claude 3 Haiku is Anthropic's fastest model yet, designed for enterprise workloads which often involve longer prompts. Haiku quickly analyzes large volumes of documents, such as quarterly filings, contracts, or legal cases, for half the cost of other models in its performance tier.",
+    "deprecation_date": "2025-10-01",
+    "tool_use_system_prompt_tokens": 264,
+    "openrouter_model_id": "anthropic/claude-3.5-haiku-20241022",
+    "_last_updated": "2025-03-21T21:40:54.744032+00:00",
+    "_data_source": "openrouter",
+    "_last_updated_from_id": "anthropic/claude-3.5-haiku-20241022"
+  },
+  "anthropic/claude-3-opus-latest": {
+    "name": "Claude 3 Opus",
+    "mode": "chat",
+    "service_provider": "anthropic",
+    "model_provider": "anthropic",
+    "model_provider_name": "Anthropic",
+    "capabilities": {
+      "supports_tools": true,
+      "supports_vision": true,
+      "supports_prompt_caching": true,
+      "supports_response_schema": true,
+      "supports_assistant_prefill": true,
+      "supports_tool_choice": true
+    },
+    "context": {
+      "max_input_tokens": 200000,
+      "max_output_tokens": 4096
+    },
+    "costs": {
+      "input_cost_per_token": "0.000015",
+      "output_cost_per_token": "0.000075",
+      "cache_read_input_token_cost": "0.0000015",
+      "cache_creation_input_token_cost": "0.00001875",
+      "input_cost_per_image": "0.024"
+    },
+    "description": "Claude 3 Opus is Anthropic's most intelligent model, with best-in-market performance on highly complex tasks. It navigates open-ended prompts and sight-unseen scenarios with remarkable fluency and human-like understanding, showcasing the outer limits of generative AI.",
+    "deprecation_date": "2025-03-01",
+    "tool_use_system_prompt_tokens": 395,
+    "openrouter_model_id": "anthropic/claude-3-opus",
+    "_last_updated": "2025-03-21T21:40:54.744119+00:00",
+    "_data_source": "openrouter",
+    "_last_updated_from_id": "anthropic/claude-3-opus"
+  },
+  "anthropic/claude-3-opus-20240229": {
+    "name": "Claude 3 Opus",
+    "mode": "chat",
+    "service_provider": "anthropic",
+    "model_provider": "anthropic",
+    "model_provider_name": "Anthropic",
+    "capabilities": {
+      "supports_vision": true,
+      "supports_prompt_caching": true,
+      "supports_response_schema": true,
+      "supports_assistant_prefill": true,
+      "supports_tools": true,
+      "supports_tool_choice": true
+    },
+    "context": {
+      "max_input_tokens": 200000,
+      "max_output_tokens": 4096
+    },
+    "costs": {
+      "input_cost_per_token": "0.000015",
+      "output_cost_per_token": "0.000075",
+      "cache_read_input_token_cost": "0.0000015",
+      "cache_creation_input_token_cost": "0.00001875",
+      "input_cost_per_image": "0.024"
+    },
+    "description": "Claude 3 Opus is Anthropic's most intelligent model, with best-in-market performance on highly complex tasks. It navigates open-ended prompts and sight-unseen scenarios with remarkable fluency and human-like understanding, showcasing the outer limits of generative AI.",
+    "deprecation_date": "2025-03-01",
+    "tool_use_system_prompt_tokens": 395,
+    "openrouter_model_id": "anthropic/claude-3-opus-20240229"
+  },
+  "fireworks_ai/accounts/fireworks/models/deepseek-r1": {
+    "name": "DeepSeek-R1",
+    "mode": "chat",
+    "service_provider": "fireworks_ai",
+    "model_provider": "deepseek",
+    "model_provider_name": "DeepSeek",
+    "context": {
+      "max_input_tokens": 128000,
+      "max_output_tokens": 8192
+    },
+    "costs": {
+      "input_cost_per_token": "0.000003",
+      "output_cost_per_token": "0.000008"
+    },
+    "description": "R1 is a groundbreaking open source reasoning model developed by DeepSeek. R1 uses Chain of Thought (CoT) deductions to spend more time working through solutions to improve accuracy. Before providing a final answer, it generates detailed reasoning steps, allowing users to examine and leverage the model's thought process. This self-hosted version of R1 is deployed on US servers.",
+    "source": "https://fireworks.ai/pricing"
+  },
+  "fireworks_ai/accounts/fireworks/models/deepseek-v3": {
+    "name": "DeepSeek-V3",
+    "mode": "chat",
+    "service_provider": "fireworks_ai",
+    "model_provider": "deepseek",
+    "model_provider_name": "DeepSeek",
+    "capabilities": {
+      "supports_response_schema": true,
+      "supports_tool_choice": true
+    },
+    "context": {
+      "max_input_tokens": 65336,
+      "max_output_tokens": 8192
+    },
+    "costs": {
+      "input_cost_per_token": "7.5E-7",
+      "output_cost_per_token": "0.000003"
+    },
+    "description": "DeepSeek-V3 is an open-source 671B parameter Mixture-of-Experts (MoE) model that builds upon Meta's LLaMA, rivalling or exceeding similar closed source models across numerous benchmarks. This self-hosted version of V3 is deployed on US servers.",
+    "source": "https://fireworks.ai/pricing"
+  },
+  "fireworks_ai/accounts/fireworks/models/llama-v3p3-70b-instruct": {
+    "name": "Llama 3.3 70B",
+    "mode": "chat",
+    "service_provider": "fireworks_ai",
+    "model_provider": "meta",
+    "model_provider_name": "Meta",
+    "capabilities": {
+      "supports_tool_choice": true
+    },
+    "context": {
+      "max_input_tokens": 128000,
+      "max_output_tokens": 2048
+    },
+    "costs": {
+      "input_cost_per_token": "9E-7",
+      "output_cost_per_token": "9E-7"
+    },
+    "description": "Llama 3.3 70B by Meta is an instruction tuned text only model, optimized for multilingual dialogue use cases. It improves upon Llama 3.1 70B with advances in tool calling, multilingual text support, math and coding. The model achieves stellar results in reasoning, math and instructions, providing similar performance as 3.1 405B but with significant speed and cost improvements.",
+    "source": "https://fireworks.ai/pricing"
+  },
+  "fireworks_ai/accounts/fireworks/models/llama-v3p2-90b-vision-instruct": {
+    "name": "Llama 3.2 90B Vision",
+    "mode": "chat",
+    "service_provider": "fireworks_ai",
+    "model_provider": "meta",
+    "model_provider_name": "Meta",
+    "capabilities": {
+      "supports_vision": true
+    },
+    "context": {
+      "max_input_tokens": 128000,
+      "max_output_tokens": 16384
+    },
+    "costs": {
+      "input_cost_per_token": "9E-7",
+      "output_cost_per_token": "9E-7"
+    },
+    "description": "The Llama 3.2, 90 billion parameter multi-modal model by Meta is able to reason on high resolution images. Optimized for visual recognition, image reasoning, captioning, and answering general questions about an image, the model can understand visual data, such as charts and graphs and also bridge the gap between vision and language by generating text to describe images details.",
+    "source": "https://fireworks.ai/pricing"
+  },
+  "fireworks_ai/accounts/fireworks/models/llama-v3p1-405b-instruct": {
+    "name": "Llama 3.1 405B",
+    "mode": "chat",
+    "service_provider": "fireworks_ai",
+    "model_provider": "meta",
+    "model_provider_name": "Meta",
+    "capabilities": {
+      "supports_tools": true,
+      "supports_response_schema": true,
+      "supports_tool_choice": true
+    },
+    "context": {
+      "max_input_tokens": 128000,
+      "max_output_tokens": 128000
+    },
+    "costs": {
+      "input_cost_per_token": "0.000003",
+      "output_cost_per_token": "0.000003"
+    },
+    "description": "Llama is a 405 billion parameter open source model by Meta, fine-tuned for instruction following purposes. It excels at multilingual dialogue use cases. As the largest of the Llama 3.1 instruction tuned text only models, the 405B version is the most capable from the Llama 3.1 family. This model is served in FP8 closely matching reference implementation.",
+    "source": "https://fireworks.ai/pricing"
+  },
+  "fireworks_ai/accounts/fireworks/models/llama-v3p1-8b-instruct": {
+    "name": "Llama 3.1 8B",
+    "mode": "chat",
+    "service_provider": "fireworks_ai",
+    "model_provider": "meta",
+    "model_provider_name": "Meta",
+    "capabilities": {
+      "supports_tool_choice": true
+    },
+    "context": {
+      "max_input_tokens": 128000,
+      "max_output_tokens": 16384
+    },
+    "costs": {
+      "input_cost_per_token": "2E-7",
+      "output_cost_per_token": "2E-7"
+    },
+    "description": "The Meta Llama 3.1 collection of multilingual models are pretrained and instruction tuned generative models in 8B, 70B and 405B sizes, optimized for multilingual dialogue use cases. The 8B model is the smallest of the family and most cost effective for basic instruction following tasks.",
+    "source": "https://fireworks.ai/pricing"
+  },
+  "fireworks_ai/accounts/fireworks/models/llama-v3p2-3b-instruct": {
+    "name": "Llama 3.2 3B",
+    "mode": "chat",
+    "service_provider": "fireworks_ai",
+    "model_provider": "meta",
+    "model_provider_name": "Meta",
+    "capabilities": {
+      "supports_tools": false
+    },
+    "context": {
+      "max_input_tokens": 128000,
+      "max_output_tokens": 16384
+    },
+    "costs": {
+      "input_cost_per_token": "0.0000001",
+      "output_cost_per_token": "0.0000001"
+    },
+    "description": "Llama 3.2 3B instruct is a lightweight, multilingual model from Meta. The model is designed for efficiency and offers substantial latency and cost improvements compared to larger models. Example use cases for the model include query and prompt rewriting and writing assistance.",
+    "source": "https://fireworks.ai/pricing"
+  },
+  "fireworks_ai/accounts/fireworks/models/qwen2p5-72b-instruct": {
+    "name": "Qwen 2.5 72B",
+    "mode": "chat",
+    "service_provider": "fireworks_ai",
+    "model_provider": "alibaba",
+    "model_provider_name": "Alibaba",
+    "capabilities": {
+      "supports_tools": true,
+      "supports_response_schema": true,
+      "supports_tool_choice": true
+    },
+    "context": {
+      "max_input_tokens": 32768,
+      "max_output_tokens": 32768
+    },
+    "costs": {
+      "input_cost_per_token": "9E-7",
+      "output_cost_per_token": "9E-7"
+    },
+    "description": "Qwen2.5 72B is Alibaba's largest open-source language model, trained on 18 trillion tokens. It achieves strong performance across knowledge tasks (85+ on MMLU), coding (85+ on HumanEval), and mathematics (80+ on MATH). The model supports 29+ languages, handles up to 128K context tokens, can generate 8K tokens, and shows improved capabilities in instruction following, long-text generation, and structured data handling. It competes with larger models like Llama-3.1-405B and DeepSeek-V2.5.",
+    "source": "https://fireworks.ai/pricing"
+  },
+  "fireworks_ai/accounts/fireworks/models/qwen2p5-coder-32b-instruct": {
+    "name": "Qwen 2.5 Coder 32B",
+    "mode": "chat",
+    "service_provider": "fireworks_ai",
+    "model_provider": "alibaba",
+    "model_provider_name": "Alibaba",
+    "capabilities": {
+      "supports_tools": false
+    },
+    "context": {
+      "max_input_tokens": 32768,
+      "max_output_tokens": 4096
+    },
+    "costs": {
+      "input_cost_per_token": "9E-7",
+      "output_cost_per_token": "9E-7"
+    },
+    "description": "Qwen2.5 Coder is Alibaba's latest series of models trained specifically for coding tasks. The 32B model is the largest of the series. It achieves strong performance across coding tasks, matching the coding capabilities of GPT-4o. It also possesses good general and mathematical skills.",
+    "source": "https://fireworks.ai/pricing"
+  },
+  "gemini/gemini-2.0-pro-exp-02-05": {
+    "name": "Gemini 2.0 Pro",
+    "mode": "chat",
+    "service_provider": "gemini",
+    "model_provider": "google",
+    "model_provider_name": "Google",
+    "capabilities": {
+      "supports_audio_input": true,
+      "supports_tools": true,
+      "supports_pdf_input": true,
+      "supports_response_schema": true,
+      "supports_system_messages": true,
+      "supports_tool_choice": true,
+      "supports_video_input": true,
+      "supports_vision": true
+    },
+    "context": {
+      "max_audio_length_hours": 8.4,
+      "max_audio_per_prompt": 1,
+      "max_images_per_prompt": 3000,
+      "max_input_tokens": 2097152,
+      "max_output_tokens": 8192,
+      "max_pdf_size_mb": 30,
+      "max_video_length": 1,
+      "max_videos_per_prompt": 10
+    },
+    "costs": {
+      "input_cost_per_audio_per_second": "0",
+      "input_cost_per_audio_per_second_above_128k_tokens": "0",
+      "input_cost_per_character": "0",
+      "input_cost_per_character_above_128k_tokens": "0",
+      "input_cost_per_image": "0",
+      "input_cost_per_image_above_128k_tokens": "0",
+      "input_cost_per_token": "0",
+      "input_cost_per_token_above_128k_tokens": "0",
+      "input_cost_per_video_per_second": "0",
+      "input_cost_per_video_per_second_above_128k_tokens": "0",
+      "output_cost_per_character": "0",
+      "output_cost_per_character_above_128k_tokens": "0",
+      "output_cost_per_token": "0",
+      "output_cost_per_token_above_128k_tokens": "0"
+    },
+    "description": "Gemini 2.0 Pro is Google's latest flagship multimodal model, offering advanced capabilities for coding and complex prompts. With a 2 million token context window, it can handle significant amounts of information.",
+    "rpm": 2,
+    "source": "https://cloud.google.com/vertex-ai/generative-ai/pricing",
+    "tpm": 1000000
+  },
+  "gemini/gemini-2.0-flash-thinking-exp-01-21": {
+    "name": "Gemini 2.0 Flash Thinking",
+    "mode": "chat",
+    "service_provider": "gemini",
+    "model_provider": "google",
+    "model_provider_name": "Google",
+    "capabilities": {
+      "supports_audio_output": true,
+      "supports_system_messages": true,
+      "supports_vision": true
+    },
+    "context": {
+      "max_audio_length_hours": 8.4,
+      "max_audio_per_prompt": 1,
+      "max_images_per_prompt": 3000,
+      "max_input_tokens": 1048576,
+      "max_output_tokens": 65536,
+      "max_pdf_size_mb": 30,
+      "max_video_length": 1,
+      "max_videos_per_prompt": 10
+    },
+    "costs": {
+      "input_cost_per_audio_per_second": "0",
+      "input_cost_per_audio_per_second_above_128k_tokens": "0",
+      "input_cost_per_character": "0",
+      "input_cost_per_character_above_128k_tokens": "0",
+      "input_cost_per_image": "0",
+      "input_cost_per_image_above_128k_tokens": "0",
+      "input_cost_per_token": "0",
+      "input_cost_per_token_above_128k_tokens": "0",
+      "input_cost_per_video_per_second": "0",
+      "input_cost_per_video_per_second_above_128k_tokens": "0"
+    },
+    "description": "Gemini 2.0 Flash Thinking from Google is capable of showing its thoughts to improve performance and explainability. Combining speed and performance, it excels in coding, science and math, showing its reasoning to solve complex problems.",
+    "rpm": 10,
+    "source": "https://cloud.google.com/vertex-ai/generative-ai/docs/learn/models#gemini-2.0-flash",
+    "tpm": 4000000
+  },
+  "gemini/gemini-2.0-flash": {
+    "name": "Gemini 2.0 Flash",
+    "mode": "chat",
+    "service_provider": "gemini",
+    "model_provider": "google",
+    "model_provider_name": "Google",
+    "capabilities": {
+      "supports_audio_output": true,
+      "supports_tools": true,
+      "supports_response_schema": true,
+      "supports_system_messages": true,
+      "supports_tool_choice": true,
+      "supports_vision": true
+    },
+    "context": {
+      "max_audio_length_hours": 8.4,
+      "max_audio_per_prompt": 1,
+      "max_images_per_prompt": 3000,
+      "max_input_tokens": 1048576,
+      "max_output_tokens": 8192,
+      "max_pdf_size_mb": 30,
+      "max_video_length": 1,
+      "max_videos_per_prompt": 10
+    },
+    "costs": {
+      "input_cost_per_audio_token": "7E-7",
+      "input_cost_per_token": "1E-7",
+      "output_cost_per_token": "4E-7"
+    },
+    "description": "Gemini 2.0 Flash is a versatile multimodal model with a 1 million token context window, designed for diverse tasks.",
+    "rpm": 10000,
+    "source": "https://ai.google.dev/pricing#2_0flash",
+    "tpm": 10000000
+  },
+  "gemini/gemini-2.0-flash-lite": {
+    "name": "Gemini 2.0 Flash-Lite",
+    "mode": "chat",
+    "service_provider": "gemini",
+    "model_provider": "google",
+    "model_provider_name": "Google",
+    "capabilities": {
+      "supports_audio_output": false,
+      "supports_tools": true,
+      "supports_response_schema": true,
+      "supports_system_messages": true,
+      "supports_tool_choice": true,
+      "supports_vision": true
+    },
+    "context": {
+      "max_audio_length_hours": 8.4,
+      "max_audio_per_prompt": 1,
+      "max_images_per_prompt": 3000,
+      "max_input_tokens": 1048576,
+      "max_output_tokens": 8192,
+      "max_pdf_size_mb": 30,
+      "max_video_length": 1,
+      "max_videos_per_prompt": 10
+    },
+    "costs": {
+      "input_cost_per_audio_token": "7.5E-8",
+      "input_cost_per_token": "7.5E-8",
+      "output_cost_per_token": "3E-7"
+    },
+    "description": "Gemini 2.0 Flash-Lite is a cost-effective model optimized for low-latency and high-volume tasks. Flash-Lite's 1 million token context window makes it suitable for processing large amounts of data.",
+    "rpm": 60000,
+    "source": "https://cloud.google.com/vertex-ai/generative-ai/docs/learn/models#gemini-2.0-flash-lite",
+    "tpm": 10000000
+  },
+  "gemini/gemini-1.5-pro": {
+    "name": "Gemini 1.5 Pro",
+    "mode": "chat",
+    "service_provider": "gemini",
+    "model_provider": "google",
+    "model_provider_name": "Google",
+    "capabilities": {
+      "supports_tools": true,
+      "supports_response_schema": true,
+      "supports_system_messages": true,
+      "supports_tool_choice": true,
+      "supports_vision": true
+    },
+    "context": {
+      "max_input_tokens": 2097152,
+      "max_output_tokens": 8192
+    },
+    "costs": {
+      "input_cost_per_token": "0.0000035",
+      "input_cost_per_token_above_128k_tokens": "0.000007",
+      "output_cost_per_token": "0.0000105",
+      "output_cost_per_token_above_128k_tokens": "0.000021"
+    },
+    "description": "Gemini 1.5 Pro is Google's flagship model with a 2 million token context window, capable of seamlessly analyzing, classifying, and summarizing large volumes of content for complex analytical tasks.",
+    "rpm": 1000,
+    "source": "https://ai.google.dev/pricing",
+    "tpm": 4000000
+  },
+  "gemini/gemini-1.5-flash": {
+    "name": "Gemini 1.5 Flash",
+    "mode": "chat",
+    "service_provider": "gemini",
+    "model_provider": "google",
+    "model_provider_name": "Google",
+    "capabilities": {
+      "supports_tools": true,
+      "supports_response_schema": true,
+      "supports_system_messages": true,
+      "supports_tool_choice": true,
+      "supports_vision": true
+    },
+    "context": {
+      "max_audio_length_hours": 8.4,
+      "max_audio_per_prompt": 1,
+      "max_images_per_prompt": 3000,
+      "max_input_tokens": 1048576,
+      "max_output_tokens": 8192,
+      "max_pdf_size_mb": 30,
+      "max_video_length": 1,
+      "max_videos_per_prompt": 10
+    },
+    "costs": {
+      "input_cost_per_token": "7.5E-8",
+      "input_cost_per_token_above_128k_tokens": "1.5E-7",
+      "output_cost_per_token": "3E-7",
+      "output_cost_per_token_above_128k_tokens": "6E-7"
+    },
+    "description": "Gemini 1.5 Flash offers balanced performance for diverse tasks with a 1 million token context window.",
+    "rpm": 2000,
+    "source": "https://ai.google.dev/pricing",
+    "tpm": 4000000
+  },
+  "gemini/gemini-1.5-flash-8b": {
+    "name": "Gemini 1.5 Flash 8B",
+    "mode": "chat",
+    "service_provider": "gemini",
+    "model_provider": "google",
+    "model_provider_name": "Google",
+    "capabilities": {
+      "supports_tools": true,
+      "supports_prompt_caching": true,
+      "supports_response_schema": true,
+      "supports_system_messages": true,
+      "supports_tool_choice": true,
+      "supports_vision": true
+    },
+    "context": {
+      "max_audio_length_hours": 8.4,
+      "max_audio_per_prompt": 1,
+      "max_images_per_prompt": 3000,
+      "max_input_tokens": 1048576,
+      "max_output_tokens": 8192,
+      "max_pdf_size_mb": 30,
+      "max_video_length": 1,
+      "max_videos_per_prompt": 10
+    },
+    "costs": {
+      "input_cost_per_token": "0",
+      "input_cost_per_token_above_128k_tokens": "0",
+      "output_cost_per_token": "0",
+      "output_cost_per_token_above_128k_tokens": "0"
+    },
+    "description": "Gemini 1.5 Flash 8B is designed for high-volume, lower-intelligence tasks with a 1 million token context window.",
+    "rpm": 4000,
+    "source": "https://ai.google.dev/pricing",
+    "tpm": 4000000
+  },
+  "xai/grok-2-latest": {
+    "name": "Grok 2",
+    "mode": "chat",
+    "service_provider": "xai",
+    "model_provider": "xai",
+    "model_provider_name": "xAI",
+    "capabilities": {
+      "supports_tools": true,
+      "supports_tool_choice": true
+    },
+    "context": {
+      "max_input_tokens": 131072,
+      "max_output_tokens": 131072
+    },
+    "costs": {
+      "input_cost_per_token": "0.000002",
+      "output_cost_per_token": "0.00001"
+    },
+    "description": "Grok-2 is the latest API-accessible release from xAI, supporting structured outputs. Grok-2 has yet to be open sourced and the architecture remains unknown. Grok 1 was a 314 billion parameter Mixture-of-Experts model. Grok models are known to have a sense of humour and xAI CEO Elon Musk says Grok is intended to be \"a maximum truth-seeking AI that tries to understand the nature of the universe.\""
+  },
+  "xai/grok-2-vision-latest": {
+    "name": "Grok 2 Vision",
+    "mode": "chat",
+    "service_provider": "xai",
+    "model_provider": "xai",
+    "model_provider_name": "xAI",
+    "capabilities": {
+      "supports_tools": true,
+      "supports_tool_choice": true,
+      "supports_vision": true
+    },
+    "context": {
+      "max_input_tokens": 32768,
+      "max_output_tokens": 32768
+    },
+    "costs": {
+      "input_cost_per_image": "0.000002",
+      "input_cost_per_token": "0.000002",
+      "output_cost_per_token": "0.00001"
+    },
+    "description": "Grok-2 Vision is the latest API-accessible multi-modal release from xAI. Grok-2 Vision can process a wide variety of visual information, including documents, diagrams, charts, screenshots, and photographs."
+  },
+  "xai/grok-3-latest": {
+    "name": "Grok 3",
+    "mode": "chat",
+    "service_provider": "xai",
+    "model_provider": "xai",
+    "model_provider_name": "xAI",
+    "capabilities": {
+      "supports_tools": true,
+      "supports_tool_choice": true
+    },
+    "context": {
+      "max_input_tokens": 1000000,
+      "max_output_tokens": 1000000
+    },
+    "costs": {
+      "input_cost_per_token": "0",
+      "output_cost_per_token": "0"
+    },
+    "description": "Grok-3 is the latest model from xAI. Grok models are known to have a sense of humour and xAI CEO Elon Musk says Grok is intended to be \"a maximum truth-seeking AI that tries to understand the nature of the universe.\" Grok-3 is not yet available for public API access.",
+    "available": false
+  },
+  "xai/grok-3-think-latest": {
+    "name": "Grok 3 (Think)",
+    "mode": "chat",
+    "service_provider": "xai",
+    "model_provider": "xai",
+    "model_provider_name": "xAI",
+    "capabilities": {
+      "supports_tools": true,
+      "supports_tool_choice": true
+    },
+    "context": {
+      "max_input_tokens": 1000000,
+      "max_output_tokens": 1000000
+    },
+    "costs": {
+      "input_cost_per_token": "0",
+      "output_cost_per_token": "0"
+    },
+    "description": "Grok-3 (Think) is xAI's first reasoning model, designed to excel at complex logic, coding, and math. The model can spend anywhere from a few seconds to several minutes reasoning, often considering multiple approaches, verifying its own solution, and evaluating how to precisely meet the requirements of the problem. It is optimized for an efficient chain-of-thought process, enabling advanced reasoning in a data-efficient manner. Grok models are known to have a sense of humour and xAI CEO Elon Musk says Grok is intended to be \"a maximum truth-seeking AI that tries to understand the nature of the universe.\"",
+    "available": false
+  },
+  "xai/grok-3-mini-think-latest": {
+    "name": "Grok-3 mini (Think)",
+    "mode": "chat",
+    "service_provider": "xai",
+    "model_provider": "xai",
+    "model_provider_name": "xAI",
+    "capabilities": {
+      "supports_tools": true,
+      "supports_tool_choice": true
+    },
+    "context": {
+      "max_input_tokens": 1000000,
+      "max_output_tokens": 1000000
+    },
+    "costs": {
+      "input_cost_per_token": "0",
+      "output_cost_per_token": "0"
+    },
+    "description": "The Grok-3 mini (Think) reasoning model from xAI is a faster and more cost-efficient alternative to its larger Grok-3 (Think) sibling, designed to excel at complex logic, coding, and math. The model can spend anywhere from a few seconds to several minutes reasoning, often considering multiple approaches, verifying its own solution, and evaluating how to precisely meet the requirements of the problem. It is optimized for an efficient chain-of-thought process, enabling advanced reasoning in a data-efficient manner. Grok models are known to have a sense of humour and xAI CEO Elon Musk says Grok is intended to be \"a maximum truth-seeking AI that tries to understand the nature of the universe.\"",
+    "available": false
+  }
+}

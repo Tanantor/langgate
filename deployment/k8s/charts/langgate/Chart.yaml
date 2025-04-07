@@ -1,0 +1,42 @@
+apiVersion: v2
+name: langgate
+description: LangGate AI Gateway - A lightweight, high-performance AI model inference gateway
+type: application
+version: 0.1.0
+appVersion: "0.1.0"
+home: https://github.com/Tanantor/langgate
+keywords:
+  - langgate
+  - ai
+  - llm
+  - gateway
+  - proxy
+sources:
+  - https://github.com/Tanantor/langgate
+maintainers:
+  - name: Tanantor
+    email: saran@tanantor.com
+icon: https://raw.githubusercontent.com/Tanantor/langgate/main/docs/assets/logo.png
+
+dependencies:
+  - name: langgate-helpers
+    repository: file://../library/langgate-helpers
+    version: 0.1.0
+
+  - name: langgate-envoy
+    repository: file://../langgate-envoy
+    version: 0.1.0
+    condition: langgate_envoy.enabled
+    alias: langgate_envoy
+
+  - name: langgate-processor
+    repository: file://../langgate-processor
+    version: 0.1.0
+    condition: langgate_processor.enabled
+    alias: langgate_processor
+
+  - name: langgate-server
+    repository: file://../langgate-server
+    version: 0.1.0
+    condition: langgate_server.enabled
+    alias: langgate_server

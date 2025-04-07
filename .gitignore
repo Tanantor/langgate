@@ -1,0 +1,30 @@
+*.crt
+*.key
+*.pem
+.venv
+.env
+!.env.example
+!.env.*.example
+__pycache__
+.cache
+coverage_report
+coverage.xml
+gcp_sa*.json
+.bash_history
+.DS_Store
+.coverage
+*.md
+!README.md
+!CONTRIBUTING.md
+.vscode
+# terraform
+**/.terraform*
+*.tfstate*
+*.secrets.tfvars
+**/terraform/**/*.json
+# Helm
+**/charts/*.tgz
+**/charts/**/.env*
+**/charts/*/charts/
+# Rendered Helm templates
+**/deployment/k8s/rendered/

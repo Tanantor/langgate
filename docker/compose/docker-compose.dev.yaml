@@ -1,0 +1,69 @@
+services:
+  # LLM GATEWAY SERVER
+
+  langgate:
+    # build:
+    #   context: .
+    #   dockerfile: services/server/Dockerfile
+    #   target: dev
+    develop:
+      watch:
+        - action: sync+restart
+          path: ./packages/client/src/langgate/client
+          target: /opt/.venv/lib/python3.13/site-packages/langgate/client
+          ignore:
+            - "**/__pycache__"
+        - action: sync+restart
+          path: ./packages/core/src/langgate/core
+          target: /opt/.venv/lib/python3.13/site-packages/langgate/core
+          ignore:
+            - "**/__pycache__"
+        - action: sync+restart
+          path: ./packages/registry/src/langgate/registry
+          target: /opt/.venv/lib/python3.13/site-packages/langgate/registry
+          ignore:
+            - "**/__pycache__"
+        - action: sync+restart
+          path: ./packages/server/src/langgate/server
+          target: /opt/.venv/lib/python3.13/site-packages/langgate/server
+          ignore:
+            - "**/__pycache__"
+
+        - action: sync+restart
+          path: ./services/server/scripts
+          target: /home/langgate/scripts
+
+        - action: rebuild
+          path: ./pyproject.toml
+
+  # LLM GATEWAY PROCESSOR
+
+  processor:
+    # build:
+    #   context: .
+    #   dockerfile: services/processor/Dockerfile
+    #   target: dev
+    develop:
+      watch:
+        - action: sync+restart
+          path: ./packages/core/src/langgate/core
+          target: /opt/.venv/lib/python3.13/site-packages/langgate/core
+          ignore:
+            - "**/__pycache__"
+        - action: sync+restart
+          path: ./packages/transform/src/langgate/transform
+          target: /opt/.venv/lib/python3.13/site-packages/langgate/transform
+          ignore:
+            - "**/__pycache__"
+        - action: sync+restart
+          path: ./packages/processor/src/langgate/processor
+          target: /opt/.venv/lib/python3.13/site-packages/langgate/processor
+          ignore:
+            - "**/__pycache__"
+
+        - action: sync+restart
+          path: ./services/processor/scripts
+          target: /home/langgate/scripts
+
+        - action: rebuild
+          path: ./pyproject.toml
