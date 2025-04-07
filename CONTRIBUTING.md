@@ -158,18 +158,19 @@ Create a PR that:
 
 After the version bump PR is merged, trigger the release:
 
-- **Automatic Method**:
-  ```bash
-  git tag v0.1.0 && git push origin v0.1.0
-  ```
+1. **Create a Draft Release**:
+   - Go to Actions → Create GitHub Release workflow
+   - Enter version number (without 'v' prefix)
+   - Set "Create as draft release" to `true`
+   - Run workflow
 
-- **Manual Method**:
-  1. Go to Actions → Create GitHub Release workflow
-  2. Enter version number (without 'v' prefix)
-  3. Run workflow
+2. **Publish the Release**:
+   - Go to GitHub Releases page
+   - Find your draft release
+   - Click "Edit"
+   - Click "Publish release"
 
-The release workflow automatically:
-- Creates a GitHub release
+Publishing a release automatically:
 - Publishes Python packages to PyPI
 - Builds and publishes Docker images
 - Publishes Helm charts
