@@ -35,6 +35,6 @@ jobs:
         uses: helm/chart-releaser-action@v1.7.0
         with:
           charts_dir: deployment/k8s/charts
-          skip_existing: true
+          skip_existing: false
         env:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
