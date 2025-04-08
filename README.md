@@ -1,10 +1,7 @@
 # LangGate AI Gateway
 <p align="left">
   <a href="https://pypi.org/project/langgate" target="_blank"><img src="https://img.shields.io/pypi/pyversions/langgate.svg" alt="Python versions"></a> <a href="https://pypi.org/project/langgate" target="_blank"><img src="https://img.shields.io/pypi/v/langgate" alt="PyPI"></a> <a href="https://github.com/Tanantor/langgate/actions?query=workflow%3A%22CI+Checks%22" target="_blank"><img src="https://github.com/Tanantor/langgate/actions/workflows/ci.yaml/badge.svg?event=push&branch=main" alt="CI Checks"></a>
-  <!-- These badges will be enabled when GitHub Pages is available -->
-  <!--
-  <a href="https://github.com/Tanantor/langgate/tree/main/tests" target="_blank"><img src="https://tanantor.github.io/langgate/coverage/test-count-badge.svg" alt="Tests"></a> <a href="https://github.com/Tanantor/langgate/actions?query=workflow%3ACI" target="_blank"><img src="https://tanantor.github.io/langgate/coverage/coverage-badge.svg" alt="Coverage"></a>
-  -->
+  <a href="https://github.com/Tanantor/langgate/tree/main/tests" target="_blank"><img src="https://img.shields.io/badge/dynamic/xml?url=https://tanantor.github.io/langgate/coverage/test-count.xml&query=//testcount&label=tests&color=blue&style=flat" alt="Tests"></a> <a href="https://github.com/Tanantor/langgate/actions?query=workflow%3ACI" target="_blank"><img src="https://tanantor.github.io/langgate/coverage/coverage-badge.svg" alt="Coverage"></a>
 </p>
 
 LangGate is a lightweight, high-performance gateway for AI model inference.
