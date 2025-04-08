@@ -34,6 +34,7 @@ jobs:
       - name: Run chart-releaser
         uses: helm/chart-releaser-action@v1.7.0
         with:
+          config: deployment/k8s/charts/.cr.yaml
           charts_dir: deployment/k8s/charts
           skip_existing: false
         env:

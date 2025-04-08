@@ -79,26 +79,54 @@ jobs:
         run: |
           cd deployment/k8s && make helm-unittest
 
-  # deploy-docs:
-  #   needs: tests
-  #   runs-on: ubuntu-latest
-  #   if: github.ref == 'refs/heads/main'
+  deploy-docs:
+    needs: tests
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    permissions:
+      contents: write
 
-  #   steps:
-  #     - uses: actions/checkout@v4
-  #     - name: Setup Python
-  #       uses: ./.github/actions/setup-python
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Python
+        uses: ./.github/actions/setup-python
 
-  #     - name: Download Coverage Report
-  #       uses: actions/download-artifact@v3
-  #       with:
-  #         name: coverage
-  #         path: coverage_report
+      - name: Download Coverage Report
+        uses: actions/download-artifact@v4
+        with:
+          name: coverage
+          path: coverage_report
 
-  #     - name: Generate Badges
-  #       run: |
-  #         make gen-coverage-badge
-  #         make gen-tests-count-badge
+      - name: Generate Badges
+        run: |
+          make gen-coverage-badge
+          make gen-test-count-badge
 
-  #     - name: Deploy docs
-  #       run: make deploy-docs
+      - name: Deploy badges to GitHub Pages
+        run: |
+          git clone --depth 1 --branch gh-pages --single-branch https://github.com/${{ github.repository }} /tmp/gh-pages || \
+          (echo "gh-pages branch not found, creating it." && \
+            mkdir -p /tmp/gh-pages && \
+            cd /tmp/gh-pages && \
+            git init && \
+            git remote add origin https://github.com/${{ github.repository }} && \
+            git checkout -b gh-pages && \
+            # Create a minimal index.html for the root if it doesn't exist
+            echo "<html><head><title>LangGate AI Gateway</title></head><body><h1>LangGate AI Gateway</h1><p>See <a href='coverage/'>coverage reports</a>.</p><p>Helm charts are available in the <a href='charts/'>charts directory</a>.</p></body></html>" > index.html && \
+            git add index.html && \
+            git commit -m "Initial commit for gh-pages with index.html")
+
+          cd /tmp/gh-pages
+          mkdir -p coverage
+          cp -a ${{ github.workspace }}/coverage_report/* coverage/
+
+          git config user.name "$GITHUB_ACTOR"
+          git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
+
+          git add coverage/*
+          if git diff --staged --quiet; then
+            echo "No changes to commit to gh-pages coverage."
+          else
+            git commit -m "Update coverage badges and report [skip ci]"
+            git push https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }} gh-pages
+          fi
