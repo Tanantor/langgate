@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.3] - 2025-04-09
+
+## Fixed
+- Update version bump script to include dependency constraints between the monorepo's packages
+
 ## [0.1.2] - 2025-04-09
 
 ### Added

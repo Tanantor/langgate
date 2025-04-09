@@ -1,6 +1,6 @@
 dependencies:
 - name: langgate-helpers
   repository: file://../library/langgate-helpers
-  version: 0.1.2
-digest: sha256:a8a78f8e0b00776d2b999e3c31e4982935ec660210736938956544c28e2e24f1
-generated: "2025-04-09T21:42:56.044949+01:00"
+  version: 0.1.3
+digest: sha256:63720e60d4505d2bbe040a08f186d9f5dd16b6b3f413fb3a2347bf36968b4867
+generated: "2025-04-09T22:22:34.976022+01:00"

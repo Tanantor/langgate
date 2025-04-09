@@ -169,25 +169,38 @@ uv-publish-to-local-index: uv-build
 		--no-cache \
 		dist/*
 
+
+helm-deps:
+	@$(MAKE) -C deployment/k8s helm-deps
+
+helm-lint:
+	@$(MAKE) -C deployment/k8s helm-lint
+
+
+define bump-version-and-update
+	@echo "Bumping version $(if $(2),to $(2),$(1))..."
+	@./scripts/bump_version.py $(if $(2),--version $(2),$(1))
+	@${MAKE} validate-versions
+	@${MAKE} sync
+	@${MAKE} helm-deps
+	@${MAKE} helm-lint
+endef
+
 bump-patch:
-	@echo "Bumping patch version..."
-	@./scripts/bump_version.py patch
+	$(call bump-version-and-update,patch)
 
 bump-minor:
-	@echo "Bumping minor version..."
-	@./scripts/bump_version.py minor
+	$(call bump-version-and-update,minor)
 
 bump-major:
-	@echo "Bumping major version..."
-	@./scripts/bump_version.py major
+	$(call bump-version-and-update,major)
 
 bump-version:
 	@if [ -z "$(VERSION)" ]; then \
 		echo "Usage: make bump-version VERSION=X.Y.Z"; \
 		exit 1; \
 	fi
-	@echo "Setting version to $(VERSION)..."
-	@./scripts/bump_version.py --version $(VERSION)
+	$(call bump-version-and-update,,$(VERSION))
 
 validate-versions:
 	@echo "Validating version consistency..."
