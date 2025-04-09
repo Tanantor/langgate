@@ -1,15 +1,15 @@
 dependencies:
 - name: langgate-helpers
   repository: file://../library/langgate-helpers
-  version: 0.1.0
+  version: 0.1.1
 - name: langgate-envoy
   repository: file://../langgate-envoy
-  version: 0.1.0
+  version: 0.1.1
 - name: langgate-processor
   repository: file://../langgate-processor
-  version: 0.1.0
+  version: 0.1.1
 - name: langgate-server
   repository: file://../langgate-server
-  version: 0.1.0
-digest: sha256:52f8593a71289d5e05acb53e3260034518a9716d14ed6dc4bee69242a0559e45
-generated: "2025-04-08T00:11:31.413435+01:00"
+  version: 0.1.1
+digest: sha256:2a8933f3a85cc75b2da4eba166a1bd30e0756d0424c56203abb3958fa0687797
+generated: "2025-04-09T11:57:27.840002+01:00"
