@@ -5,6 +5,7 @@ import os
 from pathlib import Path
 from typing import Any
 
+from dotenv import load_dotenv
 from pydantic import SecretStr
 
 from langgate.core.logging import get_logger
@@ -92,6 +93,11 @@ class LocalTransformerClient(TransformerClientProtocol):
             self._process_model_mappings(config.models)
         else:
             self._set_empty_config()
+
+        # Load environment variables from .env file if it exists
+        if self.env_file_path.exists():
+            load_dotenv(self.env_file_path)
+            logger.debug("loaded_transformer_env_file", path=str(self.env_file_path))
 
     def _set_empty_config(self) -> None:
         """Set empty/default config state, typically used in error scenarios."""
