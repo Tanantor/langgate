@@ -17,6 +17,7 @@ gcp_sa*.json
 !README.md
 !CONTRIBUTING.md
 !CHANGELOG.md
+!pull_request_template.md
 .vscode
 # terraform
 **/.terraform*
