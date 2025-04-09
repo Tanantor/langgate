@@ -2,6 +2,49 @@ apiVersion: v1
 entries:
   langgate:
   - apiVersion: v2
+    appVersion: 0.1.1
+    created: "2025-04-09T13:31:26.265198287Z"
+    dependencies:
+    - name: langgate-helpers
+      repository: file://../library/langgate-helpers
+      version: 0.1.1
+    - alias: langgate_envoy
+      condition: langgate_envoy.enabled
+      name: langgate-envoy
+      repository: file://../langgate-envoy
+      version: 0.1.1
+    - alias: langgate_processor
+      condition: langgate_processor.enabled
+      name: langgate-processor
+      repository: file://../langgate-processor
+      version: 0.1.1
+    - alias: langgate_server
+      condition: langgate_server.enabled
+      name: langgate-server
+      repository: file://../langgate-server
+      version: 0.1.1
+    description: LangGate AI Gateway - A lightweight, high-performance AI model inference
+      gateway
+    digest: d0cd179f1d75eb57ad87dcbe2ed2163ddc1c74a791df8320daa9f049107f3c2b
+    home: https://github.com/Tanantor/langgate
+    icon: https://raw.githubusercontent.com/Tanantor/langgate/main/docs/assets/logo.png
+    keywords:
+    - langgate
+    - ai
+    - llm
+    - gateway
+    - proxy
+    maintainers:
+    - email: saran@tanantor.com
+      name: Tanantor
+    name: langgate
+    sources:
+    - https://github.com/Tanantor/langgate
+    type: application
+    urls:
+    - https://github.com/Tanantor/langgate/releases/download/langgate-0.1.1/langgate-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v2
     appVersion: 0.1.0
     created: "2025-04-07T23:21:03.495090597Z"
     dependencies:
@@ -46,6 +89,20 @@ entries:
     version: 0.1.0
   langgate-envoy:
   - apiVersion: v2
+    appVersion: 0.1.1
+    created: "2025-04-09T13:31:26.48312208Z"
+    dependencies:
+    - name: langgate-helpers
+      repository: file://../library/langgate-helpers
+      version: 0.1.1
+    description: Envoy proxy component for LangGate AI Gateway
+    digest: ee454ae9e17453789f17d022455ec5ad5ba014bb2be93ac1a9e9b85166878027
+    name: langgate-envoy
+    type: application
+    urls:
+    - https://github.com/Tanantor/langgate/releases/download/langgate-envoy-0.1.1/langgate-envoy-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v2
     appVersion: 0.1.0
     created: "2025-04-07T23:21:03.649602263Z"
     dependencies:
@@ -60,6 +117,20 @@ entries:
     - https://github.com/Tanantor/langgate/releases/download/langgate-envoy-0.1.0/langgate-envoy-0.1.0.tgz
     version: 0.1.0
   langgate-processor:
+  - apiVersion: v2
+    appVersion: 0.1.1
+    created: "2025-04-09T13:31:26.676351933Z"
+    dependencies:
+    - name: langgate-helpers
+      repository: file://../library/langgate-helpers
+      version: 0.1.1
+    description: Processor component for LangGate AI Gateway
+    digest: c7e526f4e64a7c9271fb7aee2920975f13176493bd0441da09e924190bacfa4d
+    name: langgate-processor
+    type: application
+    urls:
+    - https://github.com/Tanantor/langgate/releases/download/langgate-processor-0.1.1/langgate-processor-0.1.1.tgz
+    version: 0.1.1
   - apiVersion: v2
     appVersion: 0.1.0
     created: "2025-04-07T23:21:03.783629972Z"
@@ -76,6 +147,20 @@ entries:
     version: 0.1.0
   langgate-server:
   - apiVersion: v2
+    appVersion: 0.1.1
+    created: "2025-04-09T13:31:26.881724555Z"
+    dependencies:
+    - name: langgate-helpers
+      repository: file://../library/langgate-helpers
+      version: 0.1.1
+    description: Server component for LangGate AI Gateway
+    digest: 05234e64dbe25607057bf65279b81cae63b904c0404da33da1b4a4e7432a53b5
+    name: langgate-server
+    type: application
+    urls:
+    - https://github.com/Tanantor/langgate/releases/download/langgate-server-0.1.1/langgate-server-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v2
     appVersion: 0.1.0
     created: "2025-04-07T23:21:03.929365523Z"
     dependencies:
@@ -89,4 +174,4 @@ entries:
     urls:
     - https://github.com/Tanantor/langgate/releases/download/langgate-server-0.1.0/langgate-server-0.1.0.tgz
     version: 0.1.0
-generated: "2025-04-07T23:21:03.929370533Z"
+generated: "2025-04-09T13:31:26.88174851Z"
