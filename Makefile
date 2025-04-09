@@ -168,3 +168,27 @@ uv-publish-to-local-index: uv-build
 		-p ${PYINDEX_PASS} \
 		--no-cache \
 		dist/*
+
+bump-patch:
+	@echo "Bumping patch version..."
+	@./scripts/bump_version.py patch
+
+bump-minor:
+	@echo "Bumping minor version..."
+	@./scripts/bump_version.py minor
+
+bump-major:
+	@echo "Bumping major version..."
+	@./scripts/bump_version.py major
+
+bump-version:
+	@if [ -z "$(VERSION)" ]; then \
+		echo "Usage: make bump-version VERSION=X.Y.Z"; \
+		exit 1; \
+	fi
+	@echo "Setting version to $(VERSION)..."
+	@./scripts/bump_version.py --version $(VERSION)
+
+validate-versions:
+	@echo "Validating version consistency..."
+	@./scripts/bump_version.py --validate
