@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.2] - 2025-04-09
+
+### Added
+- Version bump script and corresponding Makefile targets
+
+### Fixed
+- Load environment variables from .env file in `LocalTransformerClient` initialisation - necessary when the registry and transformer clients are running in separate processes
+
 ## [0.1.1] - 2025-04-09
 
 ### Changed
