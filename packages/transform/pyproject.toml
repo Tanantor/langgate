@@ -8,7 +8,7 @@ authors = [{ name = "Tanantor Ltd." }]
 maintainers = [{ name = "Saran Connoly", email = "saran@tanantor.com" }]
 license = { text = "MIT" }
 dependencies = [
-    "langgate-core",
+    "langgate-core (==0.1.2)",
     "pyyaml (>=6.0.1,<7.0.0)"
 ]
 

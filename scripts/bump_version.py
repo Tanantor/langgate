@@ -99,7 +99,6 @@ def update_pyproject_toml(file_path: Path, new_version: str) -> None:
         content = f.read()
 
     pattern = r'(\[project\][^\[]*?\bversion\s*=\s*")[^"]*(")'
-
     # Use named groups to avoid numeric reference issues
     replacement = r"\g<1>" + new_version + r"\g<2>"
     new_content = re.sub(pattern, replacement, content, flags=re.DOTALL)
@@ -108,6 +107,13 @@ def update_pyproject_toml(file_path: Path, new_version: str) -> None:
         logger.error(f"Could not find project.version in {file_path}")
         return
 
+    # Update langgate package version constraints in dependencies and optional dependencies sections
+    # This will find and update langgate-* package versions in (==X.Y.Z) format
+    new_content = re.sub(
+        r'("langgate-[^"]+)(\s*\(==)[^)]*(\)")',
+        r"\g<1>\g<2>" + new_version + r"\g<3>",
+        new_content,
+    )
     with open(file_path, "w", encoding="utf-8") as f:
         f.write(new_content)
 

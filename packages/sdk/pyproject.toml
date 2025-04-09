@@ -8,9 +8,9 @@ authors = [{ name = "Tanantor Ltd." }]
 maintainers = [{ name = "Saran Connoly", email = "saran@tanantor.com" }]
 license = { text = "MIT" }
 dependencies = [
-    "langgate-core",
-    "langgate-registry",
-    "langgate-transform",
+    "langgate-core (==0.1.2)",
+    "langgate-registry (==0.1.2)",
+    "langgate-transform (==0.1.2)",
 ]
 
 [tool.uv.sources]
