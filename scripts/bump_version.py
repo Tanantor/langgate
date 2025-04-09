@@ -74,11 +74,21 @@ def find_chart_files(project_root: Path) -> list[Path]:
 
     charts_dir = project_root / "deployment" / "k8s" / "charts"
     if charts_dir.exists():
+        # Check top-level charts
         for chart_dir in charts_dir.iterdir():
             if chart_dir.is_dir():
                 chart_yaml = chart_dir / "Chart.yaml"
                 if chart_yaml.exists():
                     result.append(chart_yaml)
+
+        # Check library charts
+        library_dir = charts_dir / "library"
+        if library_dir.exists() and library_dir.is_dir():
+            for lib_chart_dir in library_dir.iterdir():
+                if lib_chart_dir.is_dir():
+                    chart_yaml = lib_chart_dir / "Chart.yaml"
+                    if chart_yaml.exists():
+                        result.append(chart_yaml)
 
     return result
 
