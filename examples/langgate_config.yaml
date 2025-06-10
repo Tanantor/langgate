@@ -32,36 +32,36 @@ services:
 
 # Model-specific configurations
 models:
-  - id: openai/gpt-4o
+  - id: openai/gpt-4.1
     service:
       provider: openai
-      model_id: gpt-4o
+      model_id: gpt-4.1
 
-  - id: openai/o1
+  - id: openai/o3
     service:
       provider: openai
-      model_id: o1
+      model_id: o3
 
-  - id: openai/o1-high
+  - id: openai/o3-high
     service:
       provider: openai
-      model_id: o1
-    name: o1-high
-    description: o1-high applies high-effort reasoning for the o1 model
+      model_id: o3
+    name: o3-high
+    description: o3-high applies high-effort reasoning for the o3 model
     override_params:
       reasoning_effort: high
 
-  - id: anthropic/claude-3-7-sonnet
+  - id: anthropic/claude-sonnet-4
     service:
       provider: anthropic
-      model_id: claude-3-7-sonnet-20250219
+      model_id: claude-sonnet-4
 
-  - id: anthropic/claude-3-7-sonnet-reasoning
+  - id: anthropic/claude-sonnet-4-reasoning
     service:
       provider: anthropic
-      model_id: claude-3-7-sonnet-20250219
-    name: Claude-3.7 Sonnet R
-    description: "Claude-3.7 Sonnet with reasoning capabilities."
+      model_id: claude-sonnet-4
+    name: Claude-4 Sonnet R
+    description: "Claude-4 Sonnet with reasoning capabilities."
     override_params:
       thinking:
         budget_tokens: 1024

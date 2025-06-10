@@ -55,20 +55,10 @@ services:
 
 # Model-specific configurations
 models:
-  - id: openai/gpt-4o
-    service:
-      provider: openai # API service provider
-      model_id: gpt-4o # ID to send to service provider
-
-  - id: openai/gpt-4o-mini
-    service:
-      provider: openai
-      model_id: gpt-4o-mini
-
   - id: openai/gpt-4.1
     service:
-      provider: openai
-      model_id: gpt-4.1
+      provider: openai # API service provider
+      model_id: gpt-4.1 # ID to send to service provider
 
   - id: openai/gpt-4.1-mini
     service:
@@ -80,31 +70,41 @@ models:
       provider: openai
       model_id: gpt-4.1-nano
 
+  - id: openai/gpt-4o
+    service:
+      provider: openai
+      model_id: gpt-4o
+
+  - id: openai/gpt-4o-mini
+    service:
+      provider: openai
+      model_id: gpt-4o-mini
+
   - id: openai/o4-mini
     service:
       provider: openai
       model_id: o4-mini
 
-  - id: openai/o1
+  - id: openai/o3
     service:
       provider: openai
-      model_id: o1
+      model_id: o3
 
-  - id: openai/o1-high
+  - id: openai/o3-high
     service:
       provider: openai
-      model_id: o1
-    name: o1-high
-    description: "o1-high applies high-effort reasoning for the o1 model, improving results for the most complex demanding tasks at higher cost and longer latency."
+      model_id: o3
+    name: o3-high
+    description: "o3-high applies high-effort reasoning for the o3 model, improving results for the most complex demanding tasks at higher cost and longer latency."
     override_params:
       reasoning_effort: high
 
-  - id: openai/o1-fast
+  - id: openai/o3-fast
     service:
       provider: openai
-      model_id: o1
-    name: o1-fast
-    description: "o1-fast provides faster responses using lower reasoning effort, suitable for moderate reasoning tasks that require quicker replies and lower costs."
+      model_id: o3
+    name: o3-fast
+    description: "o3-fast provides faster responses using lower reasoning effort, suitable for moderate reasoning tasks that require quicker replies and lower costs."
     override_params:
       reasoning_effort: low
 
@@ -131,15 +131,15 @@ models:
     override_params:
       reasoning_effort: low
 
-  - id: anthropic/claude-4-sonnet
+  - id: anthropic/claude-sonnet-4
     service:
       provider: anthropic
-      model_id: claude-sonnet-4-20250514
+      model_id: claude-sonnet-4
 
   - id: anthropic/claude-sonnet-4-reasoning
     service:
       provider: anthropic
-      model_id: claude-sonnet-4-20250514
+      model_id: claude-sonnet-4
     name: Claude-4 Sonnet R High
     description: "Claude 4 Sonnet with standard reasoning capabilities optimized for complex problem-solving."
     override_params:
@@ -149,7 +149,7 @@ models:
   - id: anthropic/claude-sonnet-4-reasoning-high
     service:
       provider: anthropic
-      model_id: claude-sonnet-4-20250514
+      model_id: claude-sonnet-4
     name: Claude-4 Sonnet R High
     description: "Claude-4 Sonnet with high reasoning effort for superior accuracy in complex tasks at the expense of higher latency and cost."
     override_params:
@@ -159,7 +159,7 @@ models:
   - id: anthropic/claude-opus-4
     service:
       provider: anthropic
-      model_id: claude-opus-4-20250514
+      model_id: claude-opus-4
     name: Claude-4 Opus R
     description: "Claude-4 Opus with standard reasoning capabilities optimized for complex problem-solving."
     override_params:
@@ -169,7 +169,7 @@ models:
   - id: anthropic/claude-opus-4-reasoning
     service:
       provider: anthropic
-      model_id: claude-opus-4-20250514
+      model_id: claude-opus-4
     name: Claude-4 Opus R
     description: "Claude-4 Opus with standard reasoning capabilities optimized for complex problem-solving."
     override_params:
@@ -179,7 +179,7 @@ models:
   - id: anthropic/claude-opus-4-reasoning-high
     service:
       provider: anthropic
-      model_id: claude-opus-4-20250514
+      model_id: claude-opus-4
     name: Claude-4 Opus R High
     description: "Claude-4 Opus with high reasoning effort for superior accuracy in complex tasks at the expense of higher latency and cost."
     override_params:
@@ -196,10 +196,10 @@ models:
       provider: eleutheria/vllm
       model_id: el-1
 
-  - id: deepseek/deepseek-r1-0528"
+  - id: deepseek/deepseek-r1-0528
     service:
       provider: fireworks_ai
-      model_id: accounts/fireworks/models/deepseek-r1-0528"
+      model_id: accounts/fireworks/models/deepseek-r1-0528
 
   - id: deepseek/deepseek-r1
     service:
@@ -296,40 +296,50 @@ models:
       provider: google
       model_id: gemma-3-27b-it
 
+  - id: mistralai/magistral-medium-latest
+    service:
+      provider: mistralai
+      model_id: magistral-medium-latest
+
+  - id: mistralai/magistral-small-latest
+    service:
+      provider: mistralai
+      model_id: magistral-small-latest
+
   - id: mistralai/mistral-large
     service:
       provider: mistralai
-      model_id: mistralai/mistral-large-latest
+      model_id: mistral-large-latest
 
   - id: mistralai/mistral-medium
     service:
       provider: mistralai
-      model_id: mistralai/mistral-medium-latest
+      model_id: mistral-medium-latest
 
   - id: mistralai/mistral-small-latest
     service:
       provider: mistralai
-      model_id: mistralai/mistral-small-latest-latest
+      model_id: mistral-small-latest
 
   - id: mistralai/pixtral-large
     service:
       provider: mistralai
-      model_id: mistralai/pixtral-large-latest
+      model_id: pixtral-large-latest
 
   - id: mistralai/codestral
     service:
       provider: mistralai
-      model_id: mistralai/codestral-latest
+      model_id: codestral-latest
 
   - id: mistralai/open-mixtral-8x22b
     service:
       provider: mistralai
-      model_id: mistralai/open-mixtral-8x22b
+      model_id: open-mixtral-8x22b
 
   - id: mistralai/mistral-nemo
     service:
       provider: mistralai
-      model_id: mistralai/mistral-nemo
+      model_id: mistral-nemo
 
   - id: alibaba/qwen3-235b-a22b
     service:

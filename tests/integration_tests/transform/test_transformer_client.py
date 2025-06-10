@@ -78,7 +78,7 @@ async def test_transformer_config_loading(
     # Check model mappings are processed
     assert "gpt-4o" in local_transformer_client._model_mappings
     assert (
-        "anthropic/claude-3-7-sonnet-reasoning"
+        "anthropic/claude-sonnet-4-reasoning"
         in local_transformer_client._model_mappings
     )
 
@@ -105,9 +105,7 @@ async def test_transformer_service_provider_defaults(
     assert result["max_tokens"] == 1000
 
     # Anthropic service provider defaults
-    result = await local_transformer_client.get_params(
-        "anthropic/claude-3-7-sonnet", {}
-    )
+    result = await local_transformer_client.get_params("anthropic/claude-sonnet-4", {})
     assert result["max_tokens"] == 2000
 
 
@@ -118,7 +116,7 @@ async def test_transformer_model_pattern_params(
     """Test applying model pattern specific parameters."""
     # Anthropic reasoning pattern
     result = await local_transformer_client.get_params(
-        "anthropic/claude-3-7-sonnet-reasoning", {}
+        "anthropic/claude-sonnet-4-reasoning", {}
     )
 
     # Pattern should apply thinking parameter and remove temperature
@@ -136,7 +134,7 @@ async def test_transformer_model_pattern_defaults(
     """Test applying default parameters at the model pattern level."""
     # Use empty params to ensure defaults are applied
     result = await local_transformer_client.get_params(
-        "anthropic/claude-3-7-sonnet-reasoning", {}
+        "anthropic/claude-sonnet-4-reasoning", {}
     )
 
     # The pattern has default_params with max_tokens
@@ -145,7 +143,7 @@ async def test_transformer_model_pattern_defaults(
     # User params should still override pattern defaults
     user_params = {"max_tokens": 1000}
     result = await local_transformer_client.get_params(
-        "anthropic/claude-3-7-sonnet-reasoning", user_params
+        "anthropic/claude-sonnet-4-reasoning", user_params
     )
     assert result["max_tokens"] == 1000
 
@@ -158,7 +156,7 @@ async def test_transformer_model_pattern_renames(
     # Anthropic reasoning pattern has reasoning -> thinking rename
     user_params = {"reasoning": {"depth": "deep"}, "temperature": 0.7}
     result = await local_transformer_client.get_params(
-        "anthropic/claude-3-7-sonnet-reasoning", user_params
+        "anthropic/claude-sonnet-4-reasoning", user_params
     )
 
     # Check parameter was renamed via pattern's rename_params
@@ -176,7 +174,7 @@ async def test_transformer_model_specific_overrides(
     """Test applying model-specific override parameters."""
     # Model with specific thinking override
     result = await local_transformer_client.get_params(
-        "anthropic/claude-3-7-sonnet-reasoning", {}
+        "anthropic/claude-sonnet-4-reasoning", {}
     )
 
     # Check model-specific override is applied
@@ -207,9 +205,7 @@ async def test_transformer_api_key_resolution(
     assert result["api_key"].get_secret_value() == "sk-test-123"
 
     # Anthropic API key
-    result = await local_transformer_client.get_params(
-        "anthropic/claude-3-7-sonnet", {}
-    )
+    result = await local_transformer_client.get_params("anthropic/claude-sonnet-4", {})
     assert isinstance(result["api_key"], SecretStr)
     assert result["api_key"].get_secret_value() == "sk-ant-test-123"
 
@@ -219,10 +215,10 @@ async def test_transformer_model_specific_renames(
     local_transformer_client: LocalTransformerClient,
 ):
     """Test applying model-specific parameter renaming."""
-    # The claude-3-7-sonnet model has stop -> stop_sequences rename
+    # The claude-sonnet-4 model has stop -> stop_sequences rename
     user_params = {"stop": ["END"], "temperature": 0.7}
     result = await local_transformer_client.get_params(
-        "anthropic/claude-3-7-sonnet", user_params
+        "anthropic/claude-sonnet-4", user_params
     )
 
     # Check parameter was renamed
@@ -236,14 +232,14 @@ async def test_transformer_remove_params(
     local_transformer_client: LocalTransformerClient,
 ):
     """Test removing parameters based on configuration."""
-    # The anthropic/claude-3-7-sonnet model removes response_format and reasoning
+    # The anthropic/claude-sonnet-4 model removes response_format and reasoning
     user_params = {
         "response_format": {"type": "json_object"},
         "reasoning": {"depth": "deep"},
         "presence_penalty": 0.2,
     }
     result = await local_transformer_client.get_params(
-        "anthropic/claude-3-7-sonnet", user_params
+        "anthropic/claude-sonnet-4", user_params
     )
 
     # These params should be removed

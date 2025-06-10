@@ -49,7 +49,7 @@ def mock_models_json(tmp_path: Path) -> Generator[Path]:
             "_data_source": "openrouter",
             "_last_updated_from_id": "openai/gpt-4o",
         },
-        "anthropic/claude-3-7-sonnet-latest": {
+        "anthropic/claude-sonnet-4-latest": {
             "name": "Claude-3.7 Sonnet",
             "mode": "chat",
             "service_provider": "anthropic",
@@ -135,22 +135,22 @@ def mock_config_yaml(tmp_path: Path) -> Generator[Path]:
                 },
             },
             {
-                "id": "anthropic/claude-3-7-sonnet",
+                "id": "anthropic/claude-sonnet-4",
                 "name": "Claude-3.7 Sonnet",
                 "service": {
                     "provider": "anthropic",
-                    "model_id": "claude-3-7-sonnet-20250219",
+                    "model_id": "claude-sonnet-4",
                 },
                 "remove_params": ["response_format", "reasoning"],
                 "rename_params": {"stop": "stop_sequences"},
             },
             {
-                "id": "anthropic/claude-3-7-sonnet-reasoning",
+                "id": "anthropic/claude-sonnet-4-reasoning",
                 "name": "Claude-3.7 Sonnet R",
                 "description": "Claude 3.7 Sonnet with reasoning",
                 "service": {
                     "provider": "anthropic",
-                    "model_id": "claude-3-7-sonnet-20250219",
+                    "model_id": "claude-sonnet-4",
                 },
                 "remove_params": ["response_format"],
                 "rename_params": {"stop": "stop_sequences"},
