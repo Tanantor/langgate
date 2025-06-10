@@ -49,6 +49,10 @@ services:
     api_key: "${XAI_API_KEY}"
     base_url: "https://api.x.ai/v1"
 
+  mistralai:
+    api_key: "${MISTRAL_API_KEY}"
+    base_url: "https://api.mistral.ai/v1"
+
 # Model-specific configurations
 models:
   - id: openai/gpt-4o
@@ -61,11 +65,25 @@ models:
       provider: openai
       model_id: gpt-4o-mini
 
-
-  - id: openai/gpt-4.5
+  - id: openai/gpt-4.1
     service:
       provider: openai
-      model_id: gpt-4.5-preview
+      model_id: gpt-4.1
+
+  - id: openai/gpt-4.1-mini
+    service:
+      provider: openai
+      model_id: gpt-4.1-mini
+
+  - id: openai/gpt-4.1-nano
+    service:
+      provider: openai
+      model_id: gpt-4.1-nano
+
+  - id: openai/o4-mini
+    service:
+      provider: openai
+      model_id: o4-mini
 
   - id: openai/o1
     service:
@@ -113,60 +131,100 @@ models:
     override_params:
       reasoning_effort: low
 
-  - id: anthropic/claude-3-7-sonnet
+  - id: anthropic/claude-4-sonnet
     service:
       provider: anthropic
-      model_id: claude-3-7-sonnet-20250219
+      model_id: claude-sonnet-4-20250514
 
-  - id: anthropic/claude-3-7-sonnet-reasoning
+  - id: anthropic/claude-sonnet-4-reasoning
     service:
       provider: anthropic
-      model_id: claude-3-7-sonnet-20250219
-    name: Claude-3.7 Sonnet R
-    description: "Claude-3.7 Sonnet with standard reasoning capabilities optimized for complex problem-solving."
+      model_id: claude-sonnet-4-20250514
+    name: Claude-4 Sonnet R High
+    description: "Claude 4 Sonnet with standard reasoning capabilities optimized for complex problem-solving."
     override_params:
       thinking:
         budget_tokens: 1024
 
-  - id: anthropic/claude-3-7-sonnet-reasoning-high
+  - id: anthropic/claude-sonnet-4-reasoning-high
     service:
       provider: anthropic
-      model_id: claude-3-7-sonnet-20250219
-    name: Claude-3.7 Sonnet R-high
-    description: "Claude-3.7 Sonnet with high reasoning effort for superior accuracy in complex tasks at the expense of higher latency and cost."
+      model_id: claude-sonnet-4-20250514
+    name: Claude-4 Sonnet R High
+    description: "Claude-4 Sonnet with high reasoning effort for superior accuracy in complex tasks at the expense of higher latency and cost."
     override_params:
       thinking:
         budget_tokens: 10000
 
-  - id: anthropic/claude-3-5-sonnet
+  - id: anthropic/claude-opus-4
     service:
       provider: anthropic
-      model_id: claude-3-5-sonnet-20240620
+      model_id: claude-opus-4-20250514
+    name: Claude-4 Opus R
+    description: "Claude-4 Opus with standard reasoning capabilities optimized for complex problem-solving."
+    override_params:
+      thinking:
+        budget_tokens: 2048
+
+  - id: anthropic/claude-opus-4-reasoning
+    service:
+      provider: anthropic
+      model_id: claude-opus-4-20250514
+    name: Claude-4 Opus R
+    description: "Claude-4 Opus with standard reasoning capabilities optimized for complex problem-solving."
+    override_params:
+      thinking:
+        budget_tokens: 2048
+
+  - id: anthropic/claude-opus-4-reasoning-high
+    service:
+      provider: anthropic
+      model_id: claude-opus-4-20250514
+    name: Claude-4 Opus R High
+    description: "Claude-4 Opus with high reasoning effort for superior accuracy in complex tasks at the expense of higher latency and cost."
+    override_params:
+      thinking:
+        budget_tokens: 2048
 
   - id: anthropic/claude-3-5-haiku
     service:
       provider: anthropic
       model_id: claude-3-5-haiku-20241022
 
-  - id: anthropic/claude-3-opus
-    service:
-      provider: anthropic
-      model_id: claude-3-opus-20240229
-
   - id: eleutheria/el-1
     service:
       provider: eleutheria/vllm
       model_id: el-1
+
+  - id: deepseek/deepseek-r1-0528"
+    service:
+      provider: fireworks_ai
+      model_id: accounts/fireworks/models/deepseek-r1-0528"
 
   - id: deepseek/deepseek-r1
     service:
       provider: fireworks_ai
       model_id: accounts/fireworks/models/deepseek-r1
 
+  - id: deepseek/deepseek-r1-econ
+    service:
+      provider: fireworks_ai
+      model_id: accounts/fireworks/models/deepseek-r1-basic
+
   - id: deepseek/deepseek-v3
     service:
       provider: fireworks_ai
       model_id: accounts/fireworks/models/deepseek-v3
+
+  - id: meta/llama-4-maverick
+    service:
+      provider: fireworks_ai
+      model_id: accounts/fireworks/models/llama4-maverick-instruct-basic
+
+  - id: meta/llama-4-scout
+    service:
+      provider: fireworks_ai
+      model_id: accounts/fireworks/models/llama4-scout-instruct-basic
 
   - id: meta/llama-3.3-70b
     service:
@@ -193,15 +251,20 @@ models:
       provider: fireworks_ai
       model_id: accounts/fireworks/models/llama-v3p2-3b-instruct
 
-  - id: google/gemini-2.0-pro
+  - id: google/gemini-2.5-pro
     service:
       provider: gemini
-      model_id: gemini-2.0-pro-exp-02-05
+      model_id: gemini-2.5-pro-preview
 
-  - id: google/gemini-2.0-flash-thinking
+  - id: google/gemini-2.5-flash
     service:
       provider: gemini
-      model_id: gemini-2.0-flash-thinking-exp-01-21
+      model_id: gemini-2.5-flash-preview
+
+  - id: google/gemini-2.5-flash-thinking
+    service:
+      provider: gemini
+      model_id: gemini-2.5-flash-preview-05-20:thinking
 
   - id: google/gemini-2.0-flash
     service:
@@ -228,26 +291,103 @@ models:
       provider: gemini
       model_id: gemini-1.5-flash-8b
 
-  - id: alibaba/qwen-2.5-72b
+  - id: google/gemma-3-27b-it
+    service:
+      provider: google
+      model_id: gemma-3-27b-it
+
+  - id: mistralai/mistral-large
+    service:
+      provider: mistralai
+      model_id: mistralai/mistral-large-latest
+
+  - id: mistralai/mistral-medium
+    service:
+      provider: mistralai
+      model_id: mistralai/mistral-medium-latest
+
+  - id: mistralai/mistral-small-latest
+    service:
+      provider: mistralai
+      model_id: mistralai/mistral-small-latest-latest
+
+  - id: mistralai/pixtral-large
+    service:
+      provider: mistralai
+      model_id: mistralai/pixtral-large-latest
+
+  - id: mistralai/codestral
+    service:
+      provider: mistralai
+      model_id: mistralai/codestral-latest
+
+  - id: mistralai/open-mixtral-8x22b
+    service:
+      provider: mistralai
+      model_id: mistralai/open-mixtral-8x22b
+
+  - id: mistralai/mistral-nemo
+    service:
+      provider: mistralai
+      model_id: mistralai/mistral-nemo
+
+  - id: alibaba/qwen3-235b-a22b
     service:
       provider: fireworks_ai
-      model_id: accounts/fireworks/models/qwen2p5-72b-instruct
+      model_id: accounts/fireworks/models/qwen3-235b-a22b
+
+  - id: alibaba/qwen3-30b-a3b
+    service:
+      provider: fireworks_ai
+      model_id: accounts/fireworks/models/qwen3-30b-a3b
 
   - id: alibaba/qwen-2.5-coder-32b
     service:
       provider: fireworks_ai
       model_id: accounts/fireworks/models/qwen2p5-coder-32b-instruct
 
-  - id: xai/grok-2
+  - id: xai/grok-3
     service:
       provider: xai
-      model_id: grok-2-latest
+      model_id: grok-3-latest
+
+  - id: xai/grok-3-fast
+    service:
+      provider: xai
+      model_id: grok-3-fast
+
+  - id: xai/grok-3-mini
+    service:
+      provider: xai
+      model_id: grok-3-mini
+
+  - id: xai/grok-3-mini-high
+    service:
+      provider: xai
+      model_id: grok-3-mini
+    name: Grok 3 Mini High
+    description: "Grok 3 Mini with high-effort reasoning settings applied. It spends more time and resources to improve accuracy for complex tasks."
+    override_params:
+      reasoning_effort: high
+
+  - id: xai/grok-3-mini-fast
+    service:
+      provider: xai
+      model_id: grok-3-mini-fast
+
+  - id: xai/grok-3-mini-fast-high
+    service:
+      provider: xai
+      model_id: grok-3-mini-fast
+    name: Grok 3 Mini Fast High
+    description: "Grok 3 Mini Fast with high-effort reasoning settings applied. It spends more time and resources to improve accuracy for complex tasks."
+    override_params:
+      reasoning_effort: high
 
   - id: xai/grok-2-vision
     service:
       provider: xai
       model_id: grok-2-vision-latest
-
 
 app_config:
   CORS_ORIGINS: ["*"]
