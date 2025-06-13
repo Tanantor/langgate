@@ -4,7 +4,7 @@ from datetime import UTC, datetime
 from decimal import Decimal
 from typing import Annotated, Any, NewType
 
-from pydantic import BaseModel, ConfigDict, Field, SecretStr
+from pydantic import BaseModel, ConfigDict, Field, SecretStr, model_validator
 
 # Type aliases for flexibility while maintaining naming compatibility
 ServiceProviderId = NewType("ServiceProviderId", str)
@@ -51,12 +51,19 @@ class ServiceProvider(BaseModel):
     default_params: dict[str, Any] = Field(default_factory=dict)
 
 
-class ModelProvider(BaseModel):
+class ModelProviderBase(BaseModel):
+    id: ModelProviderId | None = None
+    name: str | None = None
+    description: str | None = None
+
+    model_config = ConfigDict(extra="allow")
+
+
+class ModelProvider(ModelProviderBase):
     """Information about a model provider (creator)."""
 
-    id: ModelProviderId
-    name: str
-    description: str | None = None
+    id: ModelProviderId = Field(default=...)
+    name: str = Field(default=...)
 
 
 class ContextWindow(BaseModel):
@@ -100,11 +107,26 @@ class ModelCost(BaseModel):
     model_config = ConfigDict(extra="allow")
 
 
-class LLMInfo(BaseModel):
+class LLMInfoBase(BaseModel):
+    id: str | None = None
+    name: str | None = None
+    provider_id: ModelProviderId | None = None
+
+    description: str | None = None
+    costs: ModelCost | None = None
+    capabilities: ModelCapabilities | None = None
+    context_window: ContextWindow | None = None
+
+    model_config = ConfigDict(extra="allow")
+
+
+class LLMInfo(LLMInfoBase):
     """Information about a language model."""
 
-    id: str  # "gpt-4o"
-    name: str
+    id: str = Field(default=...)  # "gpt-4o"
+    name: str = Field(default=...)
+    provider_id: ModelProviderId = Field(default=...)
+
     provider: ModelProvider  # Who created it (shown to users)
     description: str | None = None
     costs: ModelCost = Field(default_factory=ModelCost)
@@ -112,4 +134,7 @@ class LLMInfo(BaseModel):
     context_window: ContextWindow = Field(default_factory=ContextWindow)
     updated_dt: datetime = Field(default_factory=lambda: datetime.now(UTC))
 
-    model_config = ConfigDict(extra="allow")
+    @model_validator(mode="after")
+    def _validate_provider_id(self):
+        self.provider_id = self.provider.id
+        return self
