@@ -72,12 +72,12 @@ from langgate.sdk import LangGateLocal
 client = LangGateLocal()
 
 # LangGate allows us to register "virtual models" - models with specific parameters.
-# `langgate_config.yaml` defines this `claude-3-7-sonnet-reasoning` model
-# which is a wrapper around the `claude-3-7-sonnet-latest` model,
+# `langgate_config.yaml` defines this `claude-sonnet-4-reasoning` model
+# which is a wrapper around the `claude-sonnet-4-latest` model,
 # with specific parameters and metadata.
 # In `langgate_config.yaml`, Anthropic is set as the inference service provider,
 # but you could configure any backend API that offers the model, e.g. AWS Bedrock.
-model_id = "anthropic/claude-3-7-sonnet-reasoning"
+model_id = "anthropic/claude-sonnet-4-reasoning"
 
 # get metadata for a model
 model_info = await client.get_model_info(model_id)
@@ -112,7 +112,7 @@ pp(model_info.model_dump(exclude_none=True))
            'output_cost_per_token': Decimal('0.000015')},
  'description': 'Claude-3.7 Sonnet with standard reasoning capabilities '
                 'optimized for complex problem-solving.',
- 'id': 'anthropic/claude-3-7-sonnet-reasoning',
+ 'id': 'anthropic/claude-sonnet-4-reasoning',
  'name': 'Claude-3.7 Sonnet R',
  'provider': {'id': 'anthropic', 'name': 'Anthropic'},
  'updated_dt': datetime.datetime(2025, 4, 1, 17, 7, 6, 737543, tzinfo=datetime.timezone.utc)}
@@ -126,7 +126,7 @@ pp(model_params)
 ```py
 {'base_url': 'https://api.anthropic.com',
  'max_tokens': 64000,
- 'model': 'claude-3-7-sonnet-20250219',
+ 'model': 'claude-sonnet-4',
  'stream': True,
  'thinking': {'budget_tokens': 1024, 'type': 'enabled'}}
 ```
@@ -301,16 +301,16 @@ models:
     override_params:
       reasoning_effort: high
 
-  - id: anthropic/claude-3-7-sonnet
+  - id: anthropic/claude-sonnet-4
     service:
       provider: anthropic
-      model_id: claude-3-7-sonnet-20250219
+      model_id: claude-sonnet-4
 
-  # "virtual model" that wraps the claude-3-7-sonnet model with reasoning
-  - id: anthropic/claude-3-7-sonnet-reasoning
+  # "virtual model" that wraps the claude-sonnet-4 model with reasoning
+  - id: anthropic/claude-sonnet-4-reasoning
     service:
       provider: anthropic
-      model_id: claude-3-7-sonnet-20250219
+      model_id: claude-sonnet-4
     name: Claude-3.7 Sonnet R
     description: "Claude-3.7 Sonnet with reasoning capabilities."
     override_params:
