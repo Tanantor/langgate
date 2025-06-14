@@ -6,6 +6,8 @@ from typing import Annotated, Any, NewType
 
 from pydantic import BaseModel, ConfigDict, Field, SecretStr, model_validator
 
+from langgate.core.fields import NormalizedDecimal
+
 # Type aliases for flexibility while maintaining naming compatibility
 ServiceProviderId = NewType("ServiceProviderId", str)
 # Model provider might differ from the inference service provider
@@ -74,9 +76,9 @@ class ModelCapabilities(BaseModel):
     model_config = ConfigDict(extra="allow")
 
 
-TokenCost = Annotated[Decimal, "TokenCost"]
-Percentage = Annotated[Decimal, "Percentage"]
-TokenUsage = Annotated[Decimal, "TokenUsage"]
+TokenCost = Annotated[NormalizedDecimal, "TokenCost"]
+Percentage = Annotated[NormalizedDecimal, "Percentage"]
+TokenUsage = Annotated[NormalizedDecimal, "TokenUsage"]
 
 
 class ModelCost(BaseModel):

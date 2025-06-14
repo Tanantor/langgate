@@ -1,8 +1,10 @@
+from decimal import Decimal
 from typing import Annotated
 
 from pydantic import (
     AfterValidator,
     AnyHttpUrl,
+    PlainSerializer,
     PlainValidator,
     TypeAdapter,
 )
@@ -28,3 +30,9 @@ def validate_url_or_env_var(v: str) -> str:
 
 # Type that can be either a URL or an environment variable reference
 UrlOrEnvVar = Annotated[str, AfterValidator(validate_url_or_env_var)]
+
+
+NormalizedDecimal = Annotated[
+    Decimal,
+    PlainSerializer(lambda v: str(v.normalize()), return_type=str, when_used="json"),
+]
