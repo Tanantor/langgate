@@ -126,7 +126,7 @@ pp(model_params)
 ```py
 {'base_url': 'https://api.anthropic.com',
  'max_tokens': 64000,
- 'model': 'claude-sonnet-4',
+ 'model': 'claude-sonnet-4-0',
  'stream': True,
  'thinking': {'budget_tokens': 1024, 'type': 'enabled'}}
 ```
@@ -304,13 +304,13 @@ models:
   - id: anthropic/claude-sonnet-4
     service:
       provider: anthropic
-      model_id: claude-sonnet-4
+      model_id: claude-sonnet-4-0
 
-  # "virtual model" that wraps the claude-sonnet-4 model with reasoning
+  # "virtual model" that wraps the claude-sonnet-4-0 model with reasoning
   - id: anthropic/claude-sonnet-4-reasoning
     service:
       provider: anthropic
-      model_id: claude-sonnet-4
+      model_id: claude-sonnet-4-0
     name: Claude-3.7 Sonnet R
     description: "Claude-3.7 Sonnet with reasoning capabilities."
     override_params:

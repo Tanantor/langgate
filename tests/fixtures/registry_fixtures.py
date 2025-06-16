@@ -49,8 +49,8 @@ def mock_models_json(tmp_path: Path) -> Generator[Path]:
             "_data_source": "openrouter",
             "_last_updated_from_id": "openai/gpt-4o",
         },
-        "anthropic/claude-sonnet-4-latest": {
-            "name": "Claude-3.7 Sonnet",
+        "anthropic/claude-sonnet-4-0": {
+            "name": "Claude-4 Sonnet",
             "mode": "chat",
             "service_provider": "anthropic",
             "model_provider": "anthropic",
@@ -71,11 +71,11 @@ def mock_models_json(tmp_path: Path) -> Generator[Path]:
                 "cache_creation_input_token_cost": "0.00000375",
                 "input_cost_per_image": "0.0048",
             },
-            "description": "Anthropic's Claude 3.7 Sonnet model",
-            "openrouter_model_id": "anthropic/claude-3.7-sonnet",
+            "description": "Anthropic's Claude 4 Sonnet model",
+            "openrouter_model_id": "anthropic/claude-4-sonnet",
             "_last_updated": "2025-03-21T21:40:54.743326+00:00",
             "_data_source": "openrouter",
-            "_last_updated_from_id": "anthropic/claude-3.7-sonnet",
+            "_last_updated_from_id": "anthropic/claude-4-sonnet",
         },
     }
     models_json_path = tmp_path / "langgate_models.json"

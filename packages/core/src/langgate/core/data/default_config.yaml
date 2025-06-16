@@ -134,13 +134,13 @@ models:
   - id: anthropic/claude-sonnet-4
     service:
       provider: anthropic
-      model_id: claude-sonnet-4
+      model_id: claude-sonnet-4-0
 
   - id: anthropic/claude-sonnet-4-reasoning
     service:
       provider: anthropic
-      model_id: claude-sonnet-4
-    name: Claude-4 Sonnet R High
+      model_id: claude-sonnet-4-0
+    name: Claude-4 Sonnet R
     description: "Claude 4 Sonnet with standard reasoning capabilities optimized for complex problem-solving."
     override_params:
       thinking:
@@ -149,7 +149,7 @@ models:
   - id: anthropic/claude-sonnet-4-reasoning-high
     service:
       provider: anthropic
-      model_id: claude-sonnet-4
+      model_id: claude-sonnet-4-0
     name: Claude-4 Sonnet R High
     description: "Claude-4 Sonnet with high reasoning effort for superior accuracy in complex tasks at the expense of higher latency and cost."
     override_params:
@@ -159,17 +159,12 @@ models:
   - id: anthropic/claude-opus-4
     service:
       provider: anthropic
-      model_id: claude-opus-4
-    name: Claude-4 Opus R
-    description: "Claude-4 Opus with standard reasoning capabilities optimized for complex problem-solving."
-    override_params:
-      thinking:
-        budget_tokens: 2048
+      model_id: claude-opus-4-0
 
   - id: anthropic/claude-opus-4-reasoning
     service:
       provider: anthropic
-      model_id: claude-opus-4
+      model_id: claude-opus-4-0
     name: Claude-4 Opus R
     description: "Claude-4 Opus with standard reasoning capabilities optimized for complex problem-solving."
     override_params:
@@ -179,7 +174,7 @@ models:
   - id: anthropic/claude-opus-4-reasoning-high
     service:
       provider: anthropic
-      model_id: claude-opus-4
+      model_id: claude-opus-4-0
     name: Claude-4 Opus R High
     description: "Claude-4 Opus with high reasoning effort for superior accuracy in complex tasks at the expense of higher latency and cost."
     override_params:

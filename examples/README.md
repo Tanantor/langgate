@@ -61,7 +61,7 @@ models:
   - id: anthropic/claude-sonnet-4
     service:
       provider: anthropic
-      model_id: claude-sonnet-4
+      model_id: claude-sonnet-4-0
 ```
 
 See the [main documentation](../README.md) for full configuration details and parameter options.

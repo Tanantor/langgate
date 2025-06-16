@@ -54,12 +54,12 @@ models:
   - id: anthropic/claude-sonnet-4
     service:
       provider: anthropic
-      model_id: claude-sonnet-4
+      model_id: claude-sonnet-4-0
 
   - id: anthropic/claude-sonnet-4-reasoning
     service:
       provider: anthropic
-      model_id: claude-sonnet-4
+      model_id: claude-sonnet-4-0
     name: Claude-4 Sonnet R
     description: "Claude-4 Sonnet with reasoning capabilities."
     override_params:

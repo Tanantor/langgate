@@ -89,12 +89,12 @@ config:
         - id: anthropic/claude-sonnet-4
           service:
             provider: anthropic
-            model_id: claude-sonnet-4
+            model_id: claude-sonnet-4-0
 
     langgate_models: |
       {
         "anthropic/claude-sonnet-4": {
-          "name": "Claude-3.7 Sonnet",
+          "name": "Claude-4 Sonnet",
           "service_provider": "anthropic"
         }
       }
