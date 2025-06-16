@@ -347,11 +347,6 @@ models:
       provider: fireworks_ai
       model_id: accounts/fireworks/models/qwen3-30b-a3b
 
-  - id: alibaba/qwen-2.5-coder-32b
-    service:
-      provider: fireworks_ai
-      model_id: accounts/fireworks/models/qwen2p5-coder-32b-instruct
-
   - id: xai/grok-3
     service:
       provider: xai
