@@ -160,7 +160,6 @@ models:
     service:
       provider: anthropic
       model_id: claude-opus-4-0
-
   - id: anthropic/claude-opus-4-reasoning
     service:
       provider: anthropic
@@ -168,6 +167,7 @@ models:
     name: Claude-4 Opus R
     description: "Claude-4 Opus with standard reasoning capabilities optimized for complex problem-solving."
     override_params:
+      max_tokens: 32000
       thinking:
         budget_tokens: 2048
 
@@ -178,6 +178,7 @@ models:
     name: Claude-4 Opus R High
     description: "Claude-4 Opus with high reasoning effort for superior accuracy in complex tasks at the expense of higher latency and cost."
     override_params:
+      max_tokens: 32000
       thinking:
         budget_tokens: 2048
 
