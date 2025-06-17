@@ -39,6 +39,7 @@ models_data_path = resolve_path(
 # OpenRouter API endpoint
 OPENROUTER_API_URL = "https://openrouter.ai/api/v1/models"
 
+# TODO: Add programmatic solution for updating Gemini costs from `curl https://generativelanguage.googleapis.com/v1beta/models?key=$GEMINI_API_KEY``
 # TODO: Add programmatic solution for updating Fireworks AI costs from https://fireworks.ai/pricing#serverless-pricing
 # This may require using an LLM to parse the HTML and reason about the data.
 # TODO: Add programmatic solution for updating xAI costs fby querying `https://api.x.ai/v1/language-models`

@@ -204,11 +204,17 @@ class ModelFactory:
         # Transform parameters using the transformer client
         # If switching to using the proxy, you would remove this line
         # and let the proxy handle the parameter transformation instead.
-        model_params = await self.langgate_client.get_params(model_id, params)
+        api_format, model_params = await self.langgate_client.get_params(
+            model_id, params
+        )
+        # api_format defaults to the provider id unless specified in the config.
+        # e.g. Specify "openai" for OpenAI-compatible APIs, etc.
+        print("API format:", api_format)
         pp(model_params)
 
         # Get the appropriate model class based on provider
-        model_class = MODEL_CLASS_MAP.get(model_info.provider.id)
+        client_cls_key = ModelProviderId(api_format)
+        model_class = MODEL_CLASS_MAP.get(client_cls_key)
         if not model_class:
             raise ValueError(f"No model class for provider {model_info.provider.id}")
 
@@ -226,7 +232,8 @@ model_id = "openai/gpt-4o"
 model = await model_factory.create_model(model_id, {"temperature": 0.7})
 model
 ```
-```py
+```text
+API format: openai
 {'api_key': SecretStr('**********'),
  'base_url': 'https://api.openai.com/v1',
  'model': 'gpt-4o',

@@ -731,26 +731,6 @@
     "description": "Llama 3.3 70B by Meta is an instruction tuned text only model, optimized for multilingual dialogue use cases. It improves upon Llama 3.1 70B with advances in tool calling, multilingual text support, math and coding. The model achieves stellar results in reasoning, math and instructions, providing similar performance as 3.1 405B but with significant speed and cost improvements.",
     "source": "https://fireworks.ai/pricing"
   },
-  "fireworks_ai/accounts/fireworks/models/llama-v3p2-90b-vision-instruct": {
-    "name": "Llama 3.2 90B Vision",
-    "mode": "chat",
-    "service_provider": "fireworks_ai",
-    "model_provider": "meta",
-    "model_provider_name": "Meta",
-    "capabilities": {
-      "supports_vision": true
-    },
-    "context": {
-      "max_input_tokens": 128000,
-      "max_output_tokens": 16384
-    },
-    "costs": {
-      "input_cost_per_token": "9E-7",
-      "output_cost_per_token": "9E-7"
-    },
-    "description": "The Llama 3.2, 90 billion parameter multi-modal model by Meta is able to reason on high resolution images. Optimized for visual recognition, image reasoning, captioning, and answering general questions about an image, the model can understand visual data, such as charts and graphs and also bridge the gap between vision and language by generating text to describe images details.",
-    "source": "https://fireworks.ai/pricing"
-  },
   "fireworks_ai/accounts/fireworks/models/llama-v3p1-405b-instruct": {
     "name": "Llama 3.1 405B",
     "mode": "chat",
@@ -793,26 +773,6 @@
     "description": "The Meta Llama 3.1 collection of multilingual models are pretrained and instruction tuned generative models in 8B, 70B and 405B sizes, optimized for multilingual dialogue use cases. The 8B model is the smallest of the family and most cost effective for basic instruction following tasks.",
     "source": "https://fireworks.ai/pricing"
   },
-  "fireworks_ai/accounts/fireworks/models/llama-v3p2-3b-instruct": {
-    "name": "Llama 3.2 3B",
-    "mode": "chat",
-    "service_provider": "fireworks_ai",
-    "model_provider": "meta",
-    "model_provider_name": "Meta",
-    "capabilities": {
-      "supports_tools": false
-    },
-    "context": {
-      "max_input_tokens": 128000,
-      "max_output_tokens": 16384
-    },
-    "costs": {
-      "input_cost_per_token": "0.0000001",
-      "output_cost_per_token": "0.0000001"
-    },
-    "description": "Llama 3.2 3B instruct is a lightweight, multilingual model from Meta. The model is designed for efficiency and offers substantial latency and cost improvements compared to larger models. Example use cases for the model include query and prompt rewriting and writing assistance.",
-    "source": "https://fireworks.ai/pricing"
-  },
   "fireworks_ai/accounts/fireworks/models/llama4-maverick-instruct-basic": {
     "name": "Llama 4 Maverick",
     "mode": "chat",
@@ -821,6 +781,7 @@
     "model_provider_name": "Meta",
     "capabilities": {
       "supports_vision": true,
+      "supports_tools": true,
       "supports_tool_choice": true
     },
     "context": {
@@ -831,7 +792,7 @@
       "input_cost_per_token": "0.00000022",
       "output_cost_per_token": "0.00000088"
     },
-    "description": "The Llama 4 collection of models are natively multimodal AI models that enable text and multimodal experiences. These models leverage a mixture-of-experts architecture to offer industry-leading performance in text and image understanding.",
+    "description": "The Llama 4 collection of models are natively multimodal AI models. Llama 4 Maverick is a general purpose LLM containing 17 billion active parameters, 128 experts, and 400 billion total parameters, offering high quality at a lower price compared to Llama 3.3 70B.",
     "source": "https://fireworks.ai/pricing#serverless-pricing"
   },
   "fireworks_ai/accounts/fireworks/models/llama4-scout-instruct-basic": {
@@ -842,6 +803,7 @@
     "model_provider_name": "Meta",
     "capabilities": {
       "supports_vision": true,
+      "supports_tools": true,
       "supports_tool_choice": true
     },
     "context": {
@@ -852,7 +814,7 @@
       "input_cost_per_token": "0.00000015",
       "output_cost_per_token": "0.0000006"
     },
-    "description": "The Llama 4 collection of models are natively multimodal AI models that enable text and multimodal experiences. These models leverage a mixture-of-experts architecture to offer industry-leading performance in text and image understanding.",
+    "description": "The Llama 4 collection of models are natively multimodal AI models. Llama 4 Scout is smaller than Maverick, with 17B active parameters, 16 experts and 109B total parameters. Its low cost, large context window, and multimodal understanding make it ideal for processing large amounts of data, such as documents, code, and images.",
     "source": "https://fireworks.ai/pricing#serverless-pricing"
   },
   "fireworks_ai/accounts/fireworks/models/qwen2p5-72b-instruct": {
@@ -1191,7 +1153,7 @@
     "source": "https://ai.google.dev/pricing",
     "tpm": 4000000
   },
-  "gemini/gemini-2.5-pro-preview": {
+  "gemini/gemini-2.5-pro": {
     "name": "Gemini 2.5 Pro",
     "mode": "chat",
     "service_provider": "gemini",
@@ -1215,10 +1177,10 @@
       "input_cost_per_image": "0.00516"
     },
     "description": "Gemini 2.5 Pro is Google's state-of-the-art thinking model, capable of reasoning over complex problems in code, math, and STEM, as well as analyzing large datasets, codebases, and documents using long context.",
-    "openrouter_model_id": "google/gemini-2.5-pro-preview",
+    "openrouter_model_id": "google/gemini-2.5-pro",
     "_last_updated": "2025-06-16T16:54:22.641478+00:00",
     "_data_source": "openrouter",
-    "_last_updated_from_id": "google/gemini-2.5-pro-preview"
+    "_last_updated_from_id": "google/gemini-2.5-pro"
   },
   "gemini/gemini-2.5-pro-preview-06-05": {
     "name": "Gemini 2.5 Pro 0605",
@@ -1249,7 +1211,7 @@
     "_data_source": "openrouter",
     "_last_updated_from_id": "google/gemini-2.5-pro-preview-05-06"
   },
-  "gemini/gemini-2.5-flash-preview": {
+  "gemini/gemini-2.5-flash": {
     "name": "Gemini 2.5 Flash",
     "mode": "chat",
     "service_provider": "gemini",
@@ -1284,39 +1246,45 @@
       "input_cost_per_image": "0.0006192"
     },
     "description": "Gemini 2.5 Flash is a versatile multimodal model with a 1 million token context window, designed for diverse tasks.",
-    "openrouter_model_id": "google/gemini-2.5-flash-preview",
+    "openrouter_model_id": "google/gemini-2.5-flash",
     "_last_updated": "2025-06-16T16:54:22.641672+00:00",
     "_data_source": "openrouter",
-    "_last_updated_from_id": "google/gemini-2.5-flash-preview"
+    "_last_updated_from_id": "google/gemini-2.5-flash"
   },
-  "gemini/gemini-2.5-flash-preview-05-20:thinking": {
-    "name": "Gemini 2.5 Flash Thinking",
+  "gemini/gemini-2.5-flash-lite-preview-06-17": {
+        "name": "Gemini 2.5 Flash Lite",
     "mode": "chat",
     "service_provider": "gemini",
     "model_provider": "google",
     "model_provider_name": "Google",
+    "modalities": {
+      "input": [
+        "file",
+        "text",
+        "image"
+      ],
+      "output": [
+        "text"
+      ]
+    },
     "capabilities": {
       "supports_tools": true,
       "supports_vision": true,
       "supports_response_schema": true,
       "supports_system_messages": true,
-      "supports_tool_choice": true
+      "supports_tool_choice": true,
+      "supports_reasoning": true
     },
     "context": {
       "max_input_tokens": 1048576,
       "max_output_tokens": 65535
     },
     "costs": {
-      "input_cost_per_token": "1.5E-7",
-      "output_cost_per_token": "0.0000035",
-      "cache_read_input_token_cost": "3.75E-8",
-      "input_cost_per_image": "0.0006192"
+      "input_cost_per_token": "0.0000001",
+      "output_cost_per_token": "0.0000004"
     },
-    "description": "Gemini 2.5 Flash Thinking from Google is capable of showing its thoughts to improve performance and explainability. Combining speed and performance, it excels in coding, science and math, showing its reasoning to solve complex problems.",
-    "openrouter_model_id": "google/gemini-2.5-flash-preview-05-20:thinking",
-    "_last_updated": "2025-06-16T16:54:22.641792+00:00",
-    "_data_source": "openrouter",
-    "_last_updated_from_id": "google/gemini-2.5-flash-preview-05-20:thinking"
+    "description": "Gemini 2.5 Flash-Lite is a lightweight reasoning model in the Gemini 2.5 family, optimized for ultra-low latency and cost efficiency. It offers improved throughput, faster token generation, and better performance compared to earlier Flash models.",
+    "openrouter_model_id": "google/gemini-2.5-flash-lite-preview-06-17"
   },
   "gemini/gemma-3-27b-it": {
     "name": "Gemma 3 27B",
@@ -1325,7 +1293,35 @@
     "model_provider": "google",
     "model_provider_name": "Google",
     "capabilities": {
-      "supports_tools": true,
+      "supports_tools": false,
+      "supports_vision": true,
+      "supports_response_schema": true,
+      "supports_system_messages": true,
+      "supports_tool_choice": true
+    },
+    "context": {
+      "max_input_tokens": 131072,
+      "max_output_tokens": 16384
+    },
+    "costs": {
+      "input_cost_per_token": "1E-7",
+      "output_cost_per_token": "2E-7",
+      "input_cost_per_image": "0.0000256"
+    },
+    "description": "Gemma 3 is an open-source model family from Google that supports multimodal inputs with a 128k token context window and comes in four sizes (1B, 4B, 12B, and 27B parameters). It excels at math, reasoning, coding, and multilingual tasks across 140+ languages.",
+    "openrouter_model_id": "google/gemma-3-27b-it",
+    "_last_updated": "2025-06-16T16:54:22.642115+00:00",
+    "_data_source": "openrouter",
+    "_last_updated_from_id": "google/gemma-3-27b-it"
+  },
+    "openrouter/google/gemma-3-27b-it:free": {
+    "name": "Gemma 3 27B",
+    "mode": "chat",
+    "service_provider": "google",
+    "model_provider": "google",
+    "model_provider_name": "Google",
+    "capabilities": {
+      "supports_tools": false,
       "supports_vision": true,
       "supports_response_schema": true,
       "supports_system_messages": true,
@@ -1699,7 +1695,7 @@
     "description": "Open Mixtral 8x22B is a mixture-of-experts model with 22B active parameters out of 141B total.",
     "source": "https://mistral.ai/pricing#api-pricing"
   },
-  "mistralai/mistral-nemo": {
+  "mistralai/open-mistral-nemo": {
     "name": "Mistral Nemo",
     "mode": "chat",
     "service_provider": "mistralai",

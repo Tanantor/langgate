@@ -124,6 +124,34 @@ def mock_config_yaml(tmp_path: Path) -> Generator[Path]:
                     }
                 },
             },
+            "openrouter": {
+                "api_key": "${OPENROUTER_API_KEY}",
+                "base_url": "https://api.openrouter.ai/v1",
+                "api_format": "openai",
+                "default_params": {
+                    "tiktoken_model_name": "gpt-4o",
+                },
+            },
+            "xai": {
+                "api_key": "${XAI_API_KEY}",
+                "base_url": "https://api.x.ai/v1",
+                "api_format": "openai",
+            },
+            "fireworks_ai": {
+                "api_key": "${FIREWORKS_API_KEY}",
+                "base_url": "https://api.fireworks.ai/inference/v1",
+                "api_format": "openai",
+                "default_params": {
+                    "tiktoken_model_name": "gpt-4o",
+                },
+            },
+            "gemini": {
+                "api_key": "${GEMINI_API_KEY}",
+            },
+            "mistralai": {
+                "api_key": "${MISTRAL_API_KEY}",
+                "base_url": "https://api.mistral.ai/v1",
+            },
         },
         "models": [
             {
@@ -160,6 +188,41 @@ def mock_config_yaml(tmp_path: Path) -> Generator[Path]:
                     }
                 },
             },
+            {
+                "id": "google/gemma-3-27b-it",
+                "service": {
+                    "provider": "openrouter",
+                    "model_id": "google/gemma-3-27b-it:free",
+                },
+            },
+            {
+                "id": "xai/grok-3",
+                "service": {
+                    "provider": "xai",
+                    "model_id": "grok-3-latest",
+                },
+            },
+            {
+                "id": "deepseek/deepseek-r1",
+                "service": {
+                    "provider": "fireworks_ai",
+                    "model_id": "accounts/fireworks/models/deepseek-r1",
+                },
+            },
+            {
+                "id": "google/gemini-2.5-pro",
+                "service": {
+                    "provider": "gemini",
+                    "model_id": "gemini-2.5-pro-preview",
+                },
+            },
+            {
+                "id": "mistralai/magistral-medium-latest",
+                "service": {
+                    "provider": "mistralai",
+                    "model_id": "magistral-medium-latest",
+                },
+            },
         ],
     }
     config_yaml_path = tmp_path / "langgate_config.yaml"
@@ -176,6 +239,11 @@ def mock_env_file(tmp_path: Path) -> Generator[Path]:
     with open(env_path, "w") as f:
         f.write("OPENAI_API_KEY=sk-test-123\n")
         f.write("ANTHROPIC_API_KEY=sk-ant-test-123\n")
+        f.write("OPENROUTER_API_KEY=sk-or-test-123\n")
+        f.write("XAI_API_KEY=xai-test-123\n")
+        f.write("FIREWORKS_API_KEY=fw-test-123\n")
+        f.write("GEMINI_API_KEY=gm-test-123\n")
+        f.write("MISTRAL_API_KEY=ms-test-123\n")
         f.write("SECRET_KEY=test-secret-key\n")
 
     yield env_path

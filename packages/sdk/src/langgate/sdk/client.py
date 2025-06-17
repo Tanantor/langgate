@@ -66,7 +66,7 @@ class LangGateLocal(LangGateLocalProtocol):
 
     async def get_params(
         self, model_id: str, input_params: dict[str, Any]
-    ) -> dict[str, Any]:
+    ) -> tuple[str, dict[str, Any]]:
         """Transform parameters for the specified model.
 
         Args:
@@ -74,7 +74,7 @@ class LangGateLocal(LangGateLocalProtocol):
             input_params: The parameters to transform
 
         Returns:
-            The transformed parameters
+            A tuple containing (api_format, transformed_parameters)
 
         Raises:
             ValueError: If the model is not found

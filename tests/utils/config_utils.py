@@ -10,9 +10,9 @@ from tests.mocks.registry_mocks import create_mock_config
 
 
 @contextmanager
-def patch_load_yaml_config():
+def patch_load_yaml_config(custom_config=None):
     """Patch the load_yaml_config function to return a mock config."""
-    mock_config = create_mock_config()
+    mock_config = custom_config if custom_config else create_mock_config()
     with (
         mock.patch(
             "langgate.transform.local.load_yaml_config",

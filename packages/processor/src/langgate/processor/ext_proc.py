@@ -116,7 +116,7 @@ class LangGateExtProc(BaseExtProcService):
                     request["original_model"] = original_model
 
                     # Transform parameters using our transformer
-                    transformed_params = await self.transformer.get_params(
+                    _, transformed_params = await self.transformer.get_params(
                         original_model, json_body
                     )
 

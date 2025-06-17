@@ -8,6 +8,7 @@ from unittest import mock
 import pytest
 from pydantic.types import SecretStr
 
+from langgate.core.schemas.config import ConfigSchema
 from langgate.transform.local import LocalTransformerClient
 from tests.utils.config_utils import config_path_resolver, patch_load_yaml_config
 
@@ -89,7 +90,7 @@ async def test_transformer_global_defaults(
 ):
     """Test applying global default parameters."""
     # Test with empty params
-    result = await local_transformer_client.get_params("gpt-4o", {})
+    _, result = await local_transformer_client.get_params("gpt-4o", {})
 
     # Global default should be applied
     assert result["temperature"] == 0.7
@@ -101,11 +102,13 @@ async def test_transformer_service_provider_defaults(
 ):
     """Test applying service provider default parameters."""
     # OpenAI service provider defaults
-    result = await local_transformer_client.get_params("gpt-4o", {})
+    _, result = await local_transformer_client.get_params("gpt-4o", {})
     assert result["max_tokens"] == 1000
 
     # Anthropic service provider defaults
-    result = await local_transformer_client.get_params("anthropic/claude-sonnet-4", {})
+    _, result = await local_transformer_client.get_params(
+        "anthropic/claude-sonnet-4", {}
+    )
     assert result["max_tokens"] == 2000
 
 
@@ -115,7 +118,7 @@ async def test_transformer_model_pattern_params(
 ):
     """Test applying model pattern specific parameters."""
     # Anthropic reasoning pattern
-    result = await local_transformer_client.get_params(
+    _, result = await local_transformer_client.get_params(
         "anthropic/claude-sonnet-4-reasoning", {}
     )
 
@@ -133,7 +136,7 @@ async def test_transformer_model_pattern_defaults(
 ):
     """Test applying default parameters at the model pattern level."""
     # Use empty params to ensure defaults are applied
-    result = await local_transformer_client.get_params(
+    _, result = await local_transformer_client.get_params(
         "anthropic/claude-sonnet-4-reasoning", {}
     )
 
@@ -142,7 +145,7 @@ async def test_transformer_model_pattern_defaults(
 
     # User params should still override pattern defaults
     user_params = {"max_tokens": 1000}
-    result = await local_transformer_client.get_params(
+    _, result = await local_transformer_client.get_params(
         "anthropic/claude-sonnet-4-reasoning", user_params
     )
     assert result["max_tokens"] == 1000
@@ -155,7 +158,7 @@ async def test_transformer_model_pattern_renames(
     """Test parameter renaming at the model pattern level."""
     # Anthropic reasoning pattern has reasoning -> thinking rename
     user_params = {"reasoning": {"depth": "deep"}, "temperature": 0.7}
-    result = await local_transformer_client.get_params(
+    _, result = await local_transformer_client.get_params(
         "anthropic/claude-sonnet-4-reasoning", user_params
     )
 
@@ -173,7 +176,7 @@ async def test_transformer_model_specific_overrides(
 ):
     """Test applying model-specific override parameters."""
     # Model with specific thinking override
-    result = await local_transformer_client.get_params(
+    _, result = await local_transformer_client.get_params(
         "anthropic/claude-sonnet-4-reasoning", {}
     )
 
@@ -187,7 +190,7 @@ async def test_transformer_user_params_precedence(
 ):
     """Test that user parameters have precedence over defaults."""
     # User params should override defaults
-    result = await local_transformer_client.get_params(
+    _, result = await local_transformer_client.get_params(
         "gpt-4o", {"temperature": 0.5, "max_tokens": 500}
     )
     assert result["temperature"] == 0.5  # User specified
@@ -200,12 +203,14 @@ async def test_transformer_api_key_resolution(
 ):
     """Test that API keys are resolved from environment variables."""
     # OpenAI API key
-    result = await local_transformer_client.get_params("gpt-4o", {})
+    _, result = await local_transformer_client.get_params("gpt-4o", {})
     assert isinstance(result["api_key"], SecretStr)
     assert result["api_key"].get_secret_value() == "sk-test-123"
 
     # Anthropic API key
-    result = await local_transformer_client.get_params("anthropic/claude-sonnet-4", {})
+    _, result = await local_transformer_client.get_params(
+        "anthropic/claude-sonnet-4", {}
+    )
     assert isinstance(result["api_key"], SecretStr)
     assert result["api_key"].get_secret_value() == "sk-ant-test-123"
 
@@ -217,7 +222,7 @@ async def test_transformer_model_specific_renames(
     """Test applying model-specific parameter renaming."""
     # The claude-sonnet-4 model has stop -> stop_sequences rename
     user_params = {"stop": ["END"], "temperature": 0.7}
-    result = await local_transformer_client.get_params(
+    _, result = await local_transformer_client.get_params(
         "anthropic/claude-sonnet-4", user_params
     )
 
@@ -238,7 +243,7 @@ async def test_transformer_remove_params(
         "reasoning": {"depth": "deep"},
         "presence_penalty": 0.2,
     }
-    result = await local_transformer_client.get_params(
+    _, result = await local_transformer_client.get_params(
         "anthropic/claude-sonnet-4", user_params
     )
 
@@ -282,3 +287,156 @@ async def test_transformer_without_env_file():
             ValueError, match=f"Model '{model_id}' not found in configuration"
         ):
             await client.get_params(model_id, {})
+
+
+# API Format Mapping Tests
+
+
+@pytest.mark.asyncio
+async def test_api_format_service_level_openai_providers(
+    local_transformer_client: LocalTransformerClient,
+):
+    """Test API format resolution for OpenAI-compatible service providers."""
+    # Test OpenRouter (uses OpenAI API format)
+    api_format, _ = await local_transformer_client.get_params(
+        "google/gemma-3-27b-it", {}
+    )
+    assert api_format == "openai"
+
+    # Test xAI (uses OpenAI API format)
+    api_format, _ = await local_transformer_client.get_params("xai/grok-3", {})
+    assert api_format == "openai"
+
+    # Test Fireworks AI (uses OpenAI API format)
+    api_format, _ = await local_transformer_client.get_params(
+        "deepseek/deepseek-r1", {}
+    )
+    assert api_format == "openai"
+
+
+@pytest.mark.asyncio
+async def test_api_format_fallback_to_provider_name(
+    local_transformer_client: LocalTransformerClient,
+):
+    """Test API format fallback to provider name when no api_format specified."""
+    # OpenAI provider (no explicit api_format, should fallback to 'openai')
+    api_format, _ = await local_transformer_client.get_params("gpt-4o", {})
+    assert api_format == "openai"
+
+    # Anthropic provider (no explicit api_format, should fallback to 'anthropic')
+    api_format, _ = await local_transformer_client.get_params(
+        "anthropic/claude-sonnet-4", {}
+    )
+    assert api_format == "anthropic"
+
+    # Gemini provider (no explicit api_format, should fallback to 'gemini')
+    api_format, _ = await local_transformer_client.get_params(
+        "google/gemini-2.5-pro", {}
+    )
+    assert api_format == "gemini"
+
+    # MistralAI provider (no explicit api_format, should fallback to 'mistralai')
+    api_format, _ = await local_transformer_client.get_params(
+        "mistralai/magistral-medium-latest", {}
+    )
+    assert api_format == "mistralai"
+
+
+@pytest.mark.asyncio
+async def test_api_format_precedence_hierarchy():
+    """Test API format precedence: model.api_format → service.api_format → service.provider."""
+    # Reset singleton to test with custom configuration
+    LocalTransformerClient._instance = None
+
+    # Custom configuration to test precedence
+    custom_config = {
+        "default_params": {"temperature": 0.7},
+        "services": {
+            "custom_service": {
+                "api_key": "${CUSTOM_API_KEY}",
+                "base_url": "https://api.custom.com/v1",
+                "api_format": "service_format",  # Service-level API format
+                "default_params": {},
+            }
+        },
+        "models": [
+            {
+                "id": "test/model-with-override",
+                "service": {"provider": "custom_service", "model_id": "actual-model"},
+                "api_format": "model_override",  # Model-level override (highest precedence)
+                "default_params": {},
+                "override_params": {},
+                "remove_params": [],
+                "rename_params": {},
+            },
+            {
+                "id": "test/model-without-override",
+                "service": {"provider": "custom_service", "model_id": "another-model"},
+                # No model-level api_format, should use service-level
+                "default_params": {},
+                "override_params": {},
+                "remove_params": [],
+                "rename_params": {},
+            },
+        ],
+        "app_config": {},
+    }
+
+    with (
+        mock.patch.dict(os.environ, {"CUSTOM_API_KEY": "test-key"}),
+        patch_load_yaml_config(ConfigSchema.model_validate(custom_config)),
+    ):
+        client = LocalTransformerClient()
+
+        # Test model-level override (highest precedence)
+        api_format, _ = await client.get_params("test/model-with-override", {})
+        assert api_format == "model_override"
+
+        # Test service-level fallback (when no model-level override)
+        api_format, _ = await client.get_params("test/model-without-override", {})
+        assert api_format == "service_format"
+
+
+@pytest.mark.asyncio
+async def test_api_format_provider_name_fallback():
+    """Test fallback to provider name when no api_format is specified at any level."""
+    # Reset singleton to test with custom configuration
+    LocalTransformerClient._instance = None
+
+    # Custom configuration with no api_format specified
+    custom_config = {
+        "default_params": {"temperature": 0.7},
+        "services": {
+            "fallback_provider": {
+                "api_key": "${FALLBACK_API_KEY}",
+                "base_url": "https://api.fallback.com/v1",
+                # No api_format specified at service level
+                "default_params": {},
+            }
+        },
+        "models": [
+            {
+                "id": "test/fallback-model",
+                "service": {
+                    "provider": "fallback_provider",
+                    "model_id": "fallback-model",
+                },
+                # No api_format specified at model level
+                "default_params": {},
+                "override_params": {},
+                "remove_params": [],
+                "rename_params": {},
+            },
+        ],
+        "app_config": {},
+    }
+
+    with (
+        mock.patch.dict(os.environ, {"FALLBACK_API_KEY": "test-key"}),
+        patch_load_yaml_config(ConfigSchema.model_validate(custom_config)),
+    ):
+        client = LocalTransformerClient()
+
+        # Should fallback to provider name
+        api_format, _ = await client.get_params("test/fallback-model", {})
+        assert api_format == "fallback_provider"

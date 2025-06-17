@@ -113,6 +113,7 @@ class LocalTransformerClient(TransformerClientProtocol):
             self._model_mappings[model_id] = {
                 "service_provider": service["provider"],
                 "service_model_id": service["model_id"],
+                "api_format": model_data.get("api_format"),
                 "default_params": model_data["default_params"],
                 "override_params": model_data["override_params"],
                 "remove_params": model_data["remove_params"],
@@ -121,7 +122,7 @@ class LocalTransformerClient(TransformerClientProtocol):
 
     async def get_params(
         self, model_id: str, input_params: dict[str, Any]
-    ) -> dict[str, Any]:
+    ) -> tuple[str, dict[str, Any]]:
         """
         Get transformed parameters for the specified model.
 
@@ -147,7 +148,7 @@ class LocalTransformerClient(TransformerClientProtocol):
             input_params: The parameters to transform
 
         Returns:
-            The transformed parameters
+            A tuple containing (api_format, transformed_parameters)
 
         Raises:
             ValueError: If the model is not found in the configuration.
@@ -252,6 +253,15 @@ class LocalTransformerClient(TransformerClientProtocol):
         # Substitute environment variables in string values
         transformer.with_env_vars()
 
+        # Resolve API format based on fallback hierarchy: model.api_format → service.api_format → service.provider
+        api_format = (
+            mapping.get("api_format")
+            or service_config.get("api_format")
+            or service_provider
+        )
+
         # Execute Transformation
         # Applies all chained transformations in order
-        return transformer.transform(input_params)
+        transformed_params = transformer.transform(input_params)
+
+        return api_format, transformed_params
