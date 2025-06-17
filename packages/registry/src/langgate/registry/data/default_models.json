@@ -821,6 +821,7 @@
     "model_provider_name": "Meta",
     "capabilities": {
       "supports_vision": true,
+      "supports_tools": true,
       "supports_tool_choice": true
     },
     "context": {
@@ -842,6 +843,7 @@
     "model_provider_name": "Meta",
     "capabilities": {
       "supports_vision": true,
+      "supports_tools": true,
       "supports_tool_choice": true
     },
     "context": {
@@ -1727,7 +1729,7 @@
     "description": "Open Mixtral 8x22B is a mixture-of-experts model with 22B active parameters out of 141B total.",
     "source": "https://mistral.ai/pricing#api-pricing"
   },
-  "mistralai/mistral-nemo": {
+  "mistralai/open-mistral-nemo": {
     "name": "Mistral Nemo",
     "mode": "chat",
     "service_provider": "mistralai",

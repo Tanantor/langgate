@@ -31,7 +31,10 @@ services:
 
   gemini:
     api_key: "${GEMINI_API_KEY}"
-    # TODO add vertex service provider
+    # you can use this `api_format` key in your client class lookup to map to a
+    # google-genai client class for both Gemini API and Vertex AI services
+    api_format: google
+    # TODO add vertex service provider example
 
   mistralai:
     api_key: "${MISTRAL_API_KEY}"
@@ -348,7 +351,7 @@ models:
   - id: mistralai/mistral-nemo
     service:
       provider: mistralai
-      model_id: mistral-nemo
+      model_id: open-mistral-nemo
 
   - id: alibaba/qwen3-235b-a22b
     service:
