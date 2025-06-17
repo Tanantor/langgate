@@ -86,15 +86,15 @@ config:
       default_params:
         temperature: 0.7
       models:
-        - id: anthropic/claude-3-7-sonnet
+        - id: anthropic/claude-sonnet-4
           service:
             provider: anthropic
-            model_id: claude-3-7-sonnet-20250219
+            model_id: claude-sonnet-4-0
 
     langgate_models: |
       {
-        "anthropic/claude-3-7-sonnet-20250219": {
-          "name": "Claude-3.7 Sonnet",
+        "anthropic/claude-sonnet-4": {
+          "name": "Claude-4 Sonnet",
           "service_provider": "anthropic"
         }
       }
