@@ -51,7 +51,7 @@ def load_yaml_config(
     config_path: Path,
     schema_class: type[ConfigSchemaT],
     logger: StructLogger | None = None,
-) -> ConfigSchemaT | None:
+) -> ConfigSchemaT:
     """Load and validate a YAML configuration file using a Pydantic schema.
 
     Args:
@@ -60,24 +60,30 @@ def load_yaml_config(
         logger: Optional logger instance for recording validation results
 
     Returns:
-        The validated schema instance or None if validation failed
+        The validated schema instance
+
+    Raises:
+        FileNotFoundError: If config file doesn't exist
+        ValueError: If config file is empty
+        yaml.YAMLError: If YAML parsing fails
+        ValidationError: If schema validation fails
     """
     try:
         if not config_path.exists():
             if logger:
-                logger.warning(
+                logger.error(
                     "config_file_not_found",
                     config_path=str(config_path),
                 )
-            return None
+            raise FileNotFoundError(f"Config file not found: {config_path}")
 
         with open(config_path) as f:
             raw_config = yaml.safe_load(f)
 
         if raw_config is None:
             if logger:
-                logger.warning("config_file_is_empty", config_path=str(config_path))
-            return None
+                logger.error("config_file_is_empty", config_path=str(config_path))
+            raise ValueError(f"Config file is empty: {config_path}")
 
         # Validate configuration using Pydantic schema
         try:
@@ -95,15 +101,15 @@ def load_yaml_config(
                     config_path=str(config_path),
                     errors=str(exc),
                 )
-            return None
+            raise
 
     except yaml.YAMLError:
         if logger:
             logger.exception(
                 "failed_to_parse_yaml_config", config_path=str(config_path)
             )
-        return None
+        raise
     except Exception:
         if logger:
             logger.exception("failed_to_load_config", config_path=str(config_path))
-        return None
+        raise

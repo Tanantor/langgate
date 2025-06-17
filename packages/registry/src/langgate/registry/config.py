@@ -122,27 +122,18 @@ class RegistryConfig:
         """Load main configuration from YAML file."""
         config = load_yaml_config(self.config_path, ConfigSchema, logger)
 
-        if config:
-            # Extract validated data
-            self.global_config = {
-                "default_params": config.default_params,
-            }
+        # Extract validated data
+        self.global_config = {
+            "default_params": config.default_params,
+        }
 
-            # Extract service provider config
-            self.service_config = {
-                k: v.model_dump(exclude_none=True) for k, v in config.services.items()
-            }
+        # Extract service provider config
+        self.service_config = {
+            k: v.model_dump(exclude_none=True) for k, v in config.services.items()
+        }
 
-            # Process model mappings
-            self._process_model_mappings(config.models)
-        else:
-            self._set_empty_config()
-
-    def _set_empty_config(self) -> None:
-        """Set empty/default config state, typically used in error scenarios."""
-        self.global_config = {"default_params": {}}
-        self.service_config = {}
-        self.model_mappings = {}
+        # Process model mappings
+        self._process_model_mappings(config.models)
 
     def _process_model_mappings(self, models_config) -> None:
         """Process model mappings from validated configuration.

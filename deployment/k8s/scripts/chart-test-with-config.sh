@@ -14,8 +14,8 @@ mkdir -p "$OUTPUT_DIR"
 
 # Sample model config for testing
 SAMPLE_MODELS='{
-  "anthropic/claude-3-7-sonnet-20250219": {
-    "name": "Claude-3.7 Sonnet",
+  "anthropic/claude-sonnet-4-0": {
+    "name": "Claude-4 Sonnet",
     "service_provider": "anthropic"
   }
 }'

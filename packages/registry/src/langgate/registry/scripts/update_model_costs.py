@@ -39,6 +39,11 @@ models_data_path = resolve_path(
 # OpenRouter API endpoint
 OPENROUTER_API_URL = "https://openrouter.ai/api/v1/models"
 
+# TODO: Add programmatic solution for updating Fireworks AI costs from https://fireworks.ai/pricing#serverless-pricing
+# This may require using an LLM to parse the HTML and reason about the data.
+# TODO: Add programmatic solution for updating xAI costs fby querying `https://api.x.ai/v1/language-models`
+# with header Authorization: Bearer <XAI_API_KEY>.
+
 
 class ModelMatcher(Protocol):
     """Protocol for model matching strategies."""
@@ -129,6 +134,7 @@ class DefaultModelMatcher:
                         or_id.startswith(f"{prov}/")
                         and base_name
                         and self._is_specific_match(base_name, or_id)
+                        and self._is_version_compatible(model_id, or_id)
                     ):
                         return model, model["id"]
 
@@ -237,15 +243,55 @@ class DefaultModelMatcher:
             # Skip version numbers, dates, and special suffixes
             if (
                 part.isdigit()
-                or (len(part) == 1 and part.isalpha())
                 or "preview" in part
                 or "latest" in part
                 or (len(part) == 8 and part.isdigit())  # Date format
             ):
                 continue
+            # Keep single letters that are part of model names (like 'v' in claude-3-5-sonnet)
+            # but skip standalone version indicators
             core_parts.append(part)
 
         return "-".join(core_parts)
+
+    def _is_version_compatible(self, our_model_id: str, openrouter_id: str) -> bool:
+        """Check if the models are version-compatible to prevent cross-version contamination."""
+        # Extract major version numbers from both model IDs
+        our_version = self._extract_major_version(our_model_id)
+        or_version = self._extract_major_version(openrouter_id)
+
+        # If both have version numbers, they must match
+        if our_version is not None and or_version is not None:
+            return our_version == or_version
+
+        # If neither has a version number, they're compatible
+        # If only one has a version number, be more cautious
+        # Allow matching only if we're confident it's not a version conflict
+        return our_version is None and or_version is None
+
+    def _extract_major_version(self, model_id: str) -> int | None:
+        """Extract major version number from model ID using generalized patterns."""
+        import re
+
+        # General pattern to find version numbers in model IDs
+        # Matches: word-number-, word-number$, or number at start/middle of segments
+        version_patterns = [
+            r"-(\d+)-",  # -3-, -4- (most common)
+            r"-(\d+)$",  # -3, -4 at end
+            r"^(\d+)-",  # 3-, 4- at start
+            r"(\d+)\.(\d+)",  # 3.5, 4.1 (take first number)
+        ]
+
+        for pattern in version_patterns:
+            matches = re.findall(pattern, model_id.lower())
+            if matches:
+                # For tuple matches (like version 3.5), take the first number
+                if isinstance(matches[0], tuple):
+                    return int(matches[0][0])
+                # For single matches, take the first one found
+                return int(matches[0])
+
+        return None
 
 
 class DefaultUpdatePolicy:

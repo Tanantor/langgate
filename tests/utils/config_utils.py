@@ -6,6 +6,25 @@ from pathlib import Path
 from typing import Literal
 from unittest import mock
 
+from tests.mocks.registry_mocks import create_mock_config
+
+
+@contextmanager
+def patch_load_yaml_config():
+    """Patch the load_yaml_config function to return a mock config."""
+    mock_config = create_mock_config()
+    with (
+        mock.patch(
+            "langgate.transform.local.load_yaml_config",
+            return_value=mock_config,
+        ),
+        mock.patch(
+            "langgate.registry.config.load_yaml_config",
+            return_value=mock_config,
+        ),
+    ):
+        yield mock_config
+
 
 @contextmanager
 def patch_config_paths_arg_source(arg_path: Path):
@@ -16,7 +35,7 @@ def patch_config_paths_arg_source(arg_path: Path):
     Args:
         arg_path: The path provided as constructor argument.
     """
-    with mock.patch("pathlib.Path.exists", return_value=True):
+    with mock.patch("pathlib.Path.exists", return_value=True), patch_load_yaml_config():
         yield
 
 
@@ -34,6 +53,7 @@ def patch_config_paths_env_source(env_var: str, env_value: str):
     with (
         mock.patch.dict(os.environ, env_vars, clear=True),
         mock.patch("pathlib.Path.exists", return_value=True),
+        patch_load_yaml_config(),
     ):
         yield
 
@@ -54,7 +74,10 @@ def patch_config_paths_cwd_source(pattern: str):
             path_str = str(path_obj)
             return pattern in path_str and "/fake/cwd" in path_str
 
-        with mock.patch.object(Path, "exists", patched_exists):
+        with (
+            mock.patch.object(Path, "exists", patched_exists),
+            patch_load_yaml_config(),
+        ):
             yield
 
 
@@ -65,7 +88,10 @@ def patch_config_paths_default_source():
     This utility patches only what's needed to test package directory fallback paths.
     """
     # Make all explicit paths not exist to force default package dir
-    with mock.patch("pathlib.Path.exists", return_value=False):
+    with (
+        mock.patch("pathlib.Path.exists", return_value=False),
+        patch_load_yaml_config(),
+    ):
         yield
 
 

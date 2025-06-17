@@ -148,6 +148,7 @@ class ModelRegistry:
                 id=model_id,
                 name=name,
                 description=description,
+                provider_id=ModelProviderId(model_provider_id),
                 provider=ModelProvider(
                     id=ModelProviderId(model_provider_id),
                     name=provider_display_name,
