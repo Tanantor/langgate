@@ -84,26 +84,17 @@ class LocalTransformerClient(TransformerClientProtocol):
         """Load configuration from file."""
         config = load_yaml_config(self.config_path, ConfigSchema, logger)
 
-        if config:
-            # Extract validated data
-            self._global_config = {"default_params": config.default_params}
-            self._service_config = {
-                k: v.model_dump(exclude_none=True) for k, v in config.services.items()
-            }
-            self._process_model_mappings(config.models)
-        else:
-            self._set_empty_config()
+        # Extract validated data
+        self._global_config = {"default_params": config.default_params}
+        self._service_config = {
+            k: v.model_dump(exclude_none=True) for k, v in config.services.items()
+        }
+        self._process_model_mappings(config.models)
 
         # Load environment variables from .env file if it exists
         if self.env_file_path.exists():
             load_dotenv(self.env_file_path)
             logger.debug("loaded_transformer_env_file", path=str(self.env_file_path))
-
-    def _set_empty_config(self) -> None:
-        """Set empty/default config state, typically used in error scenarios."""
-        self._global_config = {"default_params": {}}
-        self._service_config = {}
-        self._model_mappings = {}
 
     def _process_model_mappings(self, models_config: list[ModelConfig]) -> None:
         """Process model mappings from validated configuration.
@@ -178,7 +169,8 @@ class LocalTransformerClient(TransformerClientProtocol):
         matching_pattern_removals = []
         matching_pattern_renames = []
 
-        for pattern, pattern_config in service_config["model_patterns"].items():
+        model_patterns = service_config.get("model_patterns", {})
+        for pattern, pattern_config in model_patterns.items():
             if pattern in model_id:
                 if "default_params" in pattern_config:
                     matching_pattern_defaults.append(pattern_config["default_params"])

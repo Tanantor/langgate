@@ -1,9 +1,11 @@
 """Unit tests for default_config.yaml validation."""
 
+import tempfile
 from pathlib import Path
 
 import pytest
 import yaml
+from pydantic import ValidationError
 
 from langgate.core.schemas.config import ConfigSchema
 from langgate.core.utils.config_utils import load_yaml_config
@@ -98,3 +100,79 @@ class TestDefaultConfig:
         assert config is not None, "Config should load successfully"
         assert config.app_config is not None, "Config should have app_config section"
         assert isinstance(config.app_config, dict), "app_config should be a dictionary"
+
+    def test_invalid_model_provider_validation(self) -> None:
+        """Test that models referencing non-existent providers raise validation errors."""
+        # Create a config with an invalid provider
+        invalid_config = {
+            "services": {
+                "openai": {
+                    "api_key": "test-key",
+                    "base_url": "https://api.openai.com/v1",
+                }
+            },
+            "models": [
+                {
+                    "id": "test/invalid-model",
+                    "service": {
+                        "provider": "invalid_provider",
+                        "model_id": "test-model",
+                    },
+                }
+            ],
+        }
+
+        # Write config to temporary file
+        with tempfile.NamedTemporaryFile(mode="w", suffix=".yaml", delete=False) as f:
+            yaml.dump(invalid_config, f)
+            temp_path = Path(f.name)
+
+        try:
+            # Should raise validation error
+            with pytest.raises(ValidationError) as exc_info:
+                load_yaml_config(temp_path, ConfigSchema)
+
+            # Check error message contains expected information
+            error_message = str(exc_info.value)
+            assert "invalid_provider" in error_message
+            assert "not defined in services" in error_message
+            assert "Available providers" in error_message
+            assert "openai" in error_message
+
+        finally:
+            # Clean up temporary file
+            temp_path.unlink()
+
+    def test_valid_model_provider_passes_validation(self) -> None:
+        """Test that models with valid providers pass validation."""
+        # Create a config with valid provider
+        valid_config = {
+            "services": {
+                "openai": {
+                    "api_key": "test-key",
+                    "base_url": "https://api.openai.com/v1",
+                }
+            },
+            "models": [
+                {
+                    "id": "test/valid-model",
+                    "service": {"provider": "openai", "model_id": "test-model"},
+                }
+            ],
+        }
+
+        # Write config to temporary file
+        with tempfile.NamedTemporaryFile(mode="w", suffix=".yaml", delete=False) as f:
+            yaml.dump(valid_config, f)
+            temp_path = Path(f.name)
+
+        try:
+            # Should load successfully without errors
+            config = load_yaml_config(temp_path, ConfigSchema)
+            assert config is not None
+            assert len(config.models) == 1
+            assert config.models[0].service.provider == "openai"
+
+        finally:
+            # Clean up temporary file
+            temp_path.unlink()

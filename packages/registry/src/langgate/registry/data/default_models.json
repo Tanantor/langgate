@@ -1318,7 +1318,7 @@
     "_data_source": "openrouter",
     "_last_updated_from_id": "google/gemini-2.5-flash-preview-05-20:thinking"
   },
-  "google/gemma-3-27b-it": {
+  "gemini/gemma-3-27b-it": {
     "name": "Gemma 3 27B",
     "mode": "chat",
     "service_provider": "google",

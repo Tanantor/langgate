@@ -289,7 +289,7 @@ models:
 
   - id: google/gemma-3-27b-it
     service:
-      provider: google
+      provider: gemini
       model_id: gemma-3-27b-it
 
   - id: mistralai/magistral-medium-latest

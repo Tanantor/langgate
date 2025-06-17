@@ -9,7 +9,7 @@ import pytest
 from pydantic.types import SecretStr
 
 from langgate.transform.local import LocalTransformerClient
-from tests.utils.config_utils import config_path_resolver
+from tests.utils.config_utils import config_path_resolver, patch_load_yaml_config
 
 
 @pytest.mark.parametrize(
@@ -271,6 +271,7 @@ async def test_transformer_without_env_file():
     with (
         mock.patch("pathlib.Path.exists", return_value=False),
         mock.patch.dict(os.environ, {"OPENAI_API_KEY": "direct-env-var"}),
+        patch_load_yaml_config(),
     ):
         # Create client with non-existent files
         client = LocalTransformerClient()

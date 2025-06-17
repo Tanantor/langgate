@@ -2,7 +2,14 @@
 
 from typing import Any
 
-from pydantic import BaseModel, ConfigDict, Field, SecretStr, field_validator
+from pydantic import (
+    BaseModel,
+    ConfigDict,
+    Field,
+    SecretStr,
+    field_validator,
+    model_validator,
+)
 
 from langgate.core.fields import UrlOrEnvVar
 
@@ -69,3 +76,17 @@ class ConfigSchema(BaseModel):
     services: dict[str, ServiceConfig] = Field(default_factory=dict)
     models: list[ModelConfig] = Field(default_factory=list)
     app_config: dict[str, Any] = Field(default_factory=dict)
+
+    @model_validator(mode="after")
+    def validate_model_service_providers(self) -> "ConfigSchema":
+        """Validate that all model service providers exist in the services configuration."""
+        available_providers = set(self.services.keys())
+
+        for model in self.models:
+            if model.service.provider not in available_providers:
+                raise ValueError(
+                    f"Model '{model.id}' references service provider '{model.service.provider}' "
+                    f"which is not defined in services. Available providers: {sorted(available_providers)}"
+                )
+
+        return self
