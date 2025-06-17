@@ -29,29 +29,38 @@ services:
         remove_params:
           - temperature
 
+  gemini:
+    api_key: "${GEMINI_API_KEY}"
+    # TODO add vertex service provider
+
+  mistralai:
+    api_key: "${MISTRAL_API_KEY}"
+    base_url: "https://api.mistral.ai/v1"
+
+  xai:
+    api_key: "${XAI_API_KEY}"
+    base_url: "https://api.x.ai/v1"
+
   fireworks_ai:
     api_key: "${FIREWORKS_API_KEY}"
     base_url: "https://api.fireworks.ai/inference/v1"
     default_params:
       tiktoken_model_name: gpt-4o
 
-  gemini:
-    api_key: "${GEMINI_API_KEY}"
-    # TODO use vertex
-    # base_url: "${GEMINI_BASE_URL}"
+  openrouter:
+    api_key: "${OPENROUTER_API_KEY}"
+    base_url: "https://api.openrouter.ai/v1"
+    default_params:
+      tiktoken_model_name: gpt-4o
+      # extra_headers:
+      #   "HTTP-Referer": "<YOUR_SITE_URL>"
+      #   "X-Title": "<YOUR_SITE_NAME>"
 
   eleutheria/vllm:
     api_key: "${ELEUTHERIA_VLLM_API_KEY}"
     base_url: "${ELEUTHERIA_VLLM_BASE_URL}"
     tiktoken_model_name: gpt-4o
 
-  xai:
-    api_key: "${XAI_API_KEY}"
-    base_url: "https://api.x.ai/v1"
-
-  mistralai:
-    api_key: "${MISTRAL_API_KEY}"
-    base_url: "https://api.mistral.ai/v1"
 
 # Model-specific configurations
 models:
@@ -289,8 +298,8 @@ models:
 
   - id: google/gemma-3-27b-it
     service:
-      provider: gemini
-      model_id: gemma-3-27b-it
+      provider: openrouter
+      model_id: google/gemma-3-27b-it:free
 
   - id: mistralai/magistral-medium-latest
     service:

@@ -1325,7 +1325,35 @@
     "model_provider": "google",
     "model_provider_name": "Google",
     "capabilities": {
-      "supports_tools": true,
+      "supports_tools": false,
+      "supports_vision": true,
+      "supports_response_schema": true,
+      "supports_system_messages": true,
+      "supports_tool_choice": true
+    },
+    "context": {
+      "max_input_tokens": 131072,
+      "max_output_tokens": 16384
+    },
+    "costs": {
+      "input_cost_per_token": "1E-7",
+      "output_cost_per_token": "2E-7",
+      "input_cost_per_image": "0.0000256"
+    },
+    "description": "Gemma 3 is an open-source model family from Google that supports multimodal inputs with a 128k token context window and comes in four sizes (1B, 4B, 12B, and 27B parameters). It excels at math, reasoning, coding, and multilingual tasks across 140+ languages.",
+    "openrouter_model_id": "google/gemma-3-27b-it",
+    "_last_updated": "2025-06-16T16:54:22.642115+00:00",
+    "_data_source": "openrouter",
+    "_last_updated_from_id": "google/gemma-3-27b-it"
+  },
+    "openrouter/google/gemma-3-27b-it:free": {
+    "name": "Gemma 3 27B",
+    "mode": "chat",
+    "service_provider": "google",
+    "model_provider": "google",
+    "model_provider_name": "Google",
+    "capabilities": {
+      "supports_tools": false,
       "supports_vision": true,
       "supports_response_schema": true,
       "supports_system_messages": true,
