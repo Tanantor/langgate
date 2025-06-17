@@ -12,7 +12,7 @@ class TransformerClientProtocol(Protocol):
 
     async def get_params(
         self, model_id: str, input_params: dict[str, Any]
-    ) -> dict[str, Any]:
+    ) -> tuple[str, dict[str, Any]]:
         """Get transformed parameters for the specified model.
 
         Args:
@@ -20,6 +20,6 @@ class TransformerClientProtocol(Protocol):
             input_params: The parameters to transform
 
         Returns:
-            The transformed parameters
+            A tuple containing (api_format, transformed_parameters)
         """
         ...

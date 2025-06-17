@@ -89,7 +89,7 @@ async def test_transformer_global_defaults(
 ):
     """Test applying global default parameters."""
     # Test with empty params
-    result = await local_transformer_client.get_params("gpt-4o", {})
+    _, result = await local_transformer_client.get_params("gpt-4o", {})
 
     # Global default should be applied
     assert result["temperature"] == 0.7
@@ -101,11 +101,13 @@ async def test_transformer_service_provider_defaults(
 ):
     """Test applying service provider default parameters."""
     # OpenAI service provider defaults
-    result = await local_transformer_client.get_params("gpt-4o", {})
+    _, result = await local_transformer_client.get_params("gpt-4o", {})
     assert result["max_tokens"] == 1000
 
     # Anthropic service provider defaults
-    result = await local_transformer_client.get_params("anthropic/claude-sonnet-4", {})
+    _, result = await local_transformer_client.get_params(
+        "anthropic/claude-sonnet-4", {}
+    )
     assert result["max_tokens"] == 2000
 
 
@@ -115,7 +117,7 @@ async def test_transformer_model_pattern_params(
 ):
     """Test applying model pattern specific parameters."""
     # Anthropic reasoning pattern
-    result = await local_transformer_client.get_params(
+    _, result = await local_transformer_client.get_params(
         "anthropic/claude-sonnet-4-reasoning", {}
     )
 
@@ -133,7 +135,7 @@ async def test_transformer_model_pattern_defaults(
 ):
     """Test applying default parameters at the model pattern level."""
     # Use empty params to ensure defaults are applied
-    result = await local_transformer_client.get_params(
+    _, result = await local_transformer_client.get_params(
         "anthropic/claude-sonnet-4-reasoning", {}
     )
 
@@ -142,7 +144,7 @@ async def test_transformer_model_pattern_defaults(
 
     # User params should still override pattern defaults
     user_params = {"max_tokens": 1000}
-    result = await local_transformer_client.get_params(
+    _, result = await local_transformer_client.get_params(
         "anthropic/claude-sonnet-4-reasoning", user_params
     )
     assert result["max_tokens"] == 1000
@@ -155,7 +157,7 @@ async def test_transformer_model_pattern_renames(
     """Test parameter renaming at the model pattern level."""
     # Anthropic reasoning pattern has reasoning -> thinking rename
     user_params = {"reasoning": {"depth": "deep"}, "temperature": 0.7}
-    result = await local_transformer_client.get_params(
+    _, result = await local_transformer_client.get_params(
         "anthropic/claude-sonnet-4-reasoning", user_params
     )
 
@@ -173,7 +175,7 @@ async def test_transformer_model_specific_overrides(
 ):
     """Test applying model-specific override parameters."""
     # Model with specific thinking override
-    result = await local_transformer_client.get_params(
+    _, result = await local_transformer_client.get_params(
         "anthropic/claude-sonnet-4-reasoning", {}
     )
 
@@ -187,7 +189,7 @@ async def test_transformer_user_params_precedence(
 ):
     """Test that user parameters have precedence over defaults."""
     # User params should override defaults
-    result = await local_transformer_client.get_params(
+    _, result = await local_transformer_client.get_params(
         "gpt-4o", {"temperature": 0.5, "max_tokens": 500}
     )
     assert result["temperature"] == 0.5  # User specified
@@ -200,12 +202,14 @@ async def test_transformer_api_key_resolution(
 ):
     """Test that API keys are resolved from environment variables."""
     # OpenAI API key
-    result = await local_transformer_client.get_params("gpt-4o", {})
+    _, result = await local_transformer_client.get_params("gpt-4o", {})
     assert isinstance(result["api_key"], SecretStr)
     assert result["api_key"].get_secret_value() == "sk-test-123"
 
     # Anthropic API key
-    result = await local_transformer_client.get_params("anthropic/claude-sonnet-4", {})
+    _, result = await local_transformer_client.get_params(
+        "anthropic/claude-sonnet-4", {}
+    )
     assert isinstance(result["api_key"], SecretStr)
     assert result["api_key"].get_secret_value() == "sk-ant-test-123"
 
@@ -217,7 +221,7 @@ async def test_transformer_model_specific_renames(
     """Test applying model-specific parameter renaming."""
     # The claude-sonnet-4 model has stop -> stop_sequences rename
     user_params = {"stop": ["END"], "temperature": 0.7}
-    result = await local_transformer_client.get_params(
+    _, result = await local_transformer_client.get_params(
         "anthropic/claude-sonnet-4", user_params
     )
 
@@ -238,7 +242,7 @@ async def test_transformer_remove_params(
         "reasoning": {"depth": "deep"},
         "presence_penalty": 0.2,
     }
-    result = await local_transformer_client.get_params(
+    _, result = await local_transformer_client.get_params(
         "anthropic/claude-sonnet-4", user_params
     )
 

@@ -28,6 +28,7 @@ class ServiceConfig(BaseModel):
 
     api_key: str | SecretStr
     base_url: UrlOrEnvVar | None = None
+    api_format: str | None = None
     default_params: dict[str, Any] = Field(default_factory=dict)
     override_params: dict[str, Any] = Field(default_factory=dict)
     remove_params: list[str] = Field(default_factory=list)
@@ -61,6 +62,7 @@ class ModelConfig(BaseModel):
     service: ModelServiceConfig
     name: str | None = None
     description: str | None = None
+    api_format: str | None = None
     default_params: dict[str, Any] = Field(default_factory=dict)
     override_params: dict[str, Any] = Field(default_factory=dict)
     remove_params: list[str] = Field(default_factory=list)
