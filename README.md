@@ -404,6 +404,13 @@ make lint
 - [SDK Examples](examples/README.md) - Sample code for using the LangGate SDK
 - [Deployment Guide](deployment/README.md) - Instructions for deploying to Kubernetes and other platforms
 
+## Roadmap
+- **Image Model Support**: Add explicit support for image generation models and include leading image models in the default model registry.
+- **Pydantic Schema Validation**: Implement validation of parameters against Pydantic schemas representing the full API of the provider's model
+- **TTS and ASR Model Support**: Include leading Text-to-Speech (TTS) and Automatic Speech Recognition (ASR) models in the default model registry, with endpoints for fetching models filtered by modality (for modality-specific return typing) and schemas for these modalities.
+- **Video Generation Model Support**: Add video generation models, similarly to the afformentioned modalities, with an explicit endpoint and schemas.
+- **OpenAI API Standardization Option**: Introduce an option to standardize to the OpenAI API spec. This will involve mapping provider-specific Pydantic schemas to corresponding OpenAI API input schemas, offering a unified interface for diverse models.
+
 ## License
 
 [MIT License](LICENSE)
