@@ -70,6 +70,7 @@ class ModelCapabilities(BaseModel):
     supports_audio_input: bool | None = None
     supports_audio_output: bool | None = None
     supports_prompt_caching: bool | None = None
+    supports_reasoning: bool | None = None
     supports_response_schema: bool | None = None
     supports_system_messages: bool | None = None
 
