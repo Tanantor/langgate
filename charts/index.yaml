@@ -2,6 +2,49 @@ apiVersion: v1
 entries:
   langgate:
   - apiVersion: v2
+    appVersion: 0.1.5
+    created: "2025-06-18T14:29:38.276255463Z"
+    dependencies:
+    - name: langgate-helpers
+      repository: file://../library/langgate-helpers
+      version: 0.1.5
+    - alias: langgate_envoy
+      condition: langgate_envoy.enabled
+      name: langgate-envoy
+      repository: file://../langgate-envoy
+      version: 0.1.5
+    - alias: langgate_processor
+      condition: langgate_processor.enabled
+      name: langgate-processor
+      repository: file://../langgate-processor
+      version: 0.1.5
+    - alias: langgate_server
+      condition: langgate_server.enabled
+      name: langgate-server
+      repository: file://../langgate-server
+      version: 0.1.5
+    description: LangGate AI Gateway - A lightweight, high-performance AI model inference
+      gateway
+    digest: 824ae45bb544f122af55c55eb0a4c1f00d7e0fd37cfcd1ef4fba1596ddf8042f
+    home: https://github.com/Tanantor/langgate
+    icon: https://raw.githubusercontent.com/Tanantor/langgate/main/docs/assets/logo.png
+    keywords:
+    - langgate
+    - ai
+    - llm
+    - gateway
+    - proxy
+    maintainers:
+    - email: saran@tanantor.com
+      name: Tanantor
+    name: langgate
+    sources:
+    - https://github.com/Tanantor/langgate
+    type: application
+    urls:
+    - https://github.com/Tanantor/langgate/releases/download/langgate-0.1.5/langgate-0.1.5.tgz
+    version: 0.1.5
+  - apiVersion: v2
     appVersion: 0.1.4
     created: "2025-06-18T14:03:09.041564657Z"
     dependencies:
@@ -218,6 +261,20 @@ entries:
     version: 0.1.0
   langgate-envoy:
   - apiVersion: v2
+    appVersion: 0.1.5
+    created: "2025-06-18T14:29:38.42452975Z"
+    dependencies:
+    - name: langgate-helpers
+      repository: file://../library/langgate-helpers
+      version: 0.1.5
+    description: Envoy proxy component for LangGate AI Gateway
+    digest: e094af7a6af66dffb87f351e838eadeb39caf66014132a8404b26845451a9c84
+    name: langgate-envoy
+    type: application
+    urls:
+    - https://github.com/Tanantor/langgate/releases/download/langgate-envoy-0.1.5/langgate-envoy-0.1.5.tgz
+    version: 0.1.5
+  - apiVersion: v2
     appVersion: 0.1.4
     created: "2025-06-18T14:03:09.14883124Z"
     dependencies:
@@ -288,6 +345,20 @@ entries:
     - https://github.com/Tanantor/langgate/releases/download/langgate-envoy-0.1.0/langgate-envoy-0.1.0.tgz
     version: 0.1.0
   langgate-processor:
+  - apiVersion: v2
+    appVersion: 0.1.5
+    created: "2025-06-18T14:29:38.564720692Z"
+    dependencies:
+    - name: langgate-helpers
+      repository: file://../library/langgate-helpers
+      version: 0.1.5
+    description: Processor component for LangGate AI Gateway
+    digest: 3855df8be81b62dbc266260729bd8cc55ab403bdf486800901502c0bb6cfac77
+    name: langgate-processor
+    type: application
+    urls:
+    - https://github.com/Tanantor/langgate/releases/download/langgate-processor-0.1.5/langgate-processor-0.1.5.tgz
+    version: 0.1.5
   - apiVersion: v2
     appVersion: 0.1.4
     created: "2025-06-18T14:03:09.269946545Z"
@@ -360,6 +431,20 @@ entries:
     version: 0.1.0
   langgate-server:
   - apiVersion: v2
+    appVersion: 0.1.5
+    created: "2025-06-18T14:29:38.711781852Z"
+    dependencies:
+    - name: langgate-helpers
+      repository: file://../library/langgate-helpers
+      version: 0.1.5
+    description: Server component for LangGate AI Gateway
+    digest: 0e47fa2d569f05d1bc71d8f21d40f1fc7dfc5bb4cd6d26120e38e8b07ccbda36
+    name: langgate-server
+    type: application
+    urls:
+    - https://github.com/Tanantor/langgate/releases/download/langgate-server-0.1.5/langgate-server-0.1.5.tgz
+    version: 0.1.5
+  - apiVersion: v2
     appVersion: 0.1.4
     created: "2025-06-18T14:03:09.383624501Z"
     dependencies:
@@ -429,4 +514,4 @@ entries:
     urls:
     - https://github.com/Tanantor/langgate/releases/download/langgate-server-0.1.0/langgate-server-0.1.0.tgz
     version: 0.1.0
-generated: "2025-06-18T14:03:09.383704772Z"
+generated: "2025-06-18T14:29:38.711879093Z"
