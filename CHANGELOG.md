@@ -7,6 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.4] - 2025-06-18
+
+### Added
+- Reasoning support to model capabilities with updated model metadata
+- Service provider API format inclusion when returning transformed parameters
+
+### Changed
+- Updated default LLMs and improved configuration validation checks
+- Updated default registry config with additional model configurations for reasoning variants
+
+### Removed
+- Deprecated LLMs form the default config
+- Mdels that are no longer supported from the default registry JSON file
+
 ## [0.1.3] - 2025-04-09
 
 ## Fixed
