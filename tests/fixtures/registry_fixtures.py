@@ -355,3 +355,134 @@ def custom_local_registry_client() -> Generator[CustomLocalRegistryClient]:
     client = CustomLocalRegistryClient()
 
     yield client
+
+
+@pytest.fixture
+def default_models_data() -> dict:
+    """Sample default models data for merge testing."""
+    return {
+        "openai/gpt-4o": {
+            "name": "GPT-4o Default",
+            "service_provider": "openai",
+            "model_provider": "openai",
+            "description": "Default GPT-4o model",
+        },
+        "anthropic/claude-3-sonnet": {
+            "name": "Claude 3 Sonnet Default",
+            "service_provider": "anthropic",
+            "model_provider": "anthropic",
+            "description": "Default Claude 3 Sonnet model",
+        },
+    }
+
+
+@pytest.fixture
+def user_models_data() -> dict:
+    """Sample user models data for merge testing."""
+    return {
+        "openai/gpt-4o": {
+            "name": "GPT-4o Custom",
+            "service_provider": "openai",
+            "model_provider": "openai",
+            "description": "Custom GPT-4o configuration",
+        },
+        "custom/my-model": {
+            "name": "My Custom Model",
+            "service_provider": "custom",
+            "model_provider": "custom",
+            "description": "My custom model",
+        },
+    }
+
+
+@pytest.fixture
+def base_config_data() -> dict:
+    """Base configuration data for merge testing."""
+    return {
+        "default_params": {},
+        "services": {
+            "openai": {
+                "api_key": "test-key",
+                "base_url": "https://api.openai.com/v1",
+            },
+            "anthropic": {
+                "api_key": "test-key",
+                "base_url": "https://api.anthropic.com",
+            },
+            "custom": {"api_key": "test-key", "base_url": "https://api.custom.com"},
+        },
+        "models": [],
+        "app_config": {},
+    }
+
+
+@pytest.fixture
+def merge_config_data(base_config_data: dict) -> dict:
+    """Configuration data with merge mode set."""
+    config_data = base_config_data.copy()
+    config_data["models_merge_mode"] = "merge"
+    return config_data
+
+
+@pytest.fixture
+def replace_config_data(base_config_data: dict) -> dict:
+    """Configuration data with replace mode set."""
+    config_data = base_config_data.copy()
+    config_data["models_merge_mode"] = "replace"
+    return config_data
+
+
+@pytest.fixture
+def extend_config_data(base_config_data: dict) -> dict:
+    """Configuration data with extend mode set."""
+    config_data = base_config_data.copy()
+    config_data["models_merge_mode"] = "extend"
+    return config_data
+
+
+@pytest.fixture
+def invalid_config_data(base_config_data: dict) -> dict:
+    """Configuration data with invalid merge mode."""
+    config_data = base_config_data.copy()
+    config_data["models_merge_mode"] = "invalid"
+    return config_data
+
+
+@pytest.fixture
+def user_models_no_conflicts() -> dict:
+    """User models data with no conflicts for extend mode testing."""
+    return {
+        "custom/my-model": {
+            "name": "My Custom Model",
+            "service_provider": "custom",
+            "model_provider": "custom",
+            "description": "My custom model",
+        }
+    }
+
+
+@pytest.fixture
+def mock_default_models_file(tmp_path: Path, default_models_data: dict) -> Path:
+    """Create a temporary default models JSON file."""
+    default_models_file = tmp_path / "default_models.json"
+    with open(default_models_file, "w") as f:
+        json.dump(default_models_data, f)
+    return default_models_file
+
+
+@pytest.fixture
+def mock_user_models_file(tmp_path: Path, user_models_data: dict) -> Path:
+    """Create a temporary user models JSON file."""
+    user_models_file = tmp_path / "user_models.json"
+    with open(user_models_file, "w") as f:
+        json.dump(user_models_data, f)
+    return user_models_file
+
+
+@pytest.fixture
+def mock_config_file(tmp_path: Path, base_config_data: dict) -> Path:
+    """Create a temporary config YAML file."""
+    config_file = tmp_path / "config.yaml"
+    with open(config_file, "w") as f:
+        yaml.dump(base_config_data, f)
+    return config_file
