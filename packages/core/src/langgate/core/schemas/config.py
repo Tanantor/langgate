@@ -1,6 +1,6 @@
 """Schema definitions for YAML configuration validation."""
 
-from typing import Any
+from typing import Any, Literal
 
 from pydantic import (
     BaseModel,
@@ -78,6 +78,7 @@ class ConfigSchema(BaseModel):
     services: dict[str, ServiceConfig] = Field(default_factory=dict)
     models: list[ModelConfig] = Field(default_factory=list)
     app_config: dict[str, Any] = Field(default_factory=dict)
+    models_merge_mode: Literal["merge", "replace", "extend"] = "merge"
 
     @model_validator(mode="after")
     def validate_model_service_providers(self) -> "ConfigSchema":

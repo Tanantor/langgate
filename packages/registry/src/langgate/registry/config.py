@@ -34,7 +34,7 @@ class RegistryConfig:
         # Get package resource paths
         registry_resources = importlib.resources.files("langgate.registry")
         core_resources = importlib.resources.files("langgate.core")
-        default_models_path = Path(
+        self.default_models_path = Path(
             str(registry_resources.joinpath("data", "default_models.json"))
         )
         default_config_path = Path(
@@ -55,7 +55,7 @@ class RegistryConfig:
         self.models_data_path = resolve_path(
             "LANGGATE_MODELS",
             models_data_path,
-            cwd_models_path if cwd_models_path.exists() else default_models_path,
+            cwd_models_path if cwd_models_path.exists() else self.default_models_path,
             "models_data_path",
         )
 
@@ -80,6 +80,7 @@ class RegistryConfig:
         self.global_config: dict[str, Any] = {}
         self.service_config: dict[str, dict[str, Any]] = {}
         self.model_mappings: dict[str, dict[str, Any]] = {}
+        self.models_merge_mode: str = "merge"  # Default value
 
         # Load configuration
         self._load_config()
@@ -87,11 +88,11 @@ class RegistryConfig:
     def _load_config(self) -> None:
         """Load configuration from files."""
         try:
-            # Load model data
-            self._load_model_data()
-
-            # Load main configuration
+            # Load main configuration first to get merge mode
             self._load_main_config()
+
+            # Load model data with merge mode available
+            self._load_model_data()
 
         except Exception:
             logger.exception(
@@ -101,30 +102,104 @@ class RegistryConfig:
             )
             raise
 
-    def _load_model_data(self) -> None:
-        """Load model data from JSON file."""
+    def _has_user_models(self) -> bool:
+        """Check if user has specified custom models."""
+        return (
+            self.models_data_path != self.default_models_path
+            and self.models_data_path.exists()
+        )
+
+    def _load_json_file(self, path: Path) -> dict[str, dict[str, Any]]:
+        """Load and return JSON data from file."""
         try:
-            with open(self.models_data_path) as f:
-                self.models_data = json.load(f)
-            logger.info(
-                "loaded_model_data",
-                models_data_path=str(self.models_data_path),
-                model_count=len(self.models_data),
-            )
+            with open(path) as f:
+                return json.load(f)
         except FileNotFoundError:
             logger.warning(
                 "model_data_file_not_found",
-                models_data_path=str(self.models_data_path),
+                models_data_path=str(path),
             )
-            self.models_data = {}
+            return {}
+
+    def _merge_models(
+        self,
+        default_models: dict[str, dict[str, Any]],
+        user_models: dict[str, dict[str, Any]],
+        merge_mode: str,
+    ) -> dict[str, dict[str, Any]]:
+        """Merge user models with default models based on merge mode."""
+        if merge_mode == "merge":
+            # User models override defaults, new models are added
+            merged = default_models.copy()
+            for model_id, model_config in user_models.items():
+                if model_id in merged:
+                    logger.debug(
+                        "overriding_default_model",
+                        model_id=model_id,
+                        original_name=merged[model_id].get("name"),
+                        new_name=model_config.get("name"),
+                    )
+                merged[model_id] = model_config
+            return merged
+
+        if merge_mode == "extend":
+            # User models are added, conflicts with defaults cause errors
+            conflicts = set(default_models.keys()) & set(user_models.keys())
+            if conflicts:
+                raise ValueError(
+                    f"Model ID conflicts found in extend mode: {', '.join(conflicts)}. "
+                    f"Use 'merge' mode to allow overrides or rename conflicting models."
+                )
+            return {**default_models, **user_models}
+
+        raise ValueError(f"Unknown merge mode: {merge_mode}")
+
+    def _load_model_data(self) -> None:
+        """Load model data from JSON file(s) based on merge mode."""
+        try:
+            # Always load default models first
+            default_models = self._load_json_file(self.default_models_path)
+
+            has_user_models = self._has_user_models()
+
+            if self.models_merge_mode == "replace" or not has_user_models:
+                # Use only user models or default if no user models
+                if has_user_models:
+                    self.models_data = self._load_json_file(self.models_data_path)
+                else:
+                    self.models_data = default_models
+            else:
+                # merge user models with defaults
+                user_models = (
+                    self._load_json_file(self.models_data_path)
+                    if has_user_models
+                    else {}
+                )
+                self.models_data = self._merge_models(
+                    default_models, user_models, self.models_merge_mode
+                )
+
+            logger.info(
+                "loaded_model_data",
+                models_data_path=str(self.models_data_path),
+                merge_mode=self.models_merge_mode,
+                model_count=len(self.models_data),
+            )
+        except Exception:
+            logger.exception("failed_to_load_model_data")
+            raise
 
     def _load_main_config(self) -> None:
         """Load main configuration from YAML file."""
         config = load_yaml_config(self.config_path, ConfigSchema, logger)
 
+        # Extract merge mode
+        self.models_merge_mode = config.models_merge_mode
+
         # Extract validated data
         self.global_config = {
             "default_params": config.default_params,
+            "models_merge_mode": config.models_merge_mode,
         }
 
         # Extract service provider config
