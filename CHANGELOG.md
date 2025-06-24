@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.6] - 2025-06-24
+
+### Added
+- Models merge mode support for user-defined models JSON file
+
 ## [0.1.5] - 2025-06-18
 
 ### Added

@@ -1,6 +1,6 @@
 [project]
 name = "langgate"
-version = "0.1.5"
+version = "0.1.6"
 description = "Lightweight AI model serving gateway with Envoy proxy and a FastAPI registry."
 readme = "README.md"
 requires-python = ">=3.13"
@@ -26,36 +26,36 @@ classifiers = [
 
 # Meta package with minimal dependencies
 dependencies = [
-    "langgate-core (==0.1.5)",
+    "langgate-core (==0.1.6)",
 ]
 
 # Optional dependencies for different use cases
 [project.optional-dependencies]
 client = [
-    "langgate-client (==0.1.5)",
+    "langgate-client (==0.1.6)",
 ]
 registry = [
-    "langgate-registry (==0.1.5)",
+    "langgate-registry (==0.1.6)",
 ]
 transform = [
-    "langgate-transform (==0.1.5)",
+    "langgate-transform (==0.1.6)",
 ]
 processor = [
-    "langgate-processor (==0.1.5)",
+    "langgate-processor (==0.1.6)",
 ]
 server = [
-    "langgate-server (==0.1.5)",
+    "langgate-server (==0.1.6)",
 ]
 sdk = [
-    "langgate-sdk (==0.1.5)",
+    "langgate-sdk (==0.1.6)",
 ]
 all = [
-    "langgate-client (==0.1.5)",
-    "langgate-core (==0.1.5)",
-    "langgate-registry (==0.1.5)",
-    "langgate-transform (==0.1.5)",
-    "langgate-processor (==0.1.5)",
-    "langgate-sdk (==0.1.5)",
+    "langgate-client (==0.1.6)",
+    "langgate-core (==0.1.6)",
+    "langgate-registry (==0.1.6)",
+    "langgate-transform (==0.1.6)",
+    "langgate-processor (==0.1.6)",
+    "langgate-sdk (==0.1.6)",
 ]
 dev = [
     "factory-boy>=3.3.3",
