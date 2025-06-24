@@ -149,6 +149,7 @@ os.environ["OPENAI_API_KEY"] = "<YOUR_API_KEY>"
 # os.environ["LANGGATE_CONFIG"] = "some_other_path_not_in_your_cwd/langgate_config.yaml"
 
 # The models data resolution priority is: args > env > cwd > package default
+# By default, any user-defined `langgate_models.json` files are merged with default models data. See `models_merge_mode` configuration.
 # If you don't want to use either the package default (langgate/registry/data/default_models.json)
 # or a models data file in your cwd, set:
 # os.environ["LANGGATE_MODELS"] = "some_other_path_not_in_your_cwd/langgate_models.json"
@@ -323,6 +324,13 @@ models:
     override_params:
       thinking:
         budget_tokens: 1024
+
+# Models merge mode for loading data from JSON files: "merge" (default), "replace", or "extend"
+# - merge: User models override defaults, new models are added
+# - replace: Only use user models (ignore defualt models file)
+# - extend: Add user models to defaults, error on conflicts
+models_merge_mode: merge
+
 ```
 
 ### Parameter Transformation Precedence
@@ -352,6 +360,17 @@ When transforming parameters for model requests, LangGate follows a specific pre
 | LANGGATE_MODELS | Path to the models data JSON file | ./langgate_models.json |
 | LANGGATE_ENV_FILE | Path to the .env file | ./.env |
 | LOG_LEVEL | Logging level | info |
+
+### Models Merge Behavior
+
+You can add additional models to LangGate's model registry by creating a `langgate_models.json` file in your working directory, or by setting the `LANGGATE_MODELS` environment variable to point to a custom JSON file.
+
+LangGate supports three modes for including extra models beyond those we ship with the package (`default_models.json`):
+- **merge** (default): Your defined models are merged with default models, with your models taking precedence
+- **replace**: Only your models are used
+- **extend**: your models are added to defaults, conflicts cause errors
+
+Configure this with `models_merge_mode` in your YAML configuration.
 
 Note:
 - If `langgate_models.json` is unset in your working directory, and no `LANGGATE_MODELS` environment variable is set, then the registry package default `langgate/registry/data/default_models.json` will be used. This file contains data on most major providers and models.
