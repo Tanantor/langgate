@@ -1,6 +1,6 @@
 [project]
 name = "langgate-processor"
-version = "0.1.6"
+version = "0.1.7"
 description = "Envoy External Processor for LangGate AI Gateway"
 readme = "README.md"
 requires-python = ">=3.13"
@@ -8,8 +8,8 @@ authors = [{ name = "Tanantor Ltd." }]
 maintainers = [{ name = "Saran Connoly", email = "saran@tanantor.com" }]
 license = { text = "MIT" }
 dependencies = [
-    "langgate-core (==0.1.6)",
-    "langgate-transform (==0.1.6)",
+    "langgate-core (==0.1.7)",
+    "langgate-transform (==0.1.7)",
     "fastapi (>=0.115.11,<0.116.0)",
     "uvicorn[standard] (>=0.34.0,<0.35.0)",
     "grpcio (>=1.71.0,<2.0.0)",

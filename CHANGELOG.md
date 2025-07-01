@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.7] - 2025-07-01
+
+### Added
+- Aded MiniMax 01 and M1 models to package default models
+- Add OpenAI o3 Pro to package default models
+
+### Fixed
+- Remove `supports_tools` from MiniMax M1 on OpenRouter - OpenRouter erroneously marks the MiniMax service API as not supporting tools
+
+
 ## [0.1.6] - 2025-06-24
 
 ### Added
