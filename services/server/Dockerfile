@@ -24,9 +24,9 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 RUN groupadd -r ${USER} && useradd -r -g ${USER} --shell /bin/bash ${USER} \
     && apt-get update && apt-get install -y --no-install-recommends \
-        curl=7.88.* \
-        ca-certificates=20230311 \
-        build-essential=12.9* \
+        curl=7.* \
+        ca-certificates=20* \
+        build-essential=12* \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* ~/.cache/* /usr/share/doc/*
 
@@ -116,7 +116,7 @@ ENV WORKDIR=${WORKDIR} \
 
 RUN groupadd -r ${USER} && useradd -r -g ${USER} ${USER} \
     && apt-get update && apt-get install -y --no-install-recommends \
-        tini=0.19* \
+        tini=0.* \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* ~/.cache/* /usr/share/doc/*
 
