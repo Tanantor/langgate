@@ -333,6 +333,19 @@ models:
       provider: openrouter
       model_id: google/gemma-3-27b-it:free
 
+  - id: minimax/minimax-01
+    service:
+      provider: openrouter
+      model_id: minimax/minimax-01
+
+  - id: minimax/minimax-m1
+    service:
+      provider: openrouter
+      model_id: minimax/minimax-m1
+    override_params:
+      extra_body:
+        include_reasoning: true
+
   - id: mistralai/magistral-medium-latest
     service:
       provider: mistralai

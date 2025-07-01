@@ -44,7 +44,7 @@
       "input_cost_per_image": "0.003613"
     },
     "description": "The GPT-4o (omni) model from OpenAI builds upon the GPT-4 series with improved performance and multimodal capabilities. GPT-4o is great for most tasks.",
-    "_last_updated": "2025-06-18T03:48:20.905780+00:00",
+    "_last_updated": "2025-07-01T16:47:00.873641+00:00",
     "_data_source": "openrouter",
     "_last_updated_from_id": "openai/gpt-4o"
   },
@@ -76,7 +76,7 @@
       "input_cost_per_image": "0.000217"
     },
     "description": "A smaller version of GPT-4o optimized for efficiency.",
-    "_last_updated": "2025-06-18T03:48:20.905984+00:00",
+    "_last_updated": "2025-07-01T16:47:00.874047+00:00",
     "_data_source": "openrouter",
     "_last_updated_from_id": "openai/gpt-4o-mini"
   },
@@ -107,7 +107,7 @@
       "input_cost_per_image": "0.021675"
     },
     "description": "o1 is the first generation reasoning model from OpenAI. o1 spends additional time thinking (generating a chain of thought) before generating an answer, which makes it better for complex reasoning tasks, particularly in science, mathematics and coding.",
-    "_last_updated": "2025-06-18T03:48:20.906328+00:00",
+    "_last_updated": "2025-07-01T16:47:00.874359+00:00",
     "_data_source": "openrouter",
     "_last_updated_from_id": "openai/o1"
   },
@@ -138,7 +138,7 @@
       "input_cost_per_image": "0.00153"
     },
     "description": "OpenAI's o3 is their most powerful reasoning model, setting new state-of-the-art benchmarks in coding, math, science, and visual perception. It excels at complex queries requiring multi-faceted analysis, with particular strength in analyzing images, charts, and graphics.",
-    "_last_updated": "2025-06-18T03:48:20.906602+00:00",
+    "_last_updated": "2025-07-01T16:47:00.874586+00:00",
     "_data_source": "openrouter",
     "_last_updated_from_id": "openai/o3"
   },
@@ -167,7 +167,7 @@
       "cache_read_input_token_cost": "5.5E-7"
     },
     "description": "o3-mini is a cost-efficient reasoning model from OpenAI. o3-mini excels at STEM, especially math and coding. As an alternative to o1-pro, it has a lower cost and lower latency.",
-    "_last_updated": "2025-06-18T03:48:20.906918+00:00",
+    "_last_updated": "2025-07-01T16:47:00.874946+00:00",
     "_data_source": "openrouter",
     "_last_updated_from_id": "openai/o3-mini"
   },
@@ -199,7 +199,7 @@
     },
     "description": "o4-mini is a new reasoning model from OpenAI that balances performance and cost.",
     "openrouter_model_id": "openai/o4-mini",
-    "_last_updated": "2025-06-18T03:48:20.907047+00:00",
+    "_last_updated": "2025-07-01T16:47:00.875185+00:00",
     "_data_source": "openrouter",
     "_last_updated_from_id": "openai/o4-mini"
   },
@@ -228,7 +228,10 @@
       "reasoning_cost_per_token": "0",
       "input_cost_per_image": "0.0153"
     },
-    "description": "OpenAI's o-series models are trained with reinforcement learning to think before they answer and perform complex reasoning. The o3 Pro model uses more compute than o3, spending longer thinking through a problem."
+    "description": "OpenAI's o-series models are trained with reinforcement learning to think before they answer and perform complex reasoning. The o3 Pro model uses more compute than o3, spending longer thinking through a problem.",
+    "_last_updated": "2025-07-01T16:47:00.875389+00:00",
+    "_data_source": "openrouter",
+    "_last_updated_from_id": "openai/o3-pro"
   },
   "openai/gpt-4.1": {
     "name": "GPT-4.1",
@@ -256,7 +259,7 @@
     },
     "description": "GPT-4.1 is the latest iteration of OpenAI's flagship model with improved capabilities across all domains.",
     "openrouter_model_id": "openai/gpt-4.1",
-    "_last_updated": "2025-06-18T03:48:20.907225+00:00",
+    "_last_updated": "2025-07-01T16:47:00.875592+00:00",
     "_data_source": "openrouter",
     "_last_updated_from_id": "openai/gpt-4.1"
   },
@@ -286,7 +289,7 @@
     },
     "description": "GPT-4.1 mini is a cost-effective version of GPT-4.1 optimized for efficiency.",
     "openrouter_model_id": "openai/gpt-4.1-mini",
-    "_last_updated": "2025-06-18T03:48:20.907358+00:00",
+    "_last_updated": "2025-07-01T16:47:00.875823+00:00",
     "_data_source": "openrouter",
     "_last_updated_from_id": "openai/gpt-4.1-mini"
   },
@@ -316,7 +319,7 @@
     },
     "description": "GPT-4.1 nano is the smallest and most cost-effective version of GPT-4.1.",
     "openrouter_model_id": "openai/gpt-4.1-nano",
-    "_last_updated": "2025-06-18T03:48:20.907491+00:00",
+    "_last_updated": "2025-07-01T16:47:00.876023+00:00",
     "_data_source": "openrouter",
     "_last_updated_from_id": "openai/gpt-4.1-nano"
   },
@@ -346,7 +349,7 @@
     },
     "description": "ChatGPT-4o is the most recent version of the conversational GPT-4o model used in ChatGPT.",
     "openrouter_model_id": "openai/chatgpt-4o-latest",
-    "_last_updated": "2025-06-18T03:48:20.907625+00:00",
+    "_last_updated": "2025-07-01T16:47:00.876208+00:00",
     "_data_source": "openrouter",
     "_last_updated_from_id": "openai/chatgpt-4o-latest"
   },
@@ -378,7 +381,7 @@
     },
     "description": "Claude 3.7 Sonnet is Anthropic's hybrid reasoning model, featuring new 'extended thinking' capabilities. It excels at complex coding, STEM tasks, and multimodal data analysis with large context windows.",
     "openrouter_model_id": "anthropic/claude-3.7-sonnet",
-    "_last_updated": "2025-06-18T03:48:20.907745+00:00",
+    "_last_updated": "2025-07-01T16:47:00.876401+00:00",
     "_data_source": "openrouter",
     "_last_updated_from_id": "anthropic/claude-3.7-sonnet"
   },
@@ -411,7 +414,7 @@
     "deprecation_date": "2025-06-01",
     "tool_use_system_prompt_tokens": 159,
     "openrouter_model_id": "anthropic/claude-3.5-sonnet",
-    "_last_updated": "2025-06-18T03:48:20.907883+00:00",
+    "_last_updated": "2025-07-01T16:47:00.876601+00:00",
     "_data_source": "openrouter",
     "_last_updated_from_id": "anthropic/claude-3.5-sonnet"
   },
@@ -444,7 +447,7 @@
     "deprecation_date": "2025-06-01",
     "tool_use_system_prompt_tokens": 159,
     "openrouter_model_id": "anthropic/claude-3.5-sonnet-20240620",
-    "_last_updated": "2025-06-18T03:48:20.907998+00:00",
+    "_last_updated": "2025-07-01T16:47:00.876791+00:00",
     "_data_source": "openrouter",
     "_last_updated_from_id": "anthropic/claude-3.5-sonnet-20240620"
   },
@@ -477,7 +480,7 @@
     "deprecation_date": "2025-10-01",
     "tool_use_system_prompt_tokens": 264,
     "openrouter_model_id": "anthropic/claude-3.5-haiku",
-    "_last_updated": "2025-06-18T03:48:20.908108+00:00",
+    "_last_updated": "2025-07-01T16:47:00.876983+00:00",
     "_data_source": "openrouter",
     "_last_updated_from_id": "anthropic/claude-3.5-haiku"
   },
@@ -510,7 +513,7 @@
     "deprecation_date": "2025-10-01",
     "tool_use_system_prompt_tokens": 264,
     "openrouter_model_id": "anthropic/claude-3.5-haiku-20241022",
-    "_last_updated": "2025-06-18T03:48:20.908204+00:00",
+    "_last_updated": "2025-07-01T16:47:00.877155+00:00",
     "_data_source": "openrouter",
     "_last_updated_from_id": "anthropic/claude-3.5-haiku-20241022"
   },
@@ -543,7 +546,7 @@
     "deprecation_date": "2025-03-01",
     "tool_use_system_prompt_tokens": 395,
     "openrouter_model_id": "anthropic/claude-3-opus",
-    "_last_updated": "2025-06-18T03:48:20.908325+00:00",
+    "_last_updated": "2025-07-01T16:47:00.877345+00:00",
     "_data_source": "openrouter",
     "_last_updated_from_id": "anthropic/claude-3-opus"
   },
@@ -575,7 +578,7 @@
     },
     "description": "Claude 4 Sonnet is Anthropic's latest flagship model offering enhanced reasoning capabilities and improved performance across all domains.",
     "openrouter_model_id": "anthropic/claude-sonnet-4",
-    "_last_updated": "2025-06-18T03:48:20.908479+00:00",
+    "_last_updated": "2025-07-01T16:47:00.877539+00:00",
     "_data_source": "openrouter",
     "_last_updated_from_id": "anthropic/claude-sonnet-4"
   },
@@ -607,7 +610,7 @@
     },
     "description": "Claude-4 Opus is Anthropic's most advanced model, featuring superior reasoning, analysis, and complex task capabilities.",
     "openrouter_model_id": "anthropic/claude-opus-4",
-    "_last_updated": "2025-06-18T03:48:20.908606+00:00",
+    "_last_updated": "2025-07-01T16:47:00.877727+00:00",
     "_data_source": "openrouter",
     "_last_updated_from_id": "anthropic/claude-opus-4"
   },
@@ -942,15 +945,15 @@
     "costs": {
       "input_cost_per_token": "1E-7",
       "output_cost_per_token": "4E-7",
-      "input_cost_per_audio_token": "7E-7",
       "cache_read_input_token_cost": "2.5E-8",
+      "input_cost_per_audio_token": "7E-7",
       "input_cost_per_image": "0.0000258"
     },
     "description": "Gemini 2.0 Flash is a versatile multimodal model with a 1 million token context window, designed for diverse tasks.",
     "rpm": 10000,
     "tpm": 10000000,
     "openrouter_model_id": "google/gemini-2.0-flash-001",
-    "_last_updated": "2025-06-18T03:48:20.909983+00:00",
+    "_last_updated": "2025-07-01T16:47:00.880380+00:00",
     "_data_source": "openrouter",
     "_last_updated_from_id": "google/gemini-2.0-flash-001"
   },
@@ -987,7 +990,7 @@
     "rpm": 60000,
     "tpm": 10000000,
     "openrouter_model_id": "google/gemini-2.0-flash-lite-001",
-    "_last_updated": "2025-06-18T03:48:20.910119+00:00",
+    "_last_updated": "2025-07-01T16:47:00.880582+00:00",
     "_data_source": "openrouter",
     "_last_updated_from_id": "google/gemini-2.0-flash-lite-001"
   },
@@ -1019,7 +1022,7 @@
     "rpm": 1000,
     "tpm": 4000000,
     "openrouter_model_id": "google/gemini-pro-1.5",
-    "_last_updated": "2025-06-18T03:48:20.910244+00:00",
+    "_last_updated": "2025-07-01T16:47:00.880765+00:00",
     "_data_source": "openrouter",
     "_last_updated_from_id": "google/gemini-pro-1.5"
   },
@@ -1049,16 +1052,16 @@
     "costs": {
       "input_cost_per_token": "7.5E-8",
       "output_cost_per_token": "3E-7",
+      "cache_read_input_token_cost": "1.875E-8",
       "input_cost_per_token_above_128k_tokens": "1.5E-7",
       "output_cost_per_token_above_128k_tokens": "6E-7",
-      "cache_read_input_token_cost": "1.875E-8",
       "input_cost_per_image": "0.00004"
     },
     "description": "Gemini 1.5 Flash offers balanced performance for diverse tasks with a 1 million token context window.",
     "rpm": 2000,
     "tpm": 4000000,
     "openrouter_model_id": "google/gemini-flash-1.5",
-    "_last_updated": "2025-06-18T03:48:20.910417+00:00",
+    "_last_updated": "2025-07-01T16:47:00.880961+00:00",
     "_data_source": "openrouter",
     "_last_updated_from_id": "google/gemini-flash-1.5"
   },
@@ -1089,15 +1092,15 @@
     "costs": {
       "input_cost_per_token": "3.75E-8",
       "output_cost_per_token": "1.5E-7",
+      "cache_read_input_token_cost": "1E-8",
       "input_cost_per_token_above_128k_tokens": "0",
-      "output_cost_per_token_above_128k_tokens": "0",
-      "cache_read_input_token_cost": "1E-8"
+      "output_cost_per_token_above_128k_tokens": "0"
     },
     "description": "Gemini 1.5 Flash 8B is designed for high-volume, lower-intelligence tasks with a 1 million token context window.",
     "rpm": 4000,
     "tpm": 4000000,
     "openrouter_model_id": "google/gemini-flash-1.5-8b",
-    "_last_updated": "2025-06-18T03:48:20.910591+00:00",
+    "_last_updated": "2025-07-01T16:47:00.881165+00:00",
     "_data_source": "openrouter",
     "_last_updated_from_id": "google/gemini-flash-1.5-8b"
   },
@@ -1127,7 +1130,7 @@
     },
     "description": "Gemini 2.5 Pro is Google's state-of-the-art thinking model, capable of reasoning over complex problems in code, math, and STEM, as well as analyzing large datasets, codebases, and documents using long context.",
     "openrouter_model_id": "google/gemini-2.5-pro",
-    "_last_updated": "2025-06-18T03:48:20.910714+00:00",
+    "_last_updated": "2025-07-01T16:47:00.881327+00:00",
     "_data_source": "openrouter",
     "_last_updated_from_id": "google/gemini-2.5-pro"
   },
@@ -1157,7 +1160,7 @@
     },
     "description": "Gemini 2.5 Pro is Google's state-of-the-art thinking model, capable of reasoning over complex problems in code, math, and STEM, as well as analyzing large datasets, codebases, and documents using long context.",
     "openrouter_model_id": "google/gemini-2.5-pro-preview-05-06",
-    "_last_updated": "2025-06-18T03:48:20.910843+00:00",
+    "_last_updated": "2025-07-01T16:47:00.881526+00:00",
     "_data_source": "openrouter",
     "_last_updated_from_id": "google/gemini-2.5-pro-preview-05-06"
   },
@@ -1198,7 +1201,7 @@
     },
     "description": "Gemini 2.5 Flash is a versatile multimodal model with a 1 million token context window, designed for diverse tasks.",
     "openrouter_model_id": "google/gemini-2.5-flash",
-    "_last_updated": "2025-06-18T03:48:20.910963+00:00",
+    "_last_updated": "2025-07-01T16:47:00.881700+00:00",
     "_data_source": "openrouter",
     "_last_updated_from_id": "google/gemini-2.5-flash"
   },
@@ -1236,7 +1239,7 @@
     },
     "description": "Gemini 2.5 Flash-Lite is a lightweight reasoning model in the Gemini 2.5 family, optimized for ultra-low latency and cost efficiency. It offers improved throughput, faster token generation, and better performance compared to earlier Flash models.",
     "openrouter_model_id": "google/gemini-2.5-flash-lite-preview-06-17",
-    "_last_updated": "2025-06-18T03:48:20.911071+00:00",
+    "_last_updated": "2025-07-01T16:47:00.881890+00:00",
     "_data_source": "openrouter",
     "_last_updated_from_id": "google/gemini-2.5-flash-lite-preview-06-17"
   },
@@ -1254,17 +1257,17 @@
       "supports_tool_choice": true
     },
     "context": {
-      "max_input_tokens": 131072,
-      "max_output_tokens": 16384
+      "max_input_tokens": 32768,
+      "max_output_tokens": 32768
     },
     "costs": {
-      "input_cost_per_token": "1E-7",
-      "output_cost_per_token": "2E-7",
+      "input_cost_per_token": "9E-8",
+      "output_cost_per_token": "1.7E-7",
       "input_cost_per_image": "0.0000256"
     },
     "description": "Gemma 3 is an open-source model family from Google that supports multimodal inputs with a 128k token context window and comes in four sizes (1B, 4B, 12B, and 27B parameters). It excels at math, reasoning, coding, and multilingual tasks across 140+ languages.",
     "openrouter_model_id": "google/gemma-3-27b-it",
-    "_last_updated": "2025-06-18T03:48:20.911203+00:00",
+    "_last_updated": "2025-07-01T16:47:00.882080+00:00",
     "_data_source": "openrouter",
     "_last_updated_from_id": "google/gemma-3-27b-it"
   },
@@ -1282,17 +1285,17 @@
       "supports_tool_choice": true
     },
     "context": {
-      "max_input_tokens": 131072,
-      "max_output_tokens": 16384
+      "max_input_tokens": 32768,
+      "max_output_tokens": 32768
     },
     "costs": {
-      "input_cost_per_token": "1E-7",
-      "output_cost_per_token": "2E-7",
+      "input_cost_per_token": "9E-8",
+      "output_cost_per_token": "1.7E-7",
       "input_cost_per_image": "0.0000256"
     },
     "description": "Gemma 3 is an open-source model family from Google that supports multimodal inputs with a 128k token context window and comes in four sizes (1B, 4B, 12B, and 27B parameters). It excels at math, reasoning, coding, and multilingual tasks across 140+ languages.",
     "openrouter_model_id": "google/gemma-3-27b-it",
-    "_last_updated": "2025-06-18T03:48:20.911309+00:00",
+    "_last_updated": "2025-07-01T16:47:00.882226+00:00",
     "_data_source": "openrouter",
     "_last_updated_from_id": "google/gemma-3-27b-it"
   },
@@ -1316,7 +1319,7 @@
     },
     "description": "Grok-2 is the latest API-accessible release from xAI, supporting structured outputs. Grok-2 has yet to be open sourced and the architecture remains unknown. Grok 1 was a 314 billion parameter Mixture-of-Experts model. Grok models are known to have a sense of humour and xAI CEO Elon Musk says Grok is intended to be \"a maximum truth-seeking AI that tries to understand the nature of the universe.\"",
     "openrouter_model_id": "x-ai/grok-2-1212",
-    "_last_updated": "2025-06-18T03:48:20.911483+00:00",
+    "_last_updated": "2025-07-01T16:47:00.882494+00:00",
     "_data_source": "openrouter",
     "_last_updated_from_id": "x-ai/grok-2-1212"
   },
@@ -1342,7 +1345,7 @@
     },
     "description": "Grok-2 Vision is the latest API-accessible multi-modal release from xAI. Grok-2 Vision can process a wide variety of visual information, including documents, diagrams, charts, screenshots, and photographs.",
     "openrouter_model_id": "x-ai/grok-2-vision-1212",
-    "_last_updated": "2025-06-18T03:48:20.911593+00:00",
+    "_last_updated": "2025-07-01T16:47:00.882662+00:00",
     "_data_source": "openrouter",
     "_last_updated_from_id": "x-ai/grok-2-vision-1212"
   },
@@ -1368,7 +1371,7 @@
     },
     "description": "Grok-3 is the latest model from xAI. Grok models are known to have a sense of humour and xAI CEO Elon Musk says Grok is intended to be \"a maximum truth-seeking AI that tries to understand the nature of the universe.\"",
     "openrouter_model_id": "x-ai/grok-3-beta",
-    "_last_updated": "2025-06-18T03:48:20.911806+00:00",
+    "_last_updated": "2025-07-01T16:47:00.883191+00:00",
     "_data_source": "openrouter",
     "_last_updated_from_id": "x-ai/grok-3-beta"
   },
@@ -1417,7 +1420,7 @@
     },
     "description": "Grok 3 Mini is a A lightweight model from xAI that thinks before responding. Fast, smart, and great for logic-based tasks that do not require deep domain knowledge.",
     "openrouter_model_id": "x-ai/grok-3-mini-beta",
-    "_last_updated": "2025-06-18T03:48:20.912051+00:00",
+    "_last_updated": "2025-07-01T16:47:00.884168+00:00",
     "_data_source": "openrouter",
     "_last_updated_from_id": "x-ai/grok-3-mini-beta"
   },
@@ -1444,6 +1447,106 @@
     "description": "Grok 3 Mini Fast is a speed-omtimized deployment of Grok 3 Mini. It responds faster in exchange for a higher per-token cost. Both models are identical, so there are no quality differences.",
     "source": "https://docs.x.ai/docs/models"
   },
+  "minimax/MiniMax-Text-01": {
+    "name": "MiniMax-01",
+    "mode": "chat",
+    "service_provider": "minimax",
+    "model_provider": "minimax",
+    "model_provider_name": "MiniMax",
+    "capabilities": {
+      "supports_vision": true,
+      "supports_system_messages": true
+    },
+    "context": {
+      "max_input_tokens": 1000192,
+      "max_output_tokens": 1000192
+    },
+    "costs": {
+      "input_cost_per_token": "2E-7",
+      "output_cost_per_token": "0.0000011"
+    },
+    "openrouter_model_id": "minimax/minimax-01",
+    "description": "MiniMax-01 combines MiniMax-Text-01 for text generation and MiniMax-VL-01 for image understanding that can handle a context of over a million tokens. It is a 456 billion parameter Mixture-of-Experts (MoE) model with 45.9 billion params active at inference, combining Lightning and Softmax Attention. The image model adopts the \u201cViT-MLP-LLM\u201d framework, trained on the text model.",
+    "_last_updated": "2025-07-01T16:47:00.884550+00:00",
+    "_data_source": "openrouter",
+    "_last_updated_from_id": "minimax/minimax-01"
+  },
+  "openrouter/minimax/minimax-01": {
+    "name": "MiniMax-01",
+    "mode": "chat",
+    "service_provider": "minimax",
+    "model_provider": "minimax",
+    "model_provider_name": "MiniMax",
+    "capabilities": {
+      "supports_vision": true,
+      "supports_system_messages": true
+    },
+    "context": {
+      "max_input_tokens": 1000192,
+      "max_output_tokens": 1000192
+    },
+    "costs": {
+      "input_cost_per_token": "2E-7",
+      "output_cost_per_token": "0.0000011"
+    },
+    "openrouter_model_id": "minimax/minimax-01",
+    "description": "MiniMax-01 combines MiniMax-Text-01 for text generation and MiniMax-VL-01 for image understanding that can handle a context of over a million tokens. It is a 456 billion parameter Mixture-of-Experts (MoE) model with 45.9 billion params active at inference, combining Lightning and Softmax Attention. The image model adopts the \u201cViT-MLP-LLM\u201d framework, trained on the text model.",
+    "_last_updated": "2025-07-01T16:47:00.884798+00:00",
+    "_data_source": "openrouter",
+    "_last_updated_from_id": "minimax/minimax-01"
+  },
+  "minimax/MiniMax-M1": {
+    "name": "MiniMax-M1",
+    "mode": "chat",
+    "service_provider": "minimax",
+    "model_provider": "minimax",
+    "model_provider_name": "MiniMax",
+    "capabilities": {
+      "supports_tools": true,
+      "supports_response_schema": true,
+      "supports_system_messages": true,
+      "supports_tool_choice": true
+    },
+    "context": {
+      "max_input_tokens": 1000000,
+      "max_output_tokens": 40000
+    },
+    "costs": {
+      "input_cost_per_token": "3E-7",
+      "output_cost_per_token": "0.00000165"
+    },
+    "openrouter_model_id": "minimax/minimax-m1",
+    "description": "MiniMax-M1 is an open-weight, large-scale reasoning model with extended context, designed for high-efficiency reasoning on complex, multi-step tasks. It leverages a 456 billion parameter hybrid Mixture-of-Experts (MoE) architecture with 45.9B params active per token, paired with a custom \"lightning attention\" mechanism, allowing it to process up to 1 million tokens while maintaining competitive FLOP efficiency. Trained via a custom reinforcement learning pipeline (CISPO), M1 is competitive against other open models like DeepSeek R1 and Qwen3-235B.",
+    "_last_updated": "2025-07-01T16:47:00.885078+00:00",
+    "_data_source": "openrouter",
+    "_last_updated_from_id": "minimax/minimax-m1"
+  },
+  "openrouter/minimax/minimax-m1": {
+    "name": "MiniMax-M1",
+    "mode": "chat",
+    "service_provider": "minimax",
+    "model_provider": "minimax",
+    "model_provider_name": "MiniMax",
+    "capabilities": {
+      "supports_tools": true,
+      "supports_response_schema": true,
+      "supports_system_messages": true,
+      "supports_tool_choice": true
+    },
+    "context": {
+      "max_input_tokens": 1000000,
+      "max_output_tokens": 40000
+    },
+    "costs": {
+      "input_cost_per_token": "3E-7",
+      "output_cost_per_token": "0.00000165"
+    },
+    "openrouter_model_id": "minimax/minimax-m1",
+    "description": "MiniMax-M1 is an open-weight, large-scale reasoning model with extended context, designed for high-efficiency reasoning on complex, multi-step tasks. It leverages a 456 billion parameter hybrid Mixture-of-Experts (MoE) architecture with 45.9B params active per token, paired with a custom \"lightning attention\" mechanism, allowing it to process up to 1 million tokens while maintaining competitive FLOP efficiency. Trained via a custom reinforcement learning pipeline (CISPO), M1 is competitive against other open models like DeepSeek R1 and Qwen3-235B.",
+    "_last_updated": "2025-07-01T16:47:00.885301+00:00",
+    "_data_source": "openrouter",
+    "_last_updated_from_id": "minimax/minimax-m1"
+  },
   "mistralai/magistral-medium-latest": {
     "name": "Magistral Medium",
     "mode": "chat",
@@ -1466,7 +1569,7 @@
       "output_cost_per_token": "0.000005"
     },
     "description": "Magistral is the first reasoning model series by Mistral AI, released in June 2025. Magistral is designed to think before responding, excelling in domain-specific, transparent, and multilingual reasoning. Magistral Small is a 24B parameter open-source model while Magistral Medium is a more powerful, enterprise version.",
-    "_last_updated": "2025-06-18T03:48:20.912395+00:00",
+    "_last_updated": "2025-07-01T16:47:00.885747+00:00",
     "_data_source": "openrouter",
     "_last_updated_from_id": "mistralai/magistral-medium-2506"
   },
@@ -1492,7 +1595,7 @@
       "output_cost_per_token": "0.0000015"
     },
     "description": "Magistral is the first reasoning model series by Mistral AI, released in June 2025. Magistral Small is a 24B parameter model based on Mistral-Small-3.1, enhanced through supervised fine-tuning on traces from Magistral Medium and reinforcement learning. It is optimized for reasoning with support for over 20 languages.",
-    "_last_updated": "2025-06-18T03:48:20.912652+00:00",
+    "_last_updated": "2025-07-01T16:47:00.886199+00:00",
     "_data_source": "openrouter",
     "_last_updated_from_id": "mistralai/magistral-small-2506"
   },
@@ -1518,7 +1621,7 @@
     },
     "description": "Mistral Large is Mistral AI's flagship model designed for complex problem solving and advanced tasks.",
     "openrouter_model_id": "mistralai/mistral-large-latest",
-    "_last_updated": "2025-06-18T03:48:20.912910+00:00",
+    "_last_updated": "2025-07-01T16:47:00.886713+00:00",
     "_data_source": "openrouter",
     "_last_updated_from_id": "mistralai/mistral-large-2411"
   },
@@ -1536,7 +1639,7 @@
       "supports_tool_choice": true
     },
     "context": {
-      "max_input_tokens": 32768,
+      "max_input_tokens": 131072,
       "max_output_tokens": 8192
     },
     "costs": {
@@ -1545,7 +1648,7 @@
     },
     "description": "Mistral Medium offers balanced performance for general-purpose tasks.",
     "openrouter_model_id": "mistralai/mistral-medium-latest",
-    "_last_updated": "2025-06-18T03:48:20.913123+00:00",
+    "_last_updated": "2025-07-01T16:47:00.887139+00:00",
     "_data_source": "openrouter",
     "_last_updated_from_id": "mistralai/mistral-medium-3"
   },
@@ -1573,7 +1676,7 @@
     },
     "description": "Pixtral Large is Mistral AI's multimodal model with vision capabilities for processing images and text.",
     "openrouter_model_id": "mistralai/pixtral-large-latest",
-    "_last_updated": "2025-06-18T03:48:20.913320+00:00",
+    "_last_updated": "2025-07-01T16:47:00.887511+00:00",
     "_data_source": "openrouter",
     "_last_updated_from_id": "mistralai/pixtral-large-2411"
   },
@@ -1600,9 +1703,9 @@
     },
     "description": "Mistral Small is a cost-effective model optimized for simple tasks and high throughput.",
     "openrouter_model_id": "mistralai/mistral-small-latest",
-    "_last_updated": "2025-06-18T03:48:20.913574+00:00",
+    "_last_updated": "2025-07-01T16:47:00.888055+00:00",
     "_data_source": "openrouter",
-    "_last_updated_from_id": "mistralai/mistral-small-3.1-24b-instruct:free"
+    "_last_updated_from_id": "mistralai/mistral-small-3.2-24b-instruct:free"
   },
   "mistralai/codestral-latest": {
     "name": "Codestral Latest",
@@ -1626,7 +1729,7 @@
     },
     "description": "Codestral is Mistral AI's specialized model for code generation and programming tasks.",
     "openrouter_model_id": "mistralai/codestral-latest",
-    "_last_updated": "2025-06-18T03:48:20.913857+00:00",
+    "_last_updated": "2025-07-01T16:47:00.888474+00:00",
     "_data_source": "openrouter",
     "_last_updated_from_id": "mistralai/codestral-2501"
   },
@@ -1671,11 +1774,11 @@
     },
     "costs": {
       "input_cost_per_token": "1E-8",
-      "output_cost_per_token": "2.3E-8"
+      "output_cost_per_token": "1.1E-8"
     },
     "description": "Mistral Nemo is a 12B model with state-of-the-art reasoning, world knowledge, and coding performance.",
     "openrouter_model_id": "mistralai/mistral-nemo",
-    "_last_updated": "2025-06-18T03:48:20.914233+00:00",
+    "_last_updated": "2025-07-01T16:47:00.889029+00:00",
     "_data_source": "openrouter",
     "_last_updated_from_id": "mistralai/mistral-nemo"
   }
