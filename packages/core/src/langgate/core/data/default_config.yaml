@@ -15,6 +15,13 @@ services:
       openai/o:
         remove_params:
           - temperature
+      # if using LangChain:
+      # match any model with o3-pro in the id
+      # openai/o3-pro:
+      #   remove_params:
+      #     - stream_usage
+      #   override_params:
+      #     use_responses_api: true # or: output_version: responses/v1
 
   anthropic:
     api_key: "${ANTHROPIC_API_KEY}"
@@ -100,6 +107,11 @@ models:
     service:
       provider: openai
       model_id: o4-mini
+
+  - id: openai/o3-pro
+    service:
+      provider: openai
+      model_id: o3-pro
 
   - id: openai/o3
     service:

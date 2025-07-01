@@ -203,6 +203,33 @@
     "_data_source": "openrouter",
     "_last_updated_from_id": "openai/o4-mini"
   },
+  "openai/o3-pro": {
+    "name": "o3 Pro",
+    "mode": "chat",
+    "service_provider": "openai",
+    "model_provider": "openai",
+    "model_provider_name": "OpenAI",
+    "capabilities": {
+      "supports_tools": true,
+      "supports_parallel_tool_calls": false,
+      "supports_vision": true,
+      "supports_prompt_caching": true,
+      "supports_reasoning": true,
+      "supports_response_schema": true,
+      "supports_tool_choice": true
+    },
+    "context": {
+      "max_input_tokens": 200000,
+      "max_output_tokens": 100000
+    },
+    "costs": {
+      "input_cost_per_token": "0.00002",
+      "output_cost_per_token": "0.00008",
+      "reasoning_cost_per_token": "0",
+      "input_cost_per_image": "0.0153"
+    },
+    "description": "OpenAI's o-series models are trained with reinforcement learning to think before they answer and perform complex reasoning. The o3 Pro model uses more compute than o3, spending longer thinking through a problem."
+  },
   "openai/gpt-4.1": {
     "name": "GPT-4.1",
     "mode": "chat",
