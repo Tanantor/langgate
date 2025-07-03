@@ -595,7 +595,7 @@ wheels = [
 
 [[package]]
 name = "langgate"
-version = "0.1.8"
+version = "0.1.9"
 source = { editable = "." }
 dependencies = [
     { name = "langgate-core", marker = "sys_platform == 'darwin' or sys_platform == 'linux'" },
@@ -699,7 +699,7 @@ provides-extras = ["client", "registry", "transform", "processor", "server", "sd
 
 [[package]]
 name = "langgate-client"
-version = "0.1.8"
+version = "0.1.9"
 source = { editable = "packages/client" }
 dependencies = [
     { name = "httpx", marker = "sys_platform == 'darwin' or sys_platform == 'linux'" },
@@ -714,7 +714,7 @@ requires-dist = [
 
 [[package]]
 name = "langgate-core"
-version = "0.1.8"
+version = "0.1.9"
 source = { editable = "packages/core" }
 dependencies = [
     { name = "pydantic", marker = "sys_platform == 'darwin' or sys_platform == 'linux'" },
@@ -729,7 +729,7 @@ requires-dist = [
 
 [[package]]
 name = "langgate-processor"
-version = "0.1.8"
+version = "0.1.9"
 source = { editable = "packages/processor" }
 dependencies = [
     { name = "fastapi", marker = "sys_platform == 'darwin' or sys_platform == 'linux'" },
@@ -759,7 +759,7 @@ provides-extras = ["dev"]
 
 [[package]]
 name = "langgate-registry"
-version = "0.1.8"
+version = "0.1.9"
 source = { editable = "packages/registry" }
 dependencies = [
     { name = "aiofiles", marker = "sys_platform == 'darwin' or sys_platform == 'linux'" },
@@ -784,7 +784,7 @@ requires-dist = [
 
 [[package]]
 name = "langgate-sdk"
-version = "0.1.8"
+version = "0.1.9"
 source = { editable = "packages/sdk" }
 dependencies = [
     { name = "langgate-core", marker = "sys_platform == 'darwin' or sys_platform == 'linux'" },
@@ -801,7 +801,7 @@ requires-dist = [
 
 [[package]]
 name = "langgate-server"
-version = "0.1.8"
+version = "0.1.9"
 source = { editable = "packages/server" }
 dependencies = [
     { name = "fastapi", marker = "sys_platform == 'darwin' or sys_platform == 'linux'" },
@@ -824,7 +824,7 @@ requires-dist = [
 
 [[package]]
 name = "langgate-transform"
-version = "0.1.8"
+version = "0.1.9"
 source = { editable = "packages/transform" }
 dependencies = [
     { name = "langgate-core", marker = "sys_platform == 'darwin' or sys_platform == 'linux'" },
@@ -863,14 +863,14 @@ wheels = [
 
 [[package]]
 name = "matplotlib-inline"
-version = "0.1.8"
+version = "0.1.7"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "traitlets", marker = "sys_platform == 'darwin' or sys_platform == 'linux'" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/99/5b/a36a337438a14116b16480db471ad061c36c3694df7c2084a0da7ba538b7/matplotlib_inline-0.1.8.tar.gz", hash = "sha256:8423b23ec666be3d16e16b60bdd8ac4e86e840ebd1dd11a30b9f117f2fa0ab90", size = 8159 }
+sdist = { url = "https://files.pythonhosted.org/packages/99/5b/a36a337438a14116b16480db471ad061c36c3694df7c2084a0da7ba538b7/matplotlib_inline-0.1.7.tar.gz", hash = "sha256:8423b23ec666be3d16e16b60bdd8ac4e86e840ebd1dd11a30b9f117f2fa0ab90", size = 8159 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/8f/8e/9ad090d3553c280a8060fbf6e24dc1c0c29704ee7d1c372f0c174aa59285/matplotlib_inline-0.1.8-py3-none-any.whl", hash = "sha256:df192d39a4ff8f21b1895d72e6a13f5fcc5099f00fa84384e0ea28c2cc0653ca", size = 9899 },
+    { url = "https://files.pythonhosted.org/packages/8f/8e/9ad090d3553c280a8060fbf6e24dc1c0c29704ee7d1c372f0c174aa59285/matplotlib_inline-0.1.7-py3-none-any.whl", hash = "sha256:df192d39a4ff8f21b1895d72e6a13f5fcc5099f00fa84384e0ea28c2cc0653ca", size = 9899 },
 ]
 
 [[package]]

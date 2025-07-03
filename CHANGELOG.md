@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [0.1.8] - 2025-07-03
+## [0.1.9] - 2025-07-03
 
 ### Added
 - Support for updating default model provider metadata in YAML mappings
