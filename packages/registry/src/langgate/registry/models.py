@@ -111,17 +111,21 @@ class ModelRegistry:
             # Model provider might differ from the inference service provider
             # The service provider is not intended to be exposed to external consumers of the registry
             # The service provider is used by the proxy for routing requests to the correct service
-            if "model_provider" in model_data:
-                model_provider_id: str = model_data["model_provider"]
-            else:
+            # Priority order:
+            #   1. Explicitly set in mapping (takes precedence)
+            #   2. Value coming from the service-level model data
+            model_provider_id: str = mapping.get("model_provider") or model_data.get(
+                "model_provider", ""
+            )
+            if not model_provider_id:
                 raise ValueError(
                     f"Model {model_id} does not have a valid provider ID, Set `model_provider` in model data."
                 )
 
             # Get the provider display name, either from data or fallback to ID
-            provider_display_name = model_data.get(
-                "model_provider_name", model_provider_id.title()
-            )
+            provider_display_name = mapping.get(
+                "model_provider_name"
+            ) or model_data.get("model_provider_name", model_provider_id.title())
 
             # Name can come from multiple sources in decreasing priority
             # Use the model name from the config if available, otherwise use the model data name,

@@ -231,5 +231,7 @@ class RegistryConfig:
                 "remove_params": model_data.get("remove_params", []),
                 "rename_params": model_data.get("rename_params", {}),
                 "name": model_data.get("name"),
+                "model_provider": model_data.get("model_provider"),
+                "model_provider_name": model_data.get("model_provider_name"),
                 "description": model_data.get("description"),
             }
