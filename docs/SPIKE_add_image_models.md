@@ -242,6 +242,13 @@ models:
       quality: "standard"
       n: 1
 
+  - id: black-forest-labs/flux-dev
+    service:
+      provider: replicate
+      model_id: black-forest-labs/flux-dev
+    default_params:
+      disable_safety_checker: true
+
   - id: stability-ai/sd-3.5-large
     service:
       provider: replicate
@@ -312,6 +319,19 @@ models:
             "1792x1024": 0.12
           }
         }
+      }
+    }
+  },
+  "replicate/black-forest-labs/flux-dev": {
+    "name": "FLUX.1 [dev]",
+    "mode": "image",
+    "service_provider": "replicate",
+    "model_provider": "black-forest-labs",
+    "model_provider_name": "Black Forest Labs",
+    "description": "FLUX.1 dev is an open-weight, 12 billion parameter rectified flow transformer, distilled from FLUX.1 [pro], FLUX.1 [dev] obtains similar quality and prompt adherence capabilities, while being more efficient and faster.",
+    "costs": {
+      "image_generation": {
+        "flat_rate": 0.025
       }
     }
   },
