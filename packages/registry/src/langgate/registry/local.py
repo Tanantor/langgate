@@ -4,15 +4,17 @@ from collections.abc import Sequence
 from datetime import timedelta
 from typing import Generic, cast, get_args
 
-from langgate.client.protocol import BaseRegistryClient, LLMInfoT
+from langgate.client.protocol import BaseRegistryClient, ImageInfoT, LLMInfoT
 from langgate.core.logging import get_logger
-from langgate.core.models import LLMInfo
+from langgate.core.models import ImageModelInfo, LLMInfo
 from langgate.registry.models import ModelRegistry
 
 logger = get_logger(__name__)
 
 
-class BaseLocalRegistryClient(BaseRegistryClient[LLMInfoT], Generic[LLMInfoT]):
+class BaseLocalRegistryClient(
+    BaseRegistryClient[LLMInfoT, ImageInfoT], Generic[LLMInfoT, ImageInfoT]
+):
     """
     Base local registry client that calls ModelRegistry directly.
 
@@ -21,12 +23,18 @@ class BaseLocalRegistryClient(BaseRegistryClient[LLMInfoT], Generic[LLMInfoT]):
 
     Type Parameters:
         LLMInfoT: The LLMInfo-derived model class to use for responses
+        ImageInfoT: The ImageModelInfo-derived model class to use for responses
     """
 
     __orig_bases__: tuple
-    model_info_cls: type[LLMInfoT]
+    llm_info_cls: type[LLMInfoT]
+    image_info_cls: type[ImageInfoT]
 
-    def __init__(self, model_info_cls: type[LLMInfoT] | None = None):
+    def __init__(
+        self,
+        llm_info_cls: type[LLMInfoT] | None = None,
+        image_info_cls: type[ImageInfoT] | None = None,
+    ):
         """Initialize the client with a ModelRegistry instance."""
         # Cache refreshing is no-op for local registry clients.
         # Since this client is local, we don't need to refresh the cache.
@@ -35,64 +43,107 @@ class BaseLocalRegistryClient(BaseRegistryClient[LLMInfoT], Generic[LLMInfoT]):
         super().__init__(cache_ttl=cache_ttl)
         self.registry = ModelRegistry()
 
-        # Set model_info_cls if provided, otherwise it is inferred from the class
-        if model_info_cls is not None:
-            self.model_info_cls = model_info_cls
+        # Set model info classes if provided, otherwise they are inferred from the class
+        if llm_info_cls is not None:
+            self.llm_info_cls = llm_info_cls
+        if image_info_cls is not None:
+            self.image_info_cls = image_info_cls
 
         logger.debug("initialized_base_local_registry_client")
 
     def __init_subclass__(cls, **kwargs):
-        """Set up model class when this class is subclassed."""
+        """Set up model classes when this class is subclassed."""
         super().__init_subclass__(**kwargs)
 
-        if not hasattr(cls, "model_info_cls"):
-            cls.model_info_cls = cls._get_model_info_class()
+        if not hasattr(cls, "llm_info_cls") or not hasattr(cls, "image_info_cls"):
+            llm_cls, image_cls = cls._get_model_info_classes()
+            if not hasattr(cls, "llm_info_cls"):
+                cls.llm_info_cls = llm_cls
+            if not hasattr(cls, "image_info_cls"):
+                cls.image_info_cls = image_cls
 
     @classmethod
-    def _get_model_info_class(cls) -> type[LLMInfoT]:
-        """Extract the model class from generic type parameters."""
-        return get_args(cls.__orig_bases__[0])[0]
+    def _get_model_info_classes(cls) -> tuple[type[LLMInfoT], type[ImageInfoT]]:
+        """Extract the model classes from generic type parameters."""
+        args = get_args(cls.__orig_bases__[0])
+        return args[0], args[1]
 
-    async def _fetch_model_info(self, model_id: str) -> LLMInfoT:
-        """Get information about a model directly from registry.
+    async def _fetch_llm_info(self, model_id: str) -> LLMInfoT:
+        """Get LLM information directly from registry.
 
         Args:
-            model_id: The ID of the model to get information for
+            model_id: The ID of the LLM to get information for
 
         Returns:
-            Information about the requested model with the type expected by this client
+            Information about the requested LLM with the type expected by this client
         """
-        # Get the model info from the registry (always returns LLMInfo)
-        info = self.registry.get_model_info(model_id)
+        # Get the LLM info from the registry
+        info = self.registry.get_llm_info(model_id)
 
-        # If model_info_cls is LLMInfo (not a subclass), we can return it as-is
-        if self.model_info_cls is LLMInfo:
+        # If llm_info_cls is LLMInfo (not a subclass), we can return it as-is
+        if self.llm_info_cls is LLMInfo:
             return cast(LLMInfoT, info)
 
         # Otherwise, validate against the subclass schema
-        return self.model_info_cls.model_validate(info.model_dump())
+        return self.llm_info_cls.model_validate(info.model_dump())
 
-    async def _fetch_all_models(self) -> Sequence[LLMInfoT]:
-        """List all available models directly from registry.
+    async def _fetch_image_model_info(self, model_id: str) -> ImageInfoT:
+        """Get image model information directly from registry.
+
+        Args:
+            model_id: The ID of the image model to get information for
 
         Returns:
-            A sequence of model information objects of the type expected by this client.
+            Information about the requested image model with the type expected by this client
         """
-        models = self.registry.list_models()
+        # Get the image model info from the registry
+        info = self.registry.get_image_model_info(model_id)
 
-        # If model_info_cls is LLMInfo (not a subclass), we can return the list as-is
-        if self.model_info_cls is LLMInfo:
+        # If image_info_cls is ImageModelInfo (not a subclass), we can return it as-is
+        if self.image_info_cls is ImageModelInfo:
+            return cast(ImageInfoT, info)
+
+        # Otherwise, validate against the subclass schema
+        return self.image_info_cls.model_validate(info.model_dump())
+
+    async def _fetch_all_llms(self) -> Sequence[LLMInfoT]:
+        """List all available LLMs directly from registry.
+
+        Returns:
+            A sequence of LLM information objects of the type expected by this client.
+        """
+        models = self.registry.list_llms()
+
+        # If llm_info_cls is LLMInfo (not a subclass), we can return the list as-is
+        if self.llm_info_cls is LLMInfo:
             return cast(Sequence[LLMInfoT], models)
 
         # Otherwise, we need to validate each model against the subclass schema
         return [
-            self.model_info_cls.model_validate(model.model_dump()) for model in models
+            self.llm_info_cls.model_validate(model.model_dump()) for model in models
+        ]
+
+    async def _fetch_all_image_models(self) -> Sequence[ImageInfoT]:
+        """List all available image models directly from registry.
+
+        Returns:
+            A sequence of image model information objects of the type expected by this client.
+        """
+        models = self.registry.list_image_models()
+
+        # If image_info_cls is ImageModelInfo (not a subclass), we can return the list as-is
+        if self.image_info_cls is ImageModelInfo:
+            return cast(Sequence[ImageInfoT], models)
+
+        # Otherwise, we need to validate each model against the subclass schema
+        return [
+            self.image_info_cls.model_validate(model.model_dump()) for model in models
         ]
 
 
-class LocalRegistryClient(BaseLocalRegistryClient[LLMInfo]):
+class LocalRegistryClient(BaseLocalRegistryClient[LLMInfo, ImageModelInfo]):
     """
-    Local registry client that calls ModelRegistry directly using the default LLMInfo schema.
+    Local registry client that calls ModelRegistry directly using the default schemas.
 
     This is implemented as a singleton for convenient access across an application.
     """

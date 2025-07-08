@@ -7,9 +7,9 @@ from typing import Generic, get_args
 import httpx
 from pydantic import SecretStr
 
-from langgate.client.protocol import BaseRegistryClient, LLMInfoT
+from langgate.client.protocol import BaseRegistryClient, ImageInfoT, LLMInfoT
 from langgate.core.logging import get_logger
-from langgate.core.models import LLMInfo
+from langgate.core.models import ImageModelInfo, LLMInfo
 
 logger = get_logger(__name__)
 
@@ -37,10 +37,12 @@ def create_registry_http_client(
     )
 
 
-class BaseHTTPRegistryClient(BaseRegistryClient[LLMInfoT], Generic[LLMInfoT]):
+class BaseHTTPRegistryClient(
+    BaseRegistryClient[LLMInfoT, ImageInfoT], Generic[LLMInfoT, ImageInfoT]
+):
     """
     Base HTTP client for the Model Registry API.
-    Supports LLMInfo-derived schemas for response parsing and httpx client injection.
+    Supports LLMInfo-derived and ImageModelInfo-derived schemas for response parsing and httpx client injection.
 
     Handles infrequent HTTP requests via temporary clients by default or uses an
     injected client as the request engine. Configuration (base_url, api_key)
@@ -48,17 +50,20 @@ class BaseHTTPRegistryClient(BaseRegistryClient[LLMInfoT], Generic[LLMInfoT]):
 
     Type Parameters:
         LLMInfoT: The LLMInfo-derived model class for response parsing
+        ImageInfoT: The ImageModelInfo-derived model class for response parsing
     """
 
     __orig_bases__: tuple
-    model_info_cls: type[LLMInfoT]
+    llm_info_cls: type[LLMInfoT]
+    image_info_cls: type[ImageInfoT]
 
     def __init__(
         self,
         base_url: str,
         api_key: SecretStr | None = None,
         cache_ttl: timedelta | None = None,
-        model_info_cls: type[LLMInfoT] | None = None,
+        llm_info_cls: type[LLMInfoT] | None = None,
+        image_info_cls: type[ImageInfoT] | None = None,
         http_client: httpx.AsyncClient | None = None,
     ):
         """Initialize the client.
@@ -66,7 +71,8 @@ class BaseHTTPRegistryClient(BaseRegistryClient[LLMInfoT], Generic[LLMInfoT]):
             base_url: The base URL of the registry service
             api_key: Registry server API key for authentication
             cache_ttl: Cache time-to-live
-            model_info_cls: Override for model info class
+            llm_info_cls: Override for LLM info class
+            image_info_cls: Override for image model info class
             http_client: Optional HTTP client for making requests
         """
         super().__init__(cache_ttl=cache_ttl)
@@ -74,29 +80,37 @@ class BaseHTTPRegistryClient(BaseRegistryClient[LLMInfoT], Generic[LLMInfoT]):
         self.api_key = api_key
         self._http_client = http_client
 
-        # Set model_info_cls if provided, otherwise it is inferred from the class
-        if model_info_cls is not None:
-            self.model_info_cls = model_info_cls
+        # Set model info classes if provided, otherwise they are inferred from the class
+        if llm_info_cls is not None:
+            self.llm_info_cls = llm_info_cls
+        if image_info_cls is not None:
+            self.image_info_cls = image_info_cls
 
         logger.debug(
             "initialized_base_http_registry_client",
             base_url=self.base_url,
             api_key=self.api_key,
-            model_info_cls=self.model_info_cls,
+            llm_info_cls=self.llm_info_cls,
+            image_info_cls=self.image_info_cls,
         )
 
     def __init_subclass__(cls, **kwargs):
-        """Set up model class when this class is subclassed."""
+        """Set up model classes when this class is subclassed."""
         super().__init_subclass__(**kwargs)
 
-        # Extract the model class from generic parameters
-        if not hasattr(cls, "model_info_cls"):
-            cls.model_info_cls = cls._get_model_info_class()
+        # Extract the model classes from generic parameters
+        if not hasattr(cls, "llm_info_cls") or not hasattr(cls, "image_info_cls"):
+            llm_cls, image_cls = cls._get_model_info_classes()
+            if not hasattr(cls, "llm_info_cls"):
+                cls.llm_info_cls = llm_cls
+            if not hasattr(cls, "image_info_cls"):
+                cls.image_info_cls = image_cls
 
     @classmethod
-    def _get_model_info_class(cls) -> type[LLMInfoT]:
-        """Extract the model class from generic type parameters."""
-        return get_args(cls.__orig_bases__[0])[0]
+    def _get_model_info_classes(cls) -> tuple[type[LLMInfoT], type[ImageInfoT]]:
+        """Extract the model classes from generic type parameters."""
+        args = get_args(cls.__orig_bases__[0])
+        return args[0], args[1]
 
     @asynccontextmanager
     async def _get_client_for_request(self):
@@ -118,21 +132,33 @@ class BaseHTTPRegistryClient(BaseRegistryClient[LLMInfoT], Generic[LLMInfoT]):
             response = await client.request(method, url, headers=headers, **kwargs)
         return response
 
-    async def _fetch_model_info(self, model_id: str) -> LLMInfoT:
-        """Fetch model info from the source via HTTP."""
-        response = await self._request("GET", f"/models/{model_id}")
+    async def _fetch_llm_info(self, model_id: str) -> LLMInfoT:
+        """Fetch LLM info from the source via HTTP."""
+        response = await self._request("GET", f"/models/{model_id}?modality=text")
         response.raise_for_status()
-        return self.model_info_cls.model_validate(response.json())
+        return self.llm_info_cls.model_validate(response.json())
 
-    async def _fetch_all_models(self) -> list[LLMInfoT]:
-        """Fetch all models from the source via HTTP."""
-        response = await self._request("GET", "/models")
+    async def _fetch_image_model_info(self, model_id: str) -> ImageInfoT:
+        """Fetch image model info from the source via HTTP."""
+        response = await self._request("GET", f"/models/{model_id}?modality=image")
         response.raise_for_status()
-        return [self.model_info_cls.model_validate(model) for model in response.json()]
+        return self.image_info_cls.model_validate(response.json())
+
+    async def _fetch_all_llms(self) -> list[LLMInfoT]:
+        """Fetch all LLMs from the source via HTTP."""
+        response = await self._request("GET", "/models?modality=text")
+        response.raise_for_status()
+        return [self.llm_info_cls.model_validate(model) for model in response.json()]
+
+    async def _fetch_all_image_models(self) -> list[ImageInfoT]:
+        """Fetch all image models from the source via HTTP."""
+        response = await self._request("GET", "/models?modality=image")
+        response.raise_for_status()
+        return [self.image_info_cls.model_validate(model) for model in response.json()]
 
 
-class HTTPRegistryClient(BaseHTTPRegistryClient[LLMInfo]):
-    """HTTP client singleton for the Model Registry API using the default LLMInfo schema."""
+class HTTPRegistryClient(BaseHTTPRegistryClient[LLMInfo, ImageModelInfo]):
+    """HTTP client singleton for the Model Registry API using the default schemas."""
 
     _instance = None
 

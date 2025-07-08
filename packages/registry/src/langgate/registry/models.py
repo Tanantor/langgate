@@ -21,6 +21,10 @@ from langgate.registry.config import RegistryConfig
 logger = get_logger(__name__)
 
 
+# Type alias for any concrete model info - extend this union when adding new modalities
+type _ModelInfo = LLMInfo | ImageModelInfo
+
+
 class ModelRegistry:
     """Registry for managing model information."""
 
@@ -48,9 +52,8 @@ class ModelRegistry:
             self.config = config or RegistryConfig()
 
             # Separate caches by modality
-            self._model_caches: dict[Modality, dict[str, Any]] = {
-                Modality.TEXT: {},
-                Modality.IMAGE: {},
+            self._model_caches: dict[Modality, dict[str, _ModelInfo]] = {
+                modality: {} for modality in Modality
             }
 
             # Build the model cache
@@ -80,7 +83,7 @@ class ModelRegistry:
     def _build_model_cache(self) -> None:
         """Build cached model information for all modalities."""
         # Clear all caches
-        for modality in self._model_caches:
+        for modality in Modality:
             self._model_caches[modality] = {}
 
         for model_id, mapping in self.config.model_mappings.items():
@@ -104,7 +107,6 @@ class ModelRegistry:
                     service_provider=service_provider,
                     service_model_id=service_model_id,
                     exposed_model_id=model_id,
-                    available_models=list(self._model_caches[Modality.TEXT].keys()),
                 )
 
             # Map "mode" field from JSON to Modality enum
@@ -116,11 +118,11 @@ class ModelRegistry:
             modality = Modality.IMAGE if mode == "image" else Modality.TEXT
 
             if modality == Modality.TEXT:
-                model_info = self._build_llm_info(model_id, mapping, model_data)
-                self._model_caches[Modality.TEXT][model_id] = model_info
+                llm_info = self._build_llm_info(model_id, mapping, model_data)
+                self._model_caches[Modality.TEXT][model_id] = llm_info
             elif modality == Modality.IMAGE:
-                model_info = self._build_image_model_info(model_id, mapping, model_data)
-                self._model_caches[Modality.IMAGE][model_id] = model_info
+                image_info = self._build_image_model_info(model_id, mapping, model_data)
+                self._model_caches[Modality.IMAGE][model_id] = image_info
 
         # Check if registry is empty after building all caches
         if not any(self._model_caches[modality] for modality in self._model_caches):
@@ -278,7 +280,7 @@ class ModelRegistry:
     def list_models(self, modality: str) -> list[LLMInfo] | list[ImageModelInfo]:
         """List all available models for a given modality with proper typing."""
         modality_enum = Modality(modality)
-        return list(self._model_caches[modality_enum].values())
+        return list(self._model_caches[modality_enum].values())  # type: ignore[return-value]
 
     # Backward compatibility methods for existing LLM functionality
     def get_llm_info(self, model_id: str) -> LLMInfo:

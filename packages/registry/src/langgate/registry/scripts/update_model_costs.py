@@ -17,7 +17,7 @@ from langgate.core.utils.config_utils import resolve_path
 from langgate.registry.models import (
     ContextWindow,
     ModelCapabilities,
-    ModelCost,
+    TokenCosts,
 )
 
 logger = get_logger(__name__)
@@ -70,7 +70,7 @@ class ModelUpdatePolicy(Protocol):
 class OpenRouterData(BaseModel):
     """Schema for mapped OpenRouter data."""
 
-    costs: ModelCost
+    costs: TokenCosts
     context: ContextWindow
     capabilities: ModelCapabilities
     description: str | None = None
@@ -340,7 +340,7 @@ class OpenRouterDataMapper:
                 with suppress(ValueError, TypeError):  # Invalid cost value, skip
                     costs_data[our_field] = Decimal(pricing[their_field])
 
-        costs = ModelCost.model_validate(costs_data)
+        costs = TokenCosts.model_validate(costs_data)
 
         # Map context window
         context_data = {}
@@ -443,7 +443,7 @@ class ModelUpdater:
         ):
             await logger.adebug("no_valid_cost_data", model_id=model_id)
         else:
-            our_data["costs"] = ModelCost(**our_data.get("costs", {})).model_dump(
+            our_data["costs"] = TokenCosts(**our_data.get("costs", {})).model_dump(
                 exclude_none=True, mode="json"
             )
             our_data["costs"].update(
