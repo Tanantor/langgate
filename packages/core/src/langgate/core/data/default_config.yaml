@@ -75,6 +75,12 @@ services:
     api_format: openai
     tiktoken_model_name: gpt-4o
 
+  # Image generation services
+  replicate:
+    api_key: "${REPLICATE_API_KEY}"
+    default_params:
+      output_format: png
+
 
 # Model-specific configurations
 models:
@@ -443,6 +449,216 @@ models:
     service:
       provider: xai
       model_id: grok-2-vision-latest
+
+
+  # Image models
+  # OpenAI
+  - id: openai/gpt-image-1
+    service:
+      provider: openai
+      model_id: gpt-image-1
+
+  - id: openai/dall-e-3
+    service:
+      provider: openai
+      model_id: dall-e-3
+
+  # xAI
+  - id: xai/grok-2-image
+    service:
+      provider: xai
+      model_id: grok-2-image
+
+  # Google
+  - id: google/imagen-4-ultra
+    service:
+      provider: replicate
+      model_id: google/imagen-4-ultra
+    default_params:
+      safety_filter_level: "block_only_high"
+
+  - id: google/imagen-4
+    service:
+      provider: replicate
+      model_id: google/imagen-4
+    default_params:
+      safety_filter_level: "block_only_high"
+
+  - id: google/imagen-4-fast
+    service:
+      provider: replicate
+      model_id: google/imagen-4-fast
+    default_params:
+      safety_filter_level: "block_only_high"
+
+  # Black Forest Labs (Flux)
+  - id: black-forest-labs/flux-kontext-max
+    service:
+      provider: replicate
+      model_id: black-forest-labs/flux-kontext-max
+    default_params:
+      safety_tolerance: 6
+
+  - id: black-forest-labs/flux-kontext-pro
+    service:
+      provider: replicate
+      model_id: black-forest-labs/flux-kontext-pro
+    default_params:
+      safety_tolerance: 6
+
+  - id: black-forest-labs/flux-kontext-dev
+    service:
+      provider: replicate
+      model_id: black-forest-labs/flux-kontext-dev
+    default_params:
+      safety_filter_level: true
+
+  - id: black-forest-labs/flux-1.1-pro-ultra
+    service:
+      provider: replicate
+      model_id: black-forest-labs/flux-1.1-pro-ultra
+    default_params:
+      safety_tolerance: 6
+
+  - id: black-forest-labs/flux-1.1-pro
+    service:
+      provider: replicate
+      model_id: black-forest-labs/flux-1.1-pro
+    default_params:
+      safety_tolerance: 6
+
+  - id: black-forest-labs/flux-pro
+    service:
+      provider: replicate
+      model_id: black-forest-labs/flux-pro
+    default_params:
+      safety_tolerance: 6
+
+  - id: black-forest-labs/flux-dev
+    service:
+      provider: replicate
+      model_id: black-forest-labs/flux-dev
+    default_params:
+      disable_safety_checker: true
+
+  - id: black-forest-labs/flux-schnell
+    service:
+      provider: replicate
+      model_id: black-forest-labs/flux-schnell
+    default_params:
+      disable_safety_checker: true
+
+  - id: black-forest-labs/flux-fill-pro
+    service:
+      provider: replicate
+      model_id: black-forest-labs/flux-fill-pro
+    default_params:
+      safety_tolerance: 6
+
+  - id: black-forest-labs/flux-fill-dev
+    service:
+      provider: replicate
+      model_id: black-forest-labs/flux-fill-dev
+    default_params:
+      disable_safety_checker: true
+
+  # Recraft
+  - id: recraft-ai/recraft-v3
+    service:
+      provider: replicate
+      model_id: recraft-ai/recraft-v3
+    default_params:
+      style: realistic_image
+
+  - id: recraft-ai/recraft-20b
+    service:
+      provider: replicate
+      model_id: recraft-ai/recraft-20b
+
+  - id: recraft-ai/recraft-creative-upscale
+    service:
+      provider: replicate
+      model_id: recraft-ai/recraft-creative-upscale
+
+  - id: recraft-ai/recraft-crisp-upscale
+    service:
+      provider: replicate
+      model_id: recraft-ai/recraft-crisp-upscale
+
+  # Stability AI
+  - id: stability-ai/sd-3.5-large
+    service:
+      provider: replicate
+      model_id: stability-ai/stable-diffusion-3.5-large
+
+  - id: stability-ai/sd-3.5-large-turbo
+    service:
+      provider: replicate
+      model_id: stability-ai/stable-diffusion-3.5-large-turbo
+
+  - id: stability-ai/sd-3.5-medium
+    service:
+      provider: replicate
+      model_id: stability-ai/stable-diffusion-3.5-medium
+
+  - id: stability-ai/sdxl
+    service:
+      provider: replicate
+      model_id: stability-ai/sdxl:7762fd07cf82c948538e41f63f77d685e02b063e37e496e96eefd46c929f9bdc
+    default_params:
+      disable_safety_checker: true
+
+  # ByteDance
+  - id: bytedance/sdxl-lightning
+    service:
+      provider: replicate
+      model_id: bytedance/sdxl-lightning-4step:6f7a773af6fc3e8de9d5a3c00be77c17308914bf67772726aff83496ba1e3bbe
+    default_params:
+      disable_safety_checker: true
+
+  # MiniMax
+  - id: minimax/image-01
+    service:
+      provider: replicate
+      model_id: minimax/image-01
+
+  # HiDream
+  - id: hidream/hidream-l1-full
+    service:
+      provider: replicate
+      model_id: prunaai/hidream-l1-full:3a1457ebedf387206f83c3c8b30e8ce495084c3b7d7328b5ed2d55304124851c
+
+  - id: hidream/hidream-l1-dev
+    service:
+      provider: replicate
+      model_id: prunaai/hidream-l1-dev:597c67f9baf9bd7f4c363366c1991ff4e126b566437e10c5f5d83e25208be34b
+
+  - id: hidream/hidream-l1-fast
+    service:
+      provider: replicate
+      model_id: prunaai/hidream-l1-fast:17c237d753218fed0ed477cb553902b6b75735f48c128537ab829096ef3d3645
+
+  - id: hidream/hidream-e1
+    service:
+      provider: replicate
+      model_id: prunaai/hidream-e1:ea6549775ccda226776338114de4369854113dd9ce2ab1249dc229b90357572e
+
+  # Easel
+  - id: easel/ai-avatars
+    service:
+      provider: replicate
+      model_id: easel/ai-avatars
+
+  - id: easel/advanced-face-swap
+    service:
+      provider: replicate
+      model_id: easel/advanced-face-swap
+
+  # Topaz Labs
+  - id: topazlabs/image-upscale
+    service:
+      provider: replicate
+      model_id: topazlabs/image-upscale
 
 app_config:
   CORS_ORIGINS: ["*"]

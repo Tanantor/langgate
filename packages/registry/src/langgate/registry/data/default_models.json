@@ -1929,7 +1929,7 @@
       }
     }
   },
-    "replicate/black-forest-labs/flux-fill-pro": {
+  "replicate/black-forest-labs/flux-fill-pro": {
     "name": "FLUX.1 Fill [pro]",
     "mode": "image",
     "service_provider": "replicate",
@@ -1994,7 +1994,7 @@
       }
     }
   },
-  "replicate/bytedance/stability-ai/sdxl:7762fd07cf82c948538e41f63f77d685e02b063e37e496e96eefd46c929f9bdc": {
+  "replicate/stability-ai/sdxl:7762fd07cf82c948538e41f63f77d685e02b063e37e496e96eefd46c929f9bdc": {
     "name": "SDXL",
     "mode": "image",
     "service_provider": "replicate",
@@ -2004,6 +2004,19 @@
     "costs": {
       "image_generation": {
         "flat_rate": 0.0042
+      }
+    }
+  },
+  "replicate/bytedance/sdxl-lightning-4step:6f7a773af6fc3e8de9d5a3c00be77c17308914bf67772726aff83496ba1e3bbe": {
+    "name": "SDXL-Lightning",
+    "mode": "image",
+    "service_provider": "replicate",
+    "model_provider": "bytedance",
+    "model_provider_name": "ByteDance",
+    "description": "SDXL-Lightning by ByteDance is a fast text-to-image model based on Stable Diffusion XL that makes high-quality images in as few as 4 steps.",
+    "costs": {
+      "image_generation": {
+        "flat_rate": 0.0014
       }
     }
   },
@@ -2188,6 +2201,30 @@
         "flat_rate": 0.07
       }
     }
+  },
+  "replicate/topazlabs/image-upscale": {
+    "name": "Topaz Upscale",
+    "mode": "image",
+    "service_provider": "replicate",
+    "model_provider": "topazlabs",
+    "model_provider_name": "Topaz Labs",
+    "costs": {
+      "image_generation": {
+        "quality_tiers": {
+          "12mp": { "default": 0.05 },
+          "24mp": { "default": 0.05 },
+          "36mp": { "default": 0.1 },
+          "48mp": { "default": 0.1 },
+          "60mp": { "default": 0.15 },
+          "96mp": { "default": 0.2 },
+          "132mp": { "default": 0.24 },
+          "168mp": { "default": 0.29 },
+          "336mp": { "default": 0.53 },
+          "512mp": { "default": 0.82 }
+        }
+      }
+    },
+    "description": "Professional-grade image upscaling, from Topaz Labs, enhances image resolution and quality."
   },
   "xai/grok-2-image": {
     "name": "Grok 2 Image",
