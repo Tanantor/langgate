@@ -3,9 +3,10 @@
 # or set the LANGGATE_CONFIG environment variable to point to this file.
 # e.g. export LANGGATE_CONFIG=path/to/langgate_config.yaml
 
-# Global default parameters (applied to all models)
+# Global default parameters by modality
 default_params:
-  temperature: 0.7
+  text:
+    temperature: 0.7
 
 # Service provider configurations
 services:
@@ -30,38 +31,66 @@ services:
         remove_params:
           - temperature
 
+  replicate:
+    api_key: "${REPLICATE_API_KEY}"
+
+
 # Model-specific configurations
 models:
-  - id: openai/gpt-4.1
-    service:
-      provider: openai
-      model_id: gpt-4.1
+  text:
+    - id: openai/gpt-4.1
+      service:
+        provider: openai
+        model_id: gpt-4.1
 
-  - id: openai/o3
-    service:
-      provider: openai
-      model_id: o3
+    - id: openai/o3
+      service:
+        provider: openai
+        model_id: o3
 
-  - id: openai/o3-high
-    service:
-      provider: openai
-      model_id: o3
-    name: o3-high
-    description: o3-high applies high-effort reasoning for the o3 model
-    override_params:
-      reasoning_effort: high
+    - id: openai/o3-high
+      service:
+        provider: openai
+        model_id: o3
+      name: o3-high
+      description: o3-high applies high-effort reasoning for the o3 model
+      override_params:
+        reasoning_effort: high
 
-  - id: anthropic/claude-sonnet-4
-    service:
-      provider: anthropic
-      model_id: claude-sonnet-4-0
+    - id: anthropic/claude-sonnet-4
+      service:
+        provider: anthropic
+        model_id: claude-sonnet-4-0
 
-  - id: anthropic/claude-sonnet-4-reasoning
-    service:
-      provider: anthropic
-      model_id: claude-sonnet-4-0
-    name: Claude-4 Sonnet R
-    description: "Claude-4 Sonnet with reasoning capabilities."
-    override_params:
-      thinking:
-        budget_tokens: 1024
+    - id: anthropic/claude-sonnet-4-reasoning
+      service:
+        provider: anthropic
+        model_id: claude-sonnet-4-0
+      name: Claude-4 Sonnet R
+      description: "Claude-4 Sonnet with reasoning capabilities."
+      override_params:
+        thinking:
+          budget_tokens: 1024
+
+  image:
+    - id: openai/gpt-image-1
+      service:
+        provider: openai
+        model_id: gpt-image-1
+
+    - id: openai/dall-e-3
+      service:
+        provider: openai
+        model_id: dall-e-3
+
+    - id: black-forest-labs/flux-dev
+      service:
+        provider: replicate
+        model_id: black-forest-labs/flux-dev
+      default_params:
+        disable_safety_checker: true
+
+    - id: stability-ai/sd-3.5-large
+      service:
+        provider: replicate
+        model_id: stability-ai/stable-diffusion-3.5-large
