@@ -1171,15 +1171,8 @@
     "model_provider": "google",
     "model_provider_name": "Google",
     "modalities": {
-      "input": [
-        "text",
-        "image",
-        "audio",
-        "video"
-      ],
-      "output": [
-        "text"
-      ]
+      "input": ["text", "image", "audio", "video"],
+      "output": ["text"]
     },
     "capabilities": {
       "supports_tools": true,
@@ -1212,14 +1205,8 @@
     "model_provider": "google",
     "model_provider_name": "Google",
     "modalities": {
-      "input": [
-        "file",
-        "text",
-        "image"
-      ],
-      "output": [
-        "text"
-      ]
+      "input": ["file", "text", "image"],
+      "output": ["text"]
     },
     "capabilities": {
       "supports_tools": true,
@@ -1779,5 +1766,440 @@
     "_last_updated": "2025-07-01T16:47:00.889029+00:00",
     "_data_source": "openrouter",
     "_last_updated_from_id": "mistralai/mistral-nemo"
+  },
+  "openai/gpt-image-1": {
+    "name": "GPT Image 1",
+    "mode": "image",
+    "service_provider": "openai",
+    "model_provider": "openai",
+    "model_provider_name": "OpenAI",
+    "description": "GPT-Image-1 is a multimodal model that accepts both text and image inputs, and produces image outputs.",
+    "costs": {
+      "token_costs": {
+        "input_cost_per_token": 0.00001,
+        "output_cost_per_token": 0.00004,
+        "input_cached_cost_per_token": 0.0000025
+      },
+      "image_generation": {
+        "quality_tiers": {
+          "low": {
+            "1024x1024": 0.011,
+            "1024x1536": 0.016,
+            "1536x1024": 0.016
+          },
+          "medium": {
+            "1024x1024": 0.042,
+            "1024x1536": 0.063,
+            "1536x1024": 0.063
+          },
+          "high": {
+            "1024x1024": 0.167,
+            "1024x1536": 0.25,
+            "1536x1024": 0.25
+          }
+        }
+      }
+    }
+  },
+  "openai/dall-e-3": {
+    "name": "DALL-E 3",
+    "mode": "image",
+    "service_provider": "openai",
+    "model_provider": "openai",
+    "model_provider_name": "OpenAI",
+    "description": "DALL-E 3 is the third version of OpenAI's DALL-E model, which generates images from textual descriptions.",
+    "costs": {
+      "image_generation": {
+        "quality_tiers": {
+          "standard": {
+            "1024x1024": 0.04,
+            "1024x1792": 0.08,
+            "1792x1024": 0.08
+          },
+          "hd": {
+            "1024x1024": 0.08,
+            "1024x1792": 0.12,
+            "1792x1024": 0.12
+          }
+        }
+      }
+    }
+  },
+  "replicate/black-forest-labs/flux-kontext-max": {
+    "name": "FLUX.1 Kontext [max]",
+    "mode": "image",
+    "service_provider": "replicate",
+    "model_provider": "black-forest-labs",
+    "model_provider_name": "Black Forest Labs",
+    "description": "FLUX.1 Kontext [max] is a premium text-based image editing model that delivers maximum performance and improved typography generation for transforming images through natural language prompts.",
+    "costs": {
+      "image_generation": {
+        "flat_rate": 0.08
+      }
+    }
+  },
+  "replicate/black-forest-labs/flux-kontext-pro": {
+    "name": "FLUX.1 Kontext [pro]",
+    "mode": "image",
+    "service_provider": "replicate",
+    "model_provider": "black-forest-labs",
+    "model_provider_name": "Black Forest Labs",
+    "description": "FLUX.1 Kontext [pro] is a state-of-the-art text-based image editing model that delivers high-quality outputs with excellent prompt following and consistent results for transforming images through natural language.",
+    "costs": {
+      "image_generation": {
+        "flat_rate": 0.04
+      }
+    }
+  },
+  "replicate/black-forest-labs/flux-kontext-dev": {
+    "name": "FLUX.1 Kontext [dev]",
+    "mode": "image",
+    "service_provider": "replicate",
+    "model_provider": "black-forest-labs",
+    "model_provider_name": "Black Forest Labs",
+    "description": "FLUX.1 Kontext [dev] is an open-weight version of FLUX.1 Kontext, a text-based image editing model with excellent prompt following and consistent results for transforming images through natural language.",
+    "costs": {
+      "image_generation": {
+        "flat_rate": 0.025
+      }
+    }
+  },
+  "replicate/black-forest-labs/flux-1.1-pro-ultra": {
+    "name": "FLUX 1.1 [pro] Ultra",
+    "mode": "image",
+    "service_provider": "replicate",
+    "model_provider": "black-forest-labs",
+    "model_provider_name": "Black Forest Labs",
+    "description": "FLUX1.1 [pro] in ultra and raw modes. Images are up to 4 megapixels. Use raw mode for realism.",
+    "costs": {
+      "image_generation": {
+        "flat_rate": 0.06
+      }
+    }
+  },
+  "replicate/black-forest-labs/flux-1.1-pro": {
+    "name": "FLUX 1.1 [pro]",
+    "mode": "image",
+    "service_provider": "replicate",
+    "model_provider": "black-forest-labs",
+    "model_provider_name": "Black Forest Labs",
+    "description": "FLUX 1.1 [pro] is a closed-source image generation model from Black Forest Labs, with excellent prompt following, visual quality, image detail, and output diversity. It offers faster generation times, achieving up to six times faster results than FLUX 1.0",
+    "costs": {
+      "image_generation": {
+        "flat_rate": 0.04
+      }
+    }
+  },
+  "replicate/black-forest-labs/flux-pro": {
+    "name": "FLUX.1 [pro]",
+    "mode": "image",
+    "service_provider": "replicate",
+    "model_provider": "black-forest-labs",
+    "model_provider_name": "Black Forest Labs",
+    "description": "FLUX.1 [pro] is a closed-source image generation model from Black Forest Labs, with excellent prompt following, visual quality, image detail, and output diversity.",
+    "costs": {
+      "image_generation": {
+        "flat_rate": 0.055
+      }
+    }
+  },
+  "replicate/black-forest-labs/flux-dev": {
+    "name": "FLUX.1 [dev]",
+    "mode": "image",
+    "service_provider": "replicate",
+    "model_provider": "black-forest-labs",
+    "model_provider_name": "Black Forest Labs",
+    "description": "FLUX.1 dev is an open-weight, 12 billion parameter rectified flow transformer, distilled from FLUX.1 [pro], FLUX.1 [dev] obtains similar quality and prompt adherence capabilities, while being more efficient and faster.",
+    "costs": {
+      "image_generation": {
+        "flat_rate": 0.025
+      }
+    }
+  },
+  "replicate/black-forest-labs/flux-schnell": {
+    "name": "FLUX.1 [schnell]",
+    "mode": "image",
+    "service_provider": "replicate",
+    "model_provider": "black-forest-labs",
+    "model_provider_name": "Black Forest Labs",
+    "description": "FLUX.1 [schnell] is a high-speed version of the FLUX.1 model.",
+    "costs": {
+      "image_generation": {
+        "flat_rate": 0.003
+      }
+    }
+  },
+    "replicate/black-forest-labs/flux-fill-pro": {
+    "name": "FLUX.1 Fill [pro]",
+    "mode": "image",
+    "service_provider": "replicate",
+    "model_provider": "black-forest-labs",
+    "model_provider_name": "Black Forest Labs",
+    "description": "FLUX.1 Fill [pro] is a professional inpainting and outpainting model. Paint a mask over what you want to change and describe what you want there instead.",
+    "costs": {
+      "image_generation": {
+        "flat_rate": 0.05
+      }
+    }
+  },
+  "replicate/black-forest-labs/flux-fill-dev": {
+    "name": "FLUX.1 Fill [dev]",
+    "mode": "image",
+    "service_provider": "replicate",
+    "model_provider": "black-forest-labs",
+    "model_provider_name": "Black Forest Labs",
+    "description": "FLUX.1 Fill [dev] is an open-weight inpainting model for editing and extending images, guidance-distilled from FLUX.1 Fill [pro]. Paint a mask over what you want to change and describe what you want there instead.",
+    "costs": {
+      "image_generation": {
+        "flat_rate": 0.04
+      }
+    }
+  },
+  "replicate/stability-ai/stable-diffusion-3.5-large": {
+    "name": "SD 3.5 Large",
+    "mode": "image",
+    "service_provider": "replicate",
+    "model_provider": "stability-ai",
+    "model_provider_name": "Stability AI",
+    "description": "Stable Diffusion 3.5 Large is a text-to-image model from Stability AI that generates high-resolution images with fine details. It supports various artistic styles and produces diverse outputs from the same prompt, thanks to Query-Key Normalization.",
+    "costs": {
+      "image_generation": {
+        "flat_rate": 0.065
+      }
+    }
+  },
+  "replicate/stability-ai/stable-diffusion-3.5-large-turbo": {
+    "name": "SD 3.5 Large Turbo",
+    "mode": "image",
+    "service_provider": "replicate",
+    "model_provider": "stability-ai",
+    "model_provider_name": "Stability AI",
+    "description": "Stable Diffusion 3.5 Large Turbo is a Multimodal Diffusion Transformer (MMDiT) text-to-image model with Adversarial Diffusion Distillation (ADD) that generates high-resolution images with fine details in just 4 inference steps. It supports various artistic styles, produces diverse outputs from the same prompt, and features improved performance in image quality, typography, complex prompt understanding, and resource-efficiency with a focus on fewer inference steps.",
+    "costs": {
+      "image_generation": {
+        "flat_rate": 0.04
+      }
+    }
+  },
+  "replicate/stability-ai/stable-diffusion-3.5-medium": {
+    "name": "Stable Diffusion 3.5 Medium",
+    "mode": "image",
+    "service_provider": "replicate",
+    "model_provider": "stability-ai",
+    "model_provider_name": "Stability AI",
+    "description": "Stable Diffusion 3.5 Medium is a 2.5 billion parameter Multimodal Diffusion Transformer with improvements (MMDiT-X) text-to-image model that features improved performance in image quality, typography, complex prompt understanding, and resource-efficiency. It introduces self-attention modules in the first 13 layers of the transformer, enhancing multi-resolution generation and overall image coherence.",
+    "costs": {
+      "image_generation": {
+        "flat_rate": 0.035
+      }
+    }
+  },
+  "replicate/bytedance/stability-ai/sdxl:7762fd07cf82c948538e41f63f77d685e02b063e37e496e96eefd46c929f9bdc": {
+    "name": "SDXL",
+    "mode": "image",
+    "service_provider": "replicate",
+    "model_provider": "stability-ai",
+    "model_provider_name": "Stability AI",
+    "description": "SDXL is a text-to-image generative AI model from Stability AI that creates beautiful images.",
+    "costs": {
+      "image_generation": {
+        "flat_rate": 0.0042
+      }
+    }
+  },
+  "replicate/google/imagen-4-ultra": {
+    "name": "Imagen 4 Ultra",
+    "mode": "image",
+    "service_provider": "replicate",
+    "model_provider": "google",
+    "model_provider_name": "Google",
+    "description": "Imagen 4 Ultra, Google's flagship text-to-image generation model, optimized higher quality at the expense of speed and cost.",
+    "costs": {
+      "image_generation": {
+        "flat_rate": 0.04
+      }
+    }
+  },
+  "replicate/google/imagen-4": {
+    "name": "Imagen 4",
+    "mode": "image",
+    "service_provider": "replicate",
+    "model_provider": "google",
+    "model_provider_name": "Google",
+    "description": "Google's Imagen 4 flagship model for high-quality text-to-image generation.",
+    "costs": {
+      "image_generation": {
+        "flat_rate": 0.04
+      }
+    }
+  },
+  "replicate/google/imagen-4-fast": {
+    "name": "Imagen 4 Fast",
+    "mode": "image",
+    "service_provider": "replicate",
+    "model_provider": "google",
+    "model_provider_name": "Google",
+    "description": "Imagen 4 Fast, Google's flagship text-to-image generation model, optimized for speed and cost efficiency.",
+    "costs": {
+      "image_generation": {
+        "flat_rate": 0.04
+      }
+    }
+  },
+  "replicate/recraft-ai/recraft-v3": {
+    "name": "Recraft V3",
+    "mode": "image",
+    "service_provider": "replicate",
+    "model_provider": "recreaft-ai",
+    "model_provider_name": "Recraft AI",
+    "description": "Recraft V3 is a text-to-image model with the ability to generate long texts, and images in a wide list of styles.",
+    "costs": {
+      "image_generation": {
+        "flat_rate": 0.04
+      }
+    }
+  },
+  "replicate/recraft-ai/recraft-20b": {
+    "name": "Recraft 20b",
+    "mode": "image",
+    "service_provider": "replicate",
+    "model_provider": "recreaft-ai",
+    "model_provider_name": "Recraft AI",
+    "description": "Recraft 20b is a text-to-image model designed to generate affordable images quickly.",
+    "costs": {
+      "image_generation": {
+        "flat_rate": 0.022
+      }
+    }
+  },
+  "replicate/recraft-ai/recraft-creative-upscale": {
+    "name": "Recraft Creative Upscale",
+    "mode": "image",
+    "service_provider": "replicate",
+    "model_provider": "recreaft-ai",
+    "model_provider_name": "Recraft AI",
+    "description": "Creative Upscale focuses on enhancing details and refining complex elements in the image. It doesn't just increase resolution but adds depth by improving textures, fine details, and facial features.",
+    "costs": {
+      "image_generation": {
+        "flat_rate": 0.3
+      }
+    }
+  },
+  "replicate/recraft-ai/recraft-crisp-upscale": {
+    "name": "Recraft Crisp Upscale",
+    "mode": "image",
+    "service_provider": "replicate",
+    "model_provider": "recreaft-ai",
+    "model_provider_name": "Recraft AI",
+    "description": "Designed to make images sharper and cleaner, Crisp Upscale increases overall quality, aiming to maintain the original image's essence in higher resolution.",
+    "costs": {
+      "image_generation": {
+        "flat_rate": 0.006
+      }
+    }
+  },
+  "replicate/minimax/image-01": {
+    "name": "MiniMax Image-01",
+    "mode": "image",
+    "service_provider": "replicate",
+    "model_provider": "minimax",
+    "model_provider_name": "MiniMax",
+    "description": "Minimax's first image model, with character reference image support (human face) to use as the subject in the generated image.",
+    "costs": {
+      "image_generation": {
+        "flat_rate": 0.01
+      }
+    }
+  },
+  "replicate/prunaai/hidream-l1-full:3a1457ebedf387206f83c3c8b30e8ce495084c3b7d7328b5ed2d55304124851c": {
+    "name": "HiDream-I1 Full",
+    "mode": "image",
+    "service_provider": "replicate",
+    "model_provider": "hidream",
+    "model_provider_name": "HiDream",
+    "description": "HiDream-I1 is an advanced open-source text-to-image model for generating photorealistic images, featuring 17 billion parameters and a Mixture of Experts architecture.",
+    "costs": {
+      "image_generation": {
+        "flat_rate": 0.063
+      }
+    }
+  },
+  "replicate/prunaai/hidream-l1-dev:597c67f9baf9bd7f4c363366c1991ff4e126b566437e10c5f5d83e25208be34b": {
+    "name": "HiDream-I1 Dev",
+    "mode": "image",
+    "service_provider": "replicate",
+    "model_provider": "hidream",
+    "model_provider_name": "HiDream",
+    "description": "HiDream-I1 is an advanced open-source text-to-image model for generating photorealistic images, featuring 17 billion parameters and a Mixture of Experts architecture.",
+    "costs": {
+      "image_generation": {
+        "flat_rate": 0.019
+      }
+    }
+  },
+  "replicate/prunaai/hidream-l1-fast:17c237d753218fed0ed477cb553902b6b75735f48c128537ab829096ef3d3645": {
+    "name": "HiDream-I1 Fast",
+    "mode": "image",
+    "service_provider": "replicate",
+    "model_provider": "hidream",
+    "model_provider_name": "HiDream",
+    "description": "HiDream-I1 is an advanced open-source text-to-image model for generating photorealistic images, featuring 17 billion parameters and a Mixture of Experts architecture.",
+    "costs": {
+      "image_generation": {
+        "flat_rate": 0.014
+      }
+    }
+  },
+  "replicate/prunaai/hidream-e1:ea6549775ccda226776338114de4369854113dd9ce2ab1249dc229b90357572e": {
+    "name": "HiDream-E1",
+    "mode": "image",
+    "service_provider": "replicate",
+    "model_provider": "hidream",
+    "model_provider_name": "HiDream",
+    "description": "HiDream-E1 is an image editing model built on HiDream-I1.",
+    "costs": {
+      "image_generation": {
+        "flat_rate": 0.18
+      }
+    }
+  },
+  "replicate/easel/ai-avatars": {
+    "name": "Easel Avatar",
+    "mode": "image",
+    "service_provider": "replicate",
+    "model_provider": "easel",
+    "model_provider_name": "Easel",
+    "description": "Easel Avatar creates scenes with one or two people using face input images and a text prompt.",
+    "costs": {
+      "image_generation": {
+        "flat_rate": 0.05
+      }
+    }
+  },
+  "replicate/easel/advanced-face-swap": {
+    "name": "Easel Face Swap",
+    "mode": "image",
+    "service_provider": "replicate",
+    "model_provider": "easel",
+    "model_provider_name": "Easel",
+    "description": "Easel Advanced Face Swap allows swapping faces of one or two people at once, while preserving body and scene details.",
+    "costs": {
+      "image_generation": {
+        "flat_rate": 0.07
+      }
+    }
+  },
+  "xai/grok-2-image": {
+    "name": "Grok 2 Image",
+    "mode": "image",
+    "service_provider": "xai",
+    "model_provider": "xai",
+    "model_provider_name": "xAI",
+    "costs": {
+      "image_generation": {
+        "flat_rate": 0.07
+      }
+    },
+    "description": "Grok-2 Image from xAI transforms text prompts into high-qiality images."
   }
 }
