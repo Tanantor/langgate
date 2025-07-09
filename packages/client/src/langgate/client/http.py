@@ -134,25 +134,25 @@ class BaseHTTPRegistryClient(
 
     async def _fetch_llm_info(self, model_id: str) -> LLMInfoT:
         """Fetch LLM info from the source via HTTP."""
-        response = await self._request("GET", f"/models/{model_id}?modality=text")
+        response = await self._request("GET", f"/models/llms/{model_id}")
         response.raise_for_status()
         return self.llm_info_cls.model_validate(response.json())
 
     async def _fetch_image_model_info(self, model_id: str) -> ImageInfoT:
         """Fetch image model info from the source via HTTP."""
-        response = await self._request("GET", f"/models/{model_id}?modality=image")
+        response = await self._request("GET", f"/models/images/{model_id}")
         response.raise_for_status()
         return self.image_info_cls.model_validate(response.json())
 
     async def _fetch_all_llms(self) -> list[LLMInfoT]:
         """Fetch all LLMs from the source via HTTP."""
-        response = await self._request("GET", "/models?modality=text")
+        response = await self._request("GET", "/models/llms")
         response.raise_for_status()
         return [self.llm_info_cls.model_validate(model) for model in response.json()]
 
     async def _fetch_all_image_models(self) -> list[ImageInfoT]:
         """Fetch all image models from the source via HTTP."""
-        response = await self._request("GET", "/models?modality=image")
+        response = await self._request("GET", "/models/images")
         response.raise_for_status()
         return [self.image_info_cls.model_validate(model) for model in response.json()]
 
