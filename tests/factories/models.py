@@ -12,10 +12,13 @@ from langgate.core.models import (
     MODEL_PROVIDER_META,
     MODEL_PROVIDER_OPENAI,
     ContextWindow,
+    ImageGenerationCost,
+    ImageModelCost,
+    ImageModelInfo,
     LLMInfo,
     ModelCapabilities,
-    ModelCost,
     ModelProvider,
+    TokenCosts,
 )
 from tests.factories.base import BasePydanticFactory
 
@@ -36,8 +39,8 @@ class ModelCapabilitiesFactory(BasePydanticFactory[ModelCapabilities]):
     supports_response_schema = Faker("pybool")
 
 
-class ModelCostFactory(BasePydanticFactory[ModelCost]):
-    """Factory for ModelCost objects."""
+class TokenCostsFactory(BasePydanticFactory[TokenCosts]):
+    """Factory for TokenCosts objects."""
 
     input_cost_per_token = factory.LazyFunction(lambda: Decimal("0.00001"))
     output_cost_per_token = factory.LazyFunction(lambda: Decimal("0.00002"))
@@ -65,7 +68,32 @@ class LLMInfoFactory(BasePydanticFactory[LLMInfo]):
     name = factory.Sequence(lambda n: f"Test Model {n}")
     description = Faker("sentence")
     provider = factory.SubFactory(ModelProviderFactory)
-    costs = factory.SubFactory(ModelCostFactory)
+    costs = factory.SubFactory(TokenCostsFactory)
     capabilities = factory.SubFactory(ModelCapabilitiesFactory)
     context_window = factory.SubFactory(ContextWindowFactory)
+    updated_dt = Faker("date_time_this_year", tzinfo=UTC)
+
+
+class ImageGenerationCostFactory(BasePydanticFactory[ImageGenerationCost]):
+    """Factory for ImageGenerationCost objects."""
+
+    input_cost_per_image = factory.LazyFunction(lambda: Decimal("0.04"))
+    width = Faker("pyint", min_value=512, max_value=2048)
+    height = Faker("pyint", min_value=512, max_value=2048)
+
+
+class ImageModelCostFactory(BasePydanticFactory[ImageModelCost]):
+    """Factory for ImageModelCost objects."""
+
+    flat_rate = factory.SubFactory(ImageGenerationCostFactory)
+
+
+class ImageModelInfoFactory(BasePydanticFactory[ImageModelInfo]):
+    """Factory for ImageModelInfo objects."""
+
+    id = factory.Sequence(lambda n: f"image-model-{n}")
+    name = factory.Sequence(lambda n: f"Test Image Model {n}")
+    description = Faker("sentence")
+    provider = factory.SubFactory(ModelProviderFactory)
+    costs = factory.SubFactory(ImageModelCostFactory)
     updated_dt = Faker("date_time_this_year", tzinfo=UTC)
