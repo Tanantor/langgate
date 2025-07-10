@@ -6,9 +6,9 @@ This directory contains Jupyter notebooks demonstrating how to use the various c
 
 We recommend using these notebook examples for an interactive exploration of the SDK:
 
-1. [**registry_example.ipynb**](registry_example.ipynb):  Using the `LocalRegistryClient` to get model information
-2. [**transformer_example.ipynb**](transformer_example.ipynb):  Using the `LocalTransformerClient` for parameter transformation
-3. [**combined_example.ipynb**](combined_example.ipynb):  Using the combined `LangGateLocal` for both functionality
+1. [**registry_example.ipynb**](registry_example.ipynb):  Using the `LocalRegistryClient` to get LLM and image model information
+2. [**transformer_example.ipynb**](transformer_example.ipynb):  Using the `LocalTransformerClient` for parameter transformation with both LLMs and image models
+3. [**combined_example.ipynb**](combined_example.ipynb):  Using the combined `LangGateLocal` for both LLM and image model functionality
 4. [**langchain_examples.ipynb**](langchain_examples.ipynb):  Integrating LangGate with Langchain
 5. [**http_client_example.ipynb**](http_client_example.ipynb):  Using the `HTTPRegistryClient` to connect to a remote LangGate service
 6. [**custom_clients.ipynb**](custom_clients.ipynb):  Creating custom clients with LangGate
