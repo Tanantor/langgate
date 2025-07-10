@@ -5,7 +5,7 @@ from typing import Any
 
 from langgate.client import RegistryClientProtocol
 from langgate.core.logging import get_logger
-from langgate.core.models import LLMInfo
+from langgate.core.models import ImageModelInfo, LLMInfo
 from langgate.registry import LocalRegistryClient
 from langgate.sdk.protocol import LangGateLocalProtocol
 from langgate.transform import LocalTransformerClient, TransformerClientProtocol
@@ -32,7 +32,7 @@ class LangGateLocal(LangGateLocalProtocol):
 
     def __init__(
         self,
-        registry: RegistryClientProtocol | None = None,
+        registry: RegistryClientProtocol[LLMInfo, ImageModelInfo] | None = None,
         transformer: TransformerClientProtocol | None = None,
     ):
         """Initialize the client with registry and transformer instances."""
@@ -42,27 +42,51 @@ class LangGateLocal(LangGateLocalProtocol):
             self._initialized = True
             logger.debug("initialized_langgate_local_client_singleton")
 
-    async def get_model_info(self, model_id: str) -> LLMInfo:
-        """Get model information by ID.
+    # LLM methods
+    async def get_llm_info(self, model_id: str) -> LLMInfo:
+        """Get LLM information by ID.
 
         Args:
-            model_id: The ID of the model to get information for
+            model_id: The ID of the LLM to get information for
 
         Returns:
-            Information about the requested model
+            Information about the requested LLM
 
         Raises:
-            ValueError: If the model is not found
+            ValueError: If the LLM is not found
         """
-        return await self.registry.get_model_info(model_id)
+        return await self.registry.get_llm_info(model_id)
 
-    async def list_models(self) -> Sequence[LLMInfo]:
-        """List all available models.
+    async def list_llms(self) -> Sequence[LLMInfo]:
+        """List all available LLMs.
 
         Returns:
-            A list of all available models
+            A list of all available LLMs
         """
-        return await self.registry.list_models()
+        return await self.registry.list_llms()
+
+    # Image model methods
+    async def get_image_model_info(self, model_id: str) -> ImageModelInfo:
+        """Get image model information by ID.
+
+        Args:
+            model_id: The ID of the image model to get information for
+
+        Returns:
+            Information about the requested image model
+
+        Raises:
+            ValueError: If the image model is not found
+        """
+        return await self.registry.get_image_model_info(model_id)
+
+    async def list_image_models(self) -> Sequence[ImageModelInfo]:
+        """List all available image models.
+
+        Returns:
+            A list of all available image models
+        """
+        return await self.registry.list_image_models()
 
     async def get_params(
         self, model_id: str, input_params: dict[str, Any]

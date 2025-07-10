@@ -41,7 +41,7 @@ def test_model_registry_works_without_env_file():
             registry = ModelRegistry()
 
             # Verify we have models available
-            models = registry.list_models()
+            models = registry.list_llms()
             assert isinstance(models, list)
 
             # We may have 0 models in this test case since we're using a mock registry

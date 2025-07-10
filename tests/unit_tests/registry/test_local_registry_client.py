@@ -1,5 +1,6 @@
 """Unit tests for LocalRegistryClient."""
 
+from langgate.core.models import ImageModelInfo
 from langgate.registry.local import BaseLocalRegistryClient, LocalRegistryClient
 from tests.mocks.registry_mocks import CustomLLMInfo, CustomLocalRegistryClient
 from tests.utils.registry_utils import patch_model_registry
@@ -29,14 +30,17 @@ def test_custom_client_type_parameter_extraction():
         client = CustomLocalRegistryClient()
 
         # Verify the generic type parameter extraction worked
-        assert client.model_info_cls is CustomLLMInfo
+        assert client.llm_info_cls is CustomLLMInfo
 
 
 def test_explicit_model_class_parameter():
-    """Test passing explicit model_info_cls to BaseLocalRegistryClient."""
+    """Test passing explicit llm_info_cls to BaseLocalRegistryClient."""
     with patch_model_registry():
-        # When using directly with type parameter, model_info_cls must be provided explicitly
-        client = BaseLocalRegistryClient[CustomLLMInfo](model_info_cls=CustomLLMInfo)
+        # When using directly with type parameter, llm_info_cls must be provided explicitly
 
-        # Verify the model_info_cls is correctly set
-        assert client.model_info_cls is CustomLLMInfo
+        client = BaseLocalRegistryClient[CustomLLMInfo, ImageModelInfo](
+            llm_info_cls=CustomLLMInfo
+        )
+
+        # Verify the llm_info_cls is correctly set
+        assert client.llm_info_cls is CustomLLMInfo

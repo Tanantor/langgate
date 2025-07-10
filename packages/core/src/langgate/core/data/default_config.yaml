@@ -1,8 +1,9 @@
 # langgate_config.yaml
 
-# Global default parameters that apply to all models unless overridden
+# Global default parameters by modality
 default_params:
-  temperature: 0.7
+  text:
+    temperature: 0.7
 
 # Inference API provider service-specific configurations
 services:
@@ -75,374 +76,590 @@ services:
     api_format: openai
     tiktoken_model_name: gpt-4o
 
+  # Image generation services
+  replicate:
+    api_key: "${REPLICATE_API_KEY}"
+
 
 # Model-specific configurations
 models:
-  - id: openai/gpt-4.1
-    service:
-      provider: openai # API service provider
-      model_id: gpt-4.1 # ID to send to service provider
+  # Text models
+  text:
+    - id: openai/gpt-4.1
+      service:
+        provider: openai # API service provider
+        model_id: gpt-4.1 # ID to send to service provider
 
-  - id: openai/gpt-4.1-mini
-    service:
-      provider: openai
-      model_id: gpt-4.1-mini
+    - id: openai/gpt-4.1-mini
+      service:
+        provider: openai
+        model_id: gpt-4.1-mini
 
-  - id: openai/gpt-4.1-nano
-    service:
-      provider: openai
-      model_id: gpt-4.1-nano
+    - id: openai/gpt-4.1-nano
+      service:
+        provider: openai
+        model_id: gpt-4.1-nano
 
-  - id: openai/gpt-4o
-    service:
-      provider: openai
-      model_id: gpt-4o
+    - id: openai/gpt-4o
+      service:
+        provider: openai
+        model_id: gpt-4o
 
-  - id: openai/gpt-4o-mini
-    service:
-      provider: openai
-      model_id: gpt-4o-mini
+    - id: openai/gpt-4o-mini
+      service:
+        provider: openai
+        model_id: gpt-4o-mini
 
-  - id: openai/o4-mini
-    service:
-      provider: openai
-      model_id: o4-mini
+    - id: openai/o4-mini
+      service:
+        provider: openai
+        model_id: o4-mini
 
-  - id: openai/o3-pro
-    service:
-      provider: openai
-      model_id: o3-pro
+    - id: openai/o3-pro
+      service:
+        provider: openai
+        model_id: o3-pro
 
-  - id: openai/o3
-    service:
-      provider: openai
-      model_id: o3
+    - id: openai/o3
+      service:
+        provider: openai
+        model_id: o3
 
-  - id: openai/o3-high
-    service:
-      provider: openai
-      model_id: o3
-    name: o3-high
-    description: "o3-high applies high-effort reasoning for the o3 model, improving results for the most complex demanding tasks at higher cost and longer latency."
-    override_params:
-      reasoning_effort: high
+    - id: openai/o3-high
+      service:
+        provider: openai
+        model_id: o3
+      name: o3-high
+      description: "o3-high applies high-effort reasoning for the o3 model, improving results for the most complex demanding tasks at higher cost and longer latency."
+      override_params:
+        reasoning_effort: high
 
-  - id: openai/o3-fast
-    service:
-      provider: openai
-      model_id: o3
-    name: o3-fast
-    description: "o3-fast provides faster responses using lower reasoning effort, suitable for moderate reasoning tasks that require quicker replies and lower costs."
-    override_params:
-      reasoning_effort: low
+    - id: openai/o3-fast
+      service:
+        provider: openai
+        model_id: o3
+      name: o3-fast
+      description: "o3-fast provides faster responses using lower reasoning effort, suitable for moderate reasoning tasks that require quicker replies and lower costs."
+      override_params:
+        reasoning_effort: low
 
-  - id: openai/o3-mini
-    service:
-      provider: openai
-      model_id: o3-mini
+    - id: openai/o3-mini
+      service:
+        provider: openai
+        model_id: o3-mini
 
-  - id: openai/o3-mini-high
-    service:
-      provider: openai
-      model_id: o3-mini
-    name: o3-mini-high
-    description: "o3-mini-high enhances the o3-mini model with high reasoning effort, delivering improved results at higher latency and cost."
-    override_params:
-      reasoning_effort: high
+    - id: openai/o3-mini-high
+      service:
+        provider: openai
+        model_id: o3-mini
+      name: o3-mini-high
+      description: "o3-mini-high enhances the o3-mini model with high reasoning effort, delivering improved results at higher latency and cost."
+      override_params:
+        reasoning_effort: high
 
-  - id: openai/o3-mini-fast
-    service:
-      provider: openai
-      model_id: o3-mini
-    name: o3-mini-fast
-    description: "o3-mini-fast prioritizes quick responses with lower reasoning effort, ideal for high-speed reasoning and cost-sensitive scenarios."
-    override_params:
-      reasoning_effort: low
+    - id: openai/o3-mini-fast
+      service:
+        provider: openai
+        model_id: o3-mini
+      name: o3-mini-fast
+      description: "o3-mini-fast prioritizes quick responses with lower reasoning effort, ideal for high-speed reasoning and cost-sensitive scenarios."
+      override_params:
+        reasoning_effort: low
 
-  - id: anthropic/claude-sonnet-4
-    service:
-      provider: anthropic
-      model_id: claude-sonnet-4-0
+    - id: anthropic/claude-sonnet-4
+      service:
+        provider: anthropic
+        model_id: claude-sonnet-4-0
 
-  - id: anthropic/claude-sonnet-4-reasoning
-    service:
-      provider: anthropic
-      model_id: claude-sonnet-4-0
-    name: Claude-4 Sonnet R
-    description: "Claude 4 Sonnet with standard reasoning capabilities optimized for complex problem-solving."
-    override_params:
-      thinking:
-        budget_tokens: 1024
+    - id: anthropic/claude-sonnet-4-reasoning
+      service:
+        provider: anthropic
+        model_id: claude-sonnet-4-0
+      name: Claude-4 Sonnet R
+      description: "Claude 4 Sonnet with standard reasoning capabilities optimized for complex problem-solving."
+      override_params:
+        thinking:
+          budget_tokens: 1024
 
-  - id: anthropic/claude-sonnet-4-reasoning-high
-    service:
-      provider: anthropic
-      model_id: claude-sonnet-4-0
-    name: Claude-4 Sonnet R High
-    description: "Claude-4 Sonnet with high reasoning effort for superior accuracy in complex tasks at the expense of higher latency and cost."
-    override_params:
-      thinking:
-        budget_tokens: 10000
+    - id: anthropic/claude-sonnet-4-reasoning-high
+      service:
+        provider: anthropic
+        model_id: claude-sonnet-4-0
+      name: Claude-4 Sonnet R High
+      description: "Claude-4 Sonnet with high reasoning effort for superior accuracy in complex tasks at the expense of higher latency and cost."
+      override_params:
+        thinking:
+          budget_tokens: 10000
 
-  - id: anthropic/claude-opus-4
-    service:
-      provider: anthropic
-      model_id: claude-opus-4-0
-  - id: anthropic/claude-opus-4-reasoning
-    service:
-      provider: anthropic
-      model_id: claude-opus-4-0
-    name: Claude-4 Opus R
-    description: "Claude-4 Opus with standard reasoning capabilities optimized for complex problem-solving."
-    override_params:
-      max_tokens: 32000
-      thinking:
-        budget_tokens: 2048
+    - id: anthropic/claude-opus-4
+      service:
+        provider: anthropic
+        model_id: claude-opus-4-0
+    - id: anthropic/claude-opus-4-reasoning
+      service:
+        provider: anthropic
+        model_id: claude-opus-4-0
+      name: Claude-4 Opus R
+      description: "Claude-4 Opus with standard reasoning capabilities optimized for complex problem-solving."
+      override_params:
+        max_tokens: 32000
+        thinking:
+          budget_tokens: 2048
 
-  - id: anthropic/claude-opus-4-reasoning-high
-    service:
-      provider: anthropic
-      model_id: claude-opus-4-0
-    name: Claude-4 Opus R High
-    description: "Claude-4 Opus with high reasoning effort for superior accuracy in complex tasks at the expense of higher latency and cost."
-    override_params:
-      max_tokens: 32000
-      thinking:
-        budget_tokens: 2048
+    - id: anthropic/claude-opus-4-reasoning-high
+      service:
+        provider: anthropic
+        model_id: claude-opus-4-0
+      name: Claude-4 Opus R High
+      description: "Claude-4 Opus with high reasoning effort for superior accuracy in complex tasks at the expense of higher latency and cost."
+      override_params:
+        max_tokens: 32000
+        thinking:
+          budget_tokens: 2048
 
-  - id: anthropic/claude-3-5-haiku
-    service:
-      provider: anthropic
-      model_id: claude-3-5-haiku-20241022
+    - id: anthropic/claude-3-5-haiku
+      service:
+        provider: anthropic
+        model_id: claude-3-5-haiku-20241022
 
-  - id: eleutheria/el-1
-    service:
-      provider: eleutheria/vllm
-      model_id: el-1
+    - id: eleutheria/el-1
+      service:
+        provider: eleutheria/vllm
+        model_id: el-1
 
-  - id: deepseek/deepseek-r1-0528
-    service:
-      provider: fireworks_ai
-      model_id: accounts/fireworks/models/deepseek-r1-0528
+    - id: deepseek/deepseek-r1-0528
+      service:
+        provider: fireworks_ai
+        model_id: accounts/fireworks/models/deepseek-r1-0528
 
-  - id: deepseek/deepseek-r1
-    service:
-      provider: fireworks_ai
-      model_id: accounts/fireworks/models/deepseek-r1
+    - id: deepseek/deepseek-r1
+      service:
+        provider: fireworks_ai
+        model_id: accounts/fireworks/models/deepseek-r1
 
-  - id: deepseek/deepseek-r1-econ
-    service:
-      provider: fireworks_ai
-      model_id: accounts/fireworks/models/deepseek-r1-basic
+    - id: deepseek/deepseek-r1-econ
+      service:
+        provider: fireworks_ai
+        model_id: accounts/fireworks/models/deepseek-r1-basic
 
-  - id: deepseek/deepseek-v3
-    service:
-      provider: fireworks_ai
-      model_id: accounts/fireworks/models/deepseek-v3
+    - id: deepseek/deepseek-v3
+      service:
+        provider: fireworks_ai
+        model_id: accounts/fireworks/models/deepseek-v3
 
-  - id: meta/llama-4-maverick
-    service:
-      provider: fireworks_ai
-      model_id: accounts/fireworks/models/llama4-maverick-instruct-basic
+    - id: meta/llama-4-maverick
+      service:
+        provider: fireworks_ai
+        model_id: accounts/fireworks/models/llama4-maverick-instruct-basic
 
-  - id: meta/llama-4-scout
-    service:
-      provider: fireworks_ai
-      model_id: accounts/fireworks/models/llama4-scout-instruct-basic
+    - id: meta/llama-4-scout
+      service:
+        provider: fireworks_ai
+        model_id: accounts/fireworks/models/llama4-scout-instruct-basic
 
-  - id: meta/llama-3.3-70b
-    service:
-      provider: fireworks_ai
-      model_id: accounts/fireworks/models/llama-v3p3-70b-instruct
+    - id: meta/llama-3.3-70b
+      service:
+        provider: fireworks_ai
+        model_id: accounts/fireworks/models/llama-v3p3-70b-instruct
 
-  - id: meta/llama-3.1-405b
-    service:
-      provider: fireworks_ai
-      model_id: accounts/fireworks/models/llama-v3p1-405b-instruct
+    - id: meta/llama-3.1-405b
+      service:
+        provider: fireworks_ai
+        model_id: accounts/fireworks/models/llama-v3p1-405b-instruct
 
-  - id: meta/llama-3.1-8b
-    service:
-      provider: fireworks_ai
-      model_id: accounts/fireworks/models/llama-v3p1-8b-instruct
+    - id: meta/llama-3.1-8b
+      service:
+        provider: fireworks_ai
+        model_id: accounts/fireworks/models/llama-v3p1-8b-instruct
 
-  - id: google/gemini-2.5-pro
-    service:
-      provider: gemini
-      model_id: gemini-2.5-pro
-    override_params:
-      thinking_budget: -1
-      include_thoughts: true
+    - id: google/gemini-2.5-pro
+      service:
+        provider: gemini
+        model_id: gemini-2.5-pro
+      override_params:
+        thinking_budget: -1
+        include_thoughts: true
 
-  - id: google/gemini-2.5-flash
-    service:
-      provider: gemini
-      model_id: gemini-2.5-flash
+    - id: google/gemini-2.5-flash
+      service:
+        provider: gemini
+        model_id: gemini-2.5-flash
 
-  - id: google/gemini-2.5-flash-thinking
-    service:
-      provider: gemini
-      model_id: gemini-2.5-flash
-    name: Gemini 2.5 Flash Think
-    description: "Gemini 2.5 Flash Thinking from Google is a variant of Gemini 2.5 Flash with thinking mode enabled, allowing it to show its reasoning process for improved performance and explainability."
-    override_params:
-      thinking_budget: -1
-      include_thoughts: true
+    - id: google/gemini-2.5-flash-thinking
+      service:
+        provider: gemini
+        model_id: gemini-2.5-flash
+      name: Gemini 2.5 Flash Think
+      description: "Gemini 2.5 Flash Thinking from Google is a variant of Gemini 2.5 Flash with thinking mode enabled, allowing it to show its reasoning process for improved performance and explainability."
+      override_params:
+        thinking_budget: -1
+        include_thoughts: true
 
-  - id: google/gemini-2.5-flash-lite
-    service:
-      provider: gemini
-      model_id: gemini-2.5-flash-lite-preview-06-17
+    - id: google/gemini-2.5-flash-lite
+      service:
+        provider: gemini
+        model_id: gemini-2.5-flash-lite-preview-06-17
 
-  - id: google/gemini-2.5-flash-lite-thinking
-    service:
-      provider: gemini
-      model_id: gemini-2.5-flash-lite-preview-06-17
-    name: Gemini 2.5 Flash Lite Think
-    description: "Gemini 2.5 Flash Lite Thinking is a variant of Gemini 2.5 Flash Lite with thinking mode enabled, allowing it to show its reasoning process for improved performance and explainability."
-    override_params:
-      thinking_budget: -1
-      include_thoughts: true
+    - id: google/gemini-2.5-flash-lite-thinking
+      service:
+        provider: gemini
+        model_id: gemini-2.5-flash-lite-preview-06-17
+      name: Gemini 2.5 Flash Lite Think
+      description: "Gemini 2.5 Flash Lite Thinking is a variant of Gemini 2.5 Flash Lite with thinking mode enabled, allowing it to show its reasoning process for improved performance and explainability."
+      override_params:
+        thinking_budget: -1
+        include_thoughts: true
 
-  - id: google/gemini-2.0-flash
-    service:
-      provider: gemini
-      model_id: gemini-2.0-flash
+    - id: google/gemini-2.0-flash
+      service:
+        provider: gemini
+        model_id: gemini-2.0-flash
 
-  - id: google/gemini-2.0-flash-lite
-    service:
-      provider: gemini
-      model_id: gemini-2.0-flash-lite
+    - id: google/gemini-2.0-flash-lite
+      service:
+        provider: gemini
+        model_id: gemini-2.0-flash-lite
 
-  - id: google/gemini-1.5-pro
-    service:
-      provider: gemini
-      model_id: gemini-1.5-pro
+    - id: google/gemini-1.5-pro
+      service:
+        provider: gemini
+        model_id: gemini-1.5-pro
 
-  - id: google/gemini-1.5-flash
-    service:
-      provider: gemini
-      model_id: gemini-1.5-flash
+    - id: google/gemini-1.5-flash
+      service:
+        provider: gemini
+        model_id: gemini-1.5-flash
 
-  - id: google/gemini-1.5-flash-8b
-    service:
-      provider: gemini
-      model_id: gemini-1.5-flash-8b
+    - id: google/gemini-1.5-flash-8b
+      service:
+        provider: gemini
+        model_id: gemini-1.5-flash-8b
 
-  - id: google/gemma-3-27b-it
-    service:
-      provider: openrouter
-      model_id: google/gemma-3-27b-it:free
+    - id: google/gemma-3-27b-it
+      service:
+        provider: openrouter
+        model_id: google/gemma-3-27b-it:free
 
-  - id: minimax/minimax-01
-    service:
-      provider: openrouter
-      model_id: minimax/minimax-01
+    - id: minimax/minimax-01
+      service:
+        provider: openrouter
+        model_id: minimax/minimax-01
 
-  - id: minimax/minimax-m1
-    service:
-      provider: openrouter
-      model_id: minimax/minimax-m1
-    override_params:
-      extra_body:
-        include_reasoning: true
+    - id: minimax/minimax-m1
+      service:
+        provider: openrouter
+        model_id: minimax/minimax-m1
+      override_params:
+        extra_body:
+          include_reasoning: true
 
-  - id: mistralai/magistral-medium-latest
-    service:
-      provider: mistralai
-      model_id: magistral-medium-latest
+    - id: mistralai/magistral-medium-latest
+      service:
+        provider: mistralai
+        model_id: magistral-medium-latest
 
-  - id: mistralai/magistral-small-latest
-    service:
-      provider: mistralai
-      model_id: magistral-small-latest
+    - id: mistralai/magistral-small-latest
+      service:
+        provider: mistralai
+        model_id: magistral-small-latest
 
-  - id: mistralai/mistral-large
-    service:
-      provider: mistralai
-      model_id: mistral-large-latest
+    - id: mistralai/mistral-large
+      service:
+        provider: mistralai
+        model_id: mistral-large-latest
 
-  - id: mistralai/mistral-medium
-    service:
-      provider: mistralai
-      model_id: mistral-medium-latest
+    - id: mistralai/mistral-medium
+      service:
+        provider: mistralai
+        model_id: mistral-medium-latest
 
-  - id: mistralai/mistral-small-latest
-    service:
-      provider: mistralai
-      model_id: mistral-small-latest
+    - id: mistralai/mistral-small-latest
+      service:
+        provider: mistralai
+        model_id: mistral-small-latest
 
-  - id: mistralai/pixtral-large
-    service:
-      provider: mistralai
-      model_id: pixtral-large-latest
+    - id: mistralai/pixtral-large
+      service:
+        provider: mistralai
+        model_id: pixtral-large-latest
 
-  - id: mistralai/codestral
-    service:
-      provider: mistralai
-      model_id: codestral-latest
+    - id: mistralai/codestral
+      service:
+        provider: mistralai
+        model_id: codestral-latest
 
-  - id: mistralai/open-mixtral-8x22b
-    service:
-      provider: mistralai
-      model_id: open-mixtral-8x22b
+    - id: mistralai/open-mixtral-8x22b
+      service:
+        provider: mistralai
+        model_id: open-mixtral-8x22b
 
-  - id: mistralai/mistral-nemo
-    service:
-      provider: mistralai
-      model_id: open-mistral-nemo
+    - id: mistralai/mistral-nemo
+      service:
+        provider: mistralai
+        model_id: open-mistral-nemo
 
-  - id: alibaba/qwen3-235b-a22b
-    service:
-      provider: fireworks_ai
-      model_id: accounts/fireworks/models/qwen3-235b-a22b
+    - id: alibaba/qwen3-235b-a22b
+      service:
+        provider: fireworks_ai
+        model_id: accounts/fireworks/models/qwen3-235b-a22b
 
-  - id: alibaba/qwen3-30b-a3b
-    service:
-      provider: fireworks_ai
-      model_id: accounts/fireworks/models/qwen3-30b-a3b
+    - id: alibaba/qwen3-30b-a3b
+      service:
+        provider: fireworks_ai
+        model_id: accounts/fireworks/models/qwen3-30b-a3b
 
-  - id: xai/grok-3
-    service:
-      provider: xai
-      model_id: grok-3-latest
+    - id: xai/grok-3
+      service:
+        provider: xai
+        model_id: grok-3-latest
 
-  - id: xai/grok-3-fast
-    service:
-      provider: xai
-      model_id: grok-3-fast
+    - id: xai/grok-3-fast
+      service:
+        provider: xai
+        model_id: grok-3-fast
 
-  - id: xai/grok-3-mini
-    service:
-      provider: xai
-      model_id: grok-3-mini
+    - id: xai/grok-3-mini
+      service:
+        provider: xai
+        model_id: grok-3-mini
 
-  - id: xai/grok-3-mini-high
-    service:
-      provider: xai
-      model_id: grok-3-mini
-    name: Grok 3 Mini High
-    description: "Grok 3 Mini with high-effort reasoning settings applied. It spends more time and resources to improve accuracy for complex tasks."
-    override_params:
-      reasoning_effort: high
+    - id: xai/grok-3-mini-high
+      service:
+        provider: xai
+        model_id: grok-3-mini
+      name: Grok 3 Mini High
+      description: "Grok 3 Mini with high-effort reasoning settings applied. It spends more time and resources to improve accuracy for complex tasks."
+      override_params:
+        reasoning_effort: high
 
-  - id: xai/grok-3-mini-fast
-    service:
-      provider: xai
-      model_id: grok-3-mini-fast
+    - id: xai/grok-3-mini-fast
+      service:
+        provider: xai
+        model_id: grok-3-mini-fast
 
-  - id: xai/grok-3-mini-fast-high
-    service:
-      provider: xai
-      model_id: grok-3-mini-fast
-    name: Grok 3 Mini Fast High
-    description: "Grok 3 Mini Fast with high-effort reasoning settings applied. It spends more time and resources to improve accuracy for complex tasks."
-    override_params:
-      reasoning_effort: high
+    - id: xai/grok-3-mini-fast-high
+      service:
+        provider: xai
+        model_id: grok-3-mini-fast
+      name: Grok 3 Mini Fast High
+      description: "Grok 3 Mini Fast with high-effort reasoning settings applied. It spends more time and resources to improve accuracy for complex tasks."
+      override_params:
+        reasoning_effort: high
 
-  - id: xai/grok-2-vision
-    service:
-      provider: xai
-      model_id: grok-2-vision-latest
+    - id: xai/grok-2-vision
+      service:
+        provider: xai
+        model_id: grok-2-vision-latest
+
+  # Image models
+  image:
+    # OpenAI
+    - id: openai/gpt-image-1
+      service:
+        provider: openai
+        model_id: gpt-image-1
+
+    - id: openai/dall-e-3
+      service:
+        provider: openai
+        model_id: dall-e-3
+
+    # xAI
+    - id: xai/grok-2-image
+      service:
+        provider: xai
+        model_id: grok-2-image
+
+    # Google
+    - id: google/imagen-4-ultra
+      service:
+        provider: replicate
+        model_id: google/imagen-4-ultra
+      default_params:
+        safety_filter_level: "block_only_high"
+
+    - id: google/imagen-4
+      service:
+        provider: replicate
+        model_id: google/imagen-4
+      default_params:
+        safety_filter_level: "block_only_high"
+
+    - id: google/imagen-4-fast
+      service:
+        provider: replicate
+        model_id: google/imagen-4-fast
+      default_params:
+        safety_filter_level: "block_only_high"
+
+    # Black Forest Labs (Flux)
+    - id: black-forest-labs/flux-kontext-max
+      service:
+        provider: replicate
+        model_id: black-forest-labs/flux-kontext-max
+      default_params:
+        safety_tolerance: 6
+
+    - id: black-forest-labs/flux-kontext-pro
+      service:
+        provider: replicate
+        model_id: black-forest-labs/flux-kontext-pro
+      default_params:
+        safety_tolerance: 6
+
+    - id: black-forest-labs/flux-kontext-dev
+      service:
+        provider: replicate
+        model_id: black-forest-labs/flux-kontext-dev
+      default_params:
+        safety_filter_level: true
+
+    - id: black-forest-labs/flux-1.1-pro-ultra
+      service:
+        provider: replicate
+        model_id: black-forest-labs/flux-1.1-pro-ultra
+      default_params:
+        safety_tolerance: 6
+
+    - id: black-forest-labs/flux-1.1-pro
+      service:
+        provider: replicate
+        model_id: black-forest-labs/flux-1.1-pro
+      default_params:
+        safety_tolerance: 6
+
+    - id: black-forest-labs/flux-pro
+      service:
+        provider: replicate
+        model_id: black-forest-labs/flux-pro
+      default_params:
+        safety_tolerance: 6
+
+    - id: black-forest-labs/flux-dev
+      service:
+        provider: replicate
+        model_id: black-forest-labs/flux-dev
+      default_params:
+        disable_safety_checker: true
+
+    - id: black-forest-labs/flux-schnell
+      service:
+        provider: replicate
+        model_id: black-forest-labs/flux-schnell
+      default_params:
+        disable_safety_checker: true
+
+    - id: black-forest-labs/flux-fill-pro
+      service:
+        provider: replicate
+        model_id: black-forest-labs/flux-fill-pro
+      default_params:
+        safety_tolerance: 6
+
+    - id: black-forest-labs/flux-fill-dev
+      service:
+        provider: replicate
+        model_id: black-forest-labs/flux-fill-dev
+      default_params:
+        disable_safety_checker: true
+
+    # Recraft
+    - id: recraft-ai/recraft-v3
+      service:
+        provider: replicate
+        model_id: recraft-ai/recraft-v3
+      default_params:
+        style: realistic_image
+
+    - id: recraft-ai/recraft-20b
+      service:
+        provider: replicate
+        model_id: recraft-ai/recraft-20b
+
+    - id: recraft-ai/recraft-creative-upscale
+      service:
+        provider: replicate
+        model_id: recraft-ai/recraft-creative-upscale
+
+    - id: recraft-ai/recraft-crisp-upscale
+      service:
+        provider: replicate
+        model_id: recraft-ai/recraft-crisp-upscale
+
+    # Stability AI
+    - id: stability-ai/sd-3.5-large
+      service:
+        provider: replicate
+        model_id: stability-ai/stable-diffusion-3.5-large
+
+    - id: stability-ai/sd-3.5-large-turbo
+      service:
+        provider: replicate
+        model_id: stability-ai/stable-diffusion-3.5-large-turbo
+
+    - id: stability-ai/sd-3.5-medium
+      service:
+        provider: replicate
+        model_id: stability-ai/stable-diffusion-3.5-medium
+
+    - id: stability-ai/sdxl
+      service:
+        provider: replicate
+        model_id: stability-ai/sdxl:7762fd07cf82c948538e41f63f77d685e02b063e37e496e96eefd46c929f9bdc
+      default_params:
+        disable_safety_checker: true
+
+    # ByteDance
+    - id: bytedance/sdxl-lightning
+      service:
+        provider: replicate
+        model_id: bytedance/sdxl-lightning-4step:6f7a773af6fc3e8de9d5a3c00be77c17308914bf67772726aff83496ba1e3bbe
+      default_params:
+        disable_safety_checker: true
+
+    # MiniMax
+    - id: minimax/image-01
+      service:
+        provider: replicate
+        model_id: minimax/image-01
+
+    # HiDream
+    - id: hidream/hidream-l1-full
+      service:
+        provider: replicate
+        model_id: prunaai/hidream-l1-full:3a1457ebedf387206f83c3c8b30e8ce495084c3b7d7328b5ed2d55304124851c
+
+    - id: hidream/hidream-l1-dev
+      service:
+        provider: replicate
+        model_id: prunaai/hidream-l1-dev:597c67f9baf9bd7f4c363366c1991ff4e126b566437e10c5f5d83e25208be34b
+
+    - id: hidream/hidream-l1-fast
+      service:
+        provider: replicate
+        model_id: prunaai/hidream-l1-fast:17c237d753218fed0ed477cb553902b6b75735f48c128537ab829096ef3d3645
+
+    - id: hidream/hidream-e1
+      service:
+        provider: replicate
+        model_id: prunaai/hidream-e1:ea6549775ccda226776338114de4369854113dd9ce2ab1249dc229b90357572e
+
+    # Easel
+    - id: easel/ai-avatars
+      service:
+        provider: replicate
+        model_id: easel/ai-avatars
+
+    - id: easel/advanced-face-swap
+      service:
+        provider: replicate
+        model_id: easel/advanced-face-swap
+
+    # Topaz Labs
+    - id: topazlabs/image-upscale
+      service:
+        provider: replicate
+        model_id: topazlabs/image-upscale
 
 app_config:
   CORS_ORIGINS: ["*"]

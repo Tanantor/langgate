@@ -77,6 +77,44 @@ def mock_models_json(tmp_path: Path) -> Generator[Path]:
             "_data_source": "openrouter",
             "_last_updated_from_id": "anthropic/claude-4-sonnet",
         },
+        "openai/dall-e-3": {
+            "name": "DALL-E 3",
+            "mode": "image",
+            "service_provider": "openai",
+            "model_provider": "openai",
+            "model_provider_name": "OpenAI",
+            "description": "OpenAI's DALL-E 3 model.",
+            "costs": {
+                "image_generation": {
+                    "quality_tiers": {
+                        "standard": {
+                            "1024x1024": 0.04,
+                            "1024x1792": 0.08,
+                            "1792x1024": 0.08,
+                        },
+                        "hd": {"1024x1024": 0.08, "1024x1792": 0.12, "1792x1024": 0.12},
+                    }
+                }
+            },
+        },
+        "replicate/black-forest-labs/flux-dev": {
+            "name": "FLUX.1 [dev]",
+            "mode": "image",
+            "service_provider": "replicate",
+            "model_provider": "black-forest-labs",
+            "model_provider_name": "Black Forest Labs",
+            "description": "The FLUX.1 dev model from Black Forest Labs.",
+            "costs": {"image_generation": {"flat_rate": 0.025}},
+        },
+        "replicate/stability-ai/stable-diffusion-3.5-large": {
+            "name": "SD 3.5 Large",
+            "mode": "image",
+            "service_provider": "replicate",
+            "model_provider": "stability-ai",
+            "model_provider_name": "Stability AI",
+            "description": "Stability AI's Stable Diffusion 3.5 Large model.",
+            "costs": {"image_generation": {"flat_rate": 0.065}},
+        },
     }
     models_json_path = tmp_path / "langgate_models.json"
     with open(models_json_path, "w") as f:
@@ -95,7 +133,9 @@ def mock_config_yaml(tmp_path: Path) -> Generator[Path]:
             "HTTPS": False,
         },
         "default_params": {
-            "temperature": 0.7,
+            "text": {
+                "temperature": 0.7,
+            },
         },
         "services": {
             "openai": {
@@ -152,78 +192,112 @@ def mock_config_yaml(tmp_path: Path) -> Generator[Path]:
                 "api_key": "${MISTRAL_API_KEY}",
                 "base_url": "https://api.mistral.ai/v1",
             },
+            "replicate": {
+                "api_key": "${REPLICATE_API_KEY}",
+            },
         },
-        "models": [
-            {
-                "id": "gpt-4o",
-                "name": "GPT-4o",
-                "service": {
-                    "provider": "openai",
-                    "model_id": "gpt-4o",
+        "models": {
+            "text": [
+                {
+                    "id": "gpt-4o",
+                    "name": "GPT-4o",
+                    "service": {
+                        "provider": "openai",
+                        "model_id": "gpt-4o",
+                    },
                 },
-            },
-            {
-                "id": "anthropic/claude-sonnet-4",
-                "name": "Claude-3.7 Sonnet",
-                "service": {
-                    "provider": "anthropic",
-                    "model_id": "claude-sonnet-4",
+                {
+                    "id": "anthropic/claude-sonnet-4",
+                    "name": "Claude-3.7 Sonnet",
+                    "service": {
+                        "provider": "anthropic",
+                        "model_id": "claude-sonnet-4",
+                    },
+                    "remove_params": ["response_format", "reasoning"],
+                    "rename_params": {"stop": "stop_sequences"},
                 },
-                "remove_params": ["response_format", "reasoning"],
-                "rename_params": {"stop": "stop_sequences"},
-            },
-            {
-                "id": "anthropic/claude-sonnet-4-reasoning",
-                "name": "Claude-3.7 Sonnet R",
-                "description": "Claude 3.7 Sonnet with reasoning",
-                "service": {
-                    "provider": "anthropic",
-                    "model_id": "claude-sonnet-4",
+                {
+                    "id": "anthropic/claude-sonnet-4-reasoning",
+                    "name": "Claude-3.7 Sonnet R",
+                    "description": "Claude 3.7 Sonnet with reasoning",
+                    "service": {
+                        "provider": "anthropic",
+                        "model_id": "claude-sonnet-4",
+                    },
+                    "remove_params": ["response_format"],
+                    "rename_params": {"stop": "stop_sequences"},
+                    "override_params": {
+                        "thinking": {
+                            "budget_tokens": 1024,
+                        }
+                    },
                 },
-                "remove_params": ["response_format"],
-                "rename_params": {"stop": "stop_sequences"},
-                "override_params": {
-                    "thinking": {
-                        "budget_tokens": 1024,
-                    }
+                {
+                    "id": "google/gemma-3-27b-it",
+                    "service": {
+                        "provider": "openrouter",
+                        "model_id": "google/gemma-3-27b-it:free",
+                    },
                 },
-            },
-            {
-                "id": "google/gemma-3-27b-it",
-                "service": {
-                    "provider": "openrouter",
-                    "model_id": "google/gemma-3-27b-it:free",
+                {
+                    "id": "xai/grok-3",
+                    "service": {
+                        "provider": "xai",
+                        "model_id": "grok-3-latest",
+                    },
                 },
-            },
-            {
-                "id": "xai/grok-3",
-                "service": {
-                    "provider": "xai",
-                    "model_id": "grok-3-latest",
+                {
+                    "id": "deepseek/deepseek-r1",
+                    "service": {
+                        "provider": "fireworks_ai",
+                        "model_id": "accounts/fireworks/models/deepseek-r1",
+                    },
                 },
-            },
-            {
-                "id": "deepseek/deepseek-r1",
-                "service": {
-                    "provider": "fireworks_ai",
-                    "model_id": "accounts/fireworks/models/deepseek-r1",
+                {
+                    "id": "google/gemini-2.5-pro",
+                    "service": {
+                        "provider": "gemini",
+                        "model_id": "gemini-2.5-pro-preview",
+                    },
                 },
-            },
-            {
-                "id": "google/gemini-2.5-pro",
-                "service": {
-                    "provider": "gemini",
-                    "model_id": "gemini-2.5-pro-preview",
+                {
+                    "id": "mistralai/magistral-medium-latest",
+                    "service": {
+                        "provider": "mistralai",
+                        "model_id": "magistral-medium-latest",
+                    },
                 },
-            },
-            {
-                "id": "mistralai/magistral-medium-latest",
-                "service": {
-                    "provider": "mistralai",
-                    "model_id": "magistral-medium-latest",
+            ],
+            "image": [
+                {
+                    "id": "openai/dall-e-3",
+                    "name": "DALL-E 3",
+                    "service": {
+                        "provider": "openai",
+                        "model_id": "dall-e-3",
+                    },
                 },
-            },
-        ],
+                {
+                    "id": "black-forest-labs/flux-dev",
+                    "name": "FLUX.1 [dev]",
+                    "service": {
+                        "provider": "replicate",
+                        "model_id": "black-forest-labs/flux-dev",
+                    },
+                    "default_params": {
+                        "disable_safety_checker": True,
+                    },
+                },
+                {
+                    "id": "stability-ai/sd-3.5-large",
+                    "name": "Stable Diffusion 3.5 Large",
+                    "service": {
+                        "provider": "replicate",
+                        "model_id": "stability-ai/stable-diffusion-3.5-large",
+                    },
+                },
+            ],
+        },
     }
     config_yaml_path = tmp_path / "langgate_config.yaml"
     with open(config_yaml_path, "w") as f:
@@ -244,6 +318,7 @@ def mock_env_file(tmp_path: Path) -> Generator[Path]:
         f.write("FIREWORKS_API_KEY=fw-test-123\n")
         f.write("GEMINI_API_KEY=gm-test-123\n")
         f.write("MISTRAL_API_KEY=ms-test-123\n")
+        f.write("REPLICATE_API_KEY=r8-test-123\n")
         f.write("SECRET_KEY=test-secret-key\n")
 
     yield env_path
@@ -411,7 +486,7 @@ def base_config_data() -> dict:
             },
             "custom": {"api_key": "test-key", "base_url": "https://api.custom.com"},
         },
-        "models": [],
+        "models": {"text": []},
         "app_config": {},
     }
 

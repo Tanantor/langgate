@@ -2,7 +2,8 @@
 
 from datetime import UTC, datetime
 from decimal import Decimal
-from typing import Annotated, Any, NewType
+from enum import Enum
+from typing import Annotated, Any, NewType, Self
 
 from pydantic import BaseModel, ConfigDict, Field, SecretStr, model_validator
 
@@ -27,6 +28,13 @@ MODEL_PROVIDER_ALIBABA = ModelProviderId("alibaba")
 MODEL_PROVIDER_XAI = ModelProviderId("xai")
 MODEL_PROVIDER_COHERE = ModelProviderId("cohere")
 MODEL_PROVIDER_ELEUTHERIA = ModelProviderId("eleutheria")
+
+
+class Modality(str, Enum):
+    """Supported model modalities."""
+
+    TEXT = "text"
+    IMAGE = "image"
 
 
 class ServiceProvider(BaseModel):
@@ -83,29 +91,34 @@ Percentage = Annotated[NormalizedDecimal, "Percentage"]
 TokenUsage = Annotated[NormalizedDecimal, "TokenUsage"]
 
 
-class ModelCost(BaseModel):
-    """Cost information for a language model."""
+class BaseModelInfo(BaseModel):
+    """Base class for all model types with common fields."""
 
-    input_cost_per_token: TokenCost = Field(default_factory=lambda: Decimal())
-    output_cost_per_token: TokenCost = Field(default_factory=lambda: Decimal())
-    input_cost_per_token_batches: TokenCost | None = None
-    output_cost_per_token_batches: TokenCost | None = None
-    cache_read_input_token_cost: TokenCost | None = None
-
-    model_config = ConfigDict(extra="allow")
-
-
-class LLMInfoBase(BaseModel):
     id: str | None = None
     name: str | None = None
     provider_id: ModelProviderId | None = None
-
     description: str | None = None
-    costs: ModelCost | None = None
-    capabilities: ModelCapabilities | None = None
-    context_window: ContextWindow | None = None
 
     model_config = ConfigDict(extra="allow")
+
+
+class TokenCosts(BaseModel):
+    """Token-based cost information for models that charge for input/output tokens."""
+
+    input_cost_per_token: TokenCost = Field(default_factory=Decimal)
+    output_cost_per_token: TokenCost = Field(default_factory=Decimal)
+    input_cost_per_token_batches: TokenCost | None = None
+    output_cost_per_token_batches: TokenCost | None = None
+    cache_read_input_token_cost: TokenCost | None = None
+    input_cached_cost_per_token: TokenCost | None = None
+
+    model_config = ConfigDict(extra="allow")
+
+
+class LLMInfoBase(BaseModelInfo):
+    costs: TokenCosts | None = None
+    capabilities: ModelCapabilities | None = None
+    context_window: ContextWindow | None = None
 
 
 class LLMInfo(LLMInfoBase):
@@ -117,12 +130,69 @@ class LLMInfo(LLMInfoBase):
 
     provider: ModelProvider  # Who created it (shown to users)
     description: str | None = None
-    costs: ModelCost = Field(default_factory=ModelCost)
+    costs: TokenCosts = Field(default_factory=TokenCosts)
     capabilities: ModelCapabilities = Field(default_factory=ModelCapabilities)
     context_window: ContextWindow = Field(default_factory=ContextWindow)
     updated_dt: datetime = Field(default_factory=lambda: datetime.now(UTC))
 
     @model_validator(mode="after")
     def _validate_provider_id(self):
+        self.provider_id = self.provider.id
+        return self
+
+
+class ImageGenerationCost(BaseModel):
+    """Cost information for image generation with support for multiple pricing models."""
+
+    # For simple flat-rate pricing (most providers)
+    flat_rate: Decimal | None = None
+
+    # For dimension-based pricing (OpenAI)
+    quality_tiers: dict[str, dict[str, Decimal]] | None = None
+
+    # For usage-based pricing
+    cost_per_megapixel: Decimal | None = None
+    cost_per_second: Decimal | None = None
+
+    @model_validator(mode="after")
+    def validate_exactly_one_pricing_model(self) -> Self:
+        """Ensure exactly one pricing model is specified."""
+        pricing_models = [
+            self.flat_rate,
+            self.quality_tiers,
+            self.cost_per_megapixel,
+            self.cost_per_second,
+        ]
+        if sum(p is not None for p in pricing_models) != 1:
+            raise ValueError("Exactly one pricing model must be set.")
+        return self
+
+
+class ImageModelCost(BaseModel):
+    """Cost information for image generation models."""
+
+    token_costs: TokenCosts | None = None
+    image_generation: ImageGenerationCost
+
+
+class ImageModelInfoBase(BaseModelInfo):
+    costs: ImageModelCost | None = None
+
+
+class ImageModelInfo(ImageModelInfoBase):
+    """Information about an image generation model."""
+
+    id: str = Field(default=...)
+    name: str = Field(default=...)
+    provider_id: ModelProviderId = Field(default=...)
+
+    provider: ModelProvider
+    description: str | None = None
+    costs: ImageModelCost = Field(default=...)
+    updated_dt: datetime = Field(default_factory=lambda: datetime.now(UTC))
+
+    @model_validator(mode="after")
+    def _validate_provider_id(self) -> Self:
+        """Ensure provider_id matches provider.id."""
         self.provider_id = self.provider.id
         return self

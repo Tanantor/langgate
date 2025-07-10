@@ -96,29 +96,33 @@ class LocalTransformerClient(TransformerClientProtocol):
             load_dotenv(self.env_file_path)
             logger.debug("loaded_transformer_env_file", path=str(self.env_file_path))
 
-    def _process_model_mappings(self, models_config: list[ModelConfig]) -> None:
+    def _process_model_mappings(
+        self, models_config: dict[str, list[ModelConfig]]
+    ) -> None:
         """Process model mappings from validated configuration.
 
         Args:
-            models_config: List of validated model configurations
+            models_config: Dict of modality to list of model configurations
         """
         self._model_mappings = {}
 
-        for model_config in models_config:
-            model_data = model_config.model_dump(exclude_none=True)
-            model_id = model_data["id"]
-            service = model_data["service"]
+        for modality, model_list in models_config.items():
+            for model_config in model_list:
+                model_data = model_config.model_dump(exclude_none=True)
+                model_id = model_data["id"]
+                service = model_data["service"]
 
-            # Store mapping info
-            self._model_mappings[model_id] = {
-                "service_provider": service["provider"],
-                "service_model_id": service["model_id"],
-                "api_format": model_data.get("api_format"),
-                "default_params": model_data["default_params"],
-                "override_params": model_data["override_params"],
-                "remove_params": model_data["remove_params"],
-                "rename_params": model_data["rename_params"],
-            }
+                # Store mapping info including modality
+                self._model_mappings[model_id] = {
+                    "modality": modality,
+                    "service_provider": service["provider"],
+                    "service_model_id": service["model_id"],
+                    "api_format": model_data.get("api_format"),
+                    "default_params": model_data["default_params"],
+                    "override_params": model_data["override_params"],
+                    "remove_params": model_data["remove_params"],
+                    "rename_params": model_data["rename_params"],
+                }
 
     async def get_params(
         self, model_id: str, input_params: dict[str, Any]
@@ -187,7 +191,13 @@ class LocalTransformerClient(TransformerClientProtocol):
         for defaults in reversed(matching_pattern_defaults):
             transformer.with_defaults(defaults)
         transformer.with_defaults(service_config.get("default_params", {}))
-        transformer.with_defaults(self._global_config.get("default_params", {}))
+        # Apply modality-specific global defaults
+        global_defaults = self._global_config.get("default_params", {})
+        model_modality = mapping.get("modality")
+        modality_defaults = (
+            global_defaults.get(model_modality, {}) if model_modality else {}
+        )
+        transformer.with_defaults(modality_defaults)
 
         # Apply overrides, removals, renames (service -> pattern -> model precedence)
 

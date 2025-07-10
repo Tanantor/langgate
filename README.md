@@ -60,78 +60,105 @@ pip install langgate[sdk]
 For more information on package components and installation options for specific use cases, see the  [packages documentation](packages/README.md).
 #### Example Usage
 
-The package includes a `LangGateLocal` client that can be used directly in your application without needing to run the proxy service. This client provides access to the model registry and parameter transformation features.
+The package includes a `LangGateLocal` client that can be used directly in your application without needing to run the proxy service. This client provides access to both language and image model registries, plus parameter transformation features.
 
-To get metadata for a model:
+**List Available Models:**
 
 ```py
 from pprint import pprint as pp
-
 from langgate.sdk import LangGateLocal
 
 client = LangGateLocal()
 
+# List available LLMs
+llms = await client.list_llms()
+print(f"Available LLMs: {len(llms)}")
+for model in llms[:3]:
+    print(f"- {model.id}: {model.name}")
+
+# List available image models
+image_models = await client.list_image_models()
+print(f"Available Image Models: {len(image_models)}")
+for model in image_models[:3]:
+    print(f"- {model.id}: {model.name}")
+```
+```text
+Available LLMs: 5
+- openai/gpt-4.1: GPT-4.1
+- openai/o3: o3
+- openai/o3-high: o3-high
+- anthropic/claude-sonnet-4: Claude-4 Sonnet
+- anthropic/claude-sonnet-4-reasoning: Claude-4 Sonnet R
+
+==================================================
+
+Available Image Models: 4
+- openai/gpt-image-1: GPT Image 1
+- openai/dall-e-3: DALL-E 3
+- black-forest-labs/flux-dev: FLUX.1 [dev]
+- stability-ai/sd-3.5-large: SD 3.5 Large
+```
+
+**Get Model Information and Transform Parameters:**
+
+```py
 # LangGate allows us to register "virtual models" - models with specific parameters.
 # `langgate_config.yaml` defines this `claude-sonnet-4-reasoning` model
-# which is a wrapper around the `claude-sonnet-4-latest` model,
+# which is a wrapper around the `claude-sonnet-4-0` model,
 # with specific parameters and metadata.
-# In `langgate_config.yaml`, Anthropic is set as the inference service provider,
-# but you could configure any backend API that offers the model, e.g. AWS Bedrock.
 model_id = "anthropic/claude-sonnet-4-reasoning"
 
-# get metadata for a model
-model_info = await client.get_model_info(model_id)
+# Get model info
+model_info = await client.get_llm_info(model_id)
+print(f"Model: {model_info.name}")
+print(f"Provider: {model_info.provider.name}")
 
-# returns a Pydantic model instance (langgate.core.models.LLMInfo)
-pp(model_info.model_dump(exclude_none=True))
+# Transform parameters
+input_params = {"temperature": 0.7, "stream": True}
+api_format, transformed = await client.get_params(model_id, input_params)
+print(f"API format: {api_format}")
+pp(transformed)
 ```
-```py
-2025-04-01 19:33:35 [debug    ] creating_model_registry_singleton
-2025-04-01 19:33:35 [debug    ] loaded_env_file                path=/your-working-directory/.env
-2025-04-01 19:33:35 [info     ] loaded_model_data              model_count=35 models_data_path=/your-working-directory/.venv/lib/python3.13/site-packages/langgate/registry/data/default_models.json
-2025-04-01 19:33:35 [info     ] loaded_config                  config_path=/your-working-directory/langgate_config.yaml
-2025-04-01 19:33:35 [debug    ] initialized_local_registry_client
-2025-04-01 19:33:35 [debug    ] resolved_config_path           exists=True path=/your-working-directory/langgate_config.yaml source=env
-2025-04-01 19:33:35 [debug    ] resolved_env_file_path         exists=True path=/your-working-directory/.env source=default
-2025-04-01 19:33:35 [info     ] loaded_config                  config_path=/your-working-directory/langgate_config.yaml
-2025-04-01 19:33:35 [debug    ] initialized_local_transformer_client
-2025-04-01 19:33:35 [debug    ] initialized_langgate_client
-2025-04-01 19:33:35 [debug    ] refreshed_model_cache          model_count=34
-{'capabilities': {'supports_assistant_prefill': True,
-                  'supports_pdf_input': True,
-                  'supports_prompt_caching': True,
-                  'supports_response_schema': True,
-                  'supports_tool_choice': True,
-                  'supports_tools': True,
-                  'supports_vision': True},
- 'context_window': {'max_input_tokens': 200000, 'max_output_tokens': 128000},
- 'costs': {'cache_creation_input_token_cost': Decimal('0.00000375'),
-           'cache_read_input_token_cost': Decimal('3E-7'),
-           'input_cost_per_image': Decimal('0.0048'),
-           'input_cost_per_token': Decimal('0.000003'),
-           'output_cost_per_token': Decimal('0.000015')},
- 'description': 'Claude-3.7 Sonnet with standard reasoning capabilities '
-                'optimized for complex problem-solving.',
- 'id': 'anthropic/claude-sonnet-4-reasoning',
- 'name': 'Claude-3.7 Sonnet R',
- 'provider': {'id': 'anthropic', 'name': 'Anthropic'},
- 'updated_dt': datetime.datetime(2025, 4, 1, 17, 7, 6, 737543, tzinfo=datetime.timezone.utc)}
+```
+Model: Claude-4 Sonnet R
+Provider: Anthropic
+Description: Claude-4 Sonnet with reasoning capabilities.
+
+Transformed parameters:
+('anthropic',
+ {'api_key': SecretStr('**********'),
+  'base_url': 'https://api.anthropic.com',
+  'model': 'claude-sonnet-4-0',
+  'stream': True,
+  'thinking': {'budget_tokens': 1024, 'type': 'enabled'}})
 ```
 
-To get paramaters for a model, as defined in your configuration mapping (or a default mapping we ship with the package):
-```py
-model_params = await client.get_params(model_id, {"temperature": 0.7, "stream": True})
-pp(model_params)
-```
-```py
-{'base_url': 'https://api.anthropic.com',
- 'max_tokens': 64000,
- 'model': 'claude-sonnet-4-0',
- 'stream': True,
- 'thinking': {'budget_tokens': 1024, 'type': 'enabled'}}
-```
-The `temperature` parameter is removed from the request, because `temperature` is not supported by Claude 3.7 Sonnet if reasoning is enabled. The `thinking` parameter is added to the request parameters, along with the `budget_tokens` we specify in `langgate_config.yaml`.
+The `temperature` parameter is removed because temperature is not supported by Claude models with reasoning enabled. The `thinking` parameter is added with the `budget_tokens` we specify in `langgate_config.yaml`. See the below [Configuration](#configuration) section for more details on how LangGate handles parameter transformations.
 
+**Working with Image Models:**
+Transforming parameters for image models is the exact same process as for LLMs.
+```py
+# Transform parameters for an image model
+image_model_id = "openai/gpt-image-1"
+image_params = {
+    "prompt": "A beautiful sunset over the ocean",
+    "size": "1024x1024",
+    "quality": "medium",
+}
+
+api_format, transformed = await client.get_params(image_model_id, image_params)
+print(f"API format: {api_format}")
+pp(transformed)
+```
+```text
+API format: openai
+{'api_key': SecretStr('**********'),
+ 'base_url': 'https://api.openai.com/v1',
+ 'model': 'gpt-image-1',
+ 'prompt': 'A beautiful sunset over the ocean',
+ 'quality': 'medium',
+ 'size': '1024x1024'}
+```
 
 #### Example integration with Langchain:
 The following is an example of how you might define a factory class to create a Langchain `BaseChatModel` instance configured via the `LangGateLocal` client:
@@ -260,9 +287,13 @@ The LangGate proxy feature is currently in development. When completed, it will 
 LangGate uses a simple YAML configuration format:
 
 ```yaml
-# Global default parameters (applied to all models unless overridden)
+# langgate_config.yaml
+# Main configuration file for LangGate
+
+# Global default parameters by modality (applied to all models unless overridden)
 default_params:
-  temperature: 0.7
+  text:
+    temperature: 0.7
 
 # Service provider configurations
 services:
@@ -287,47 +318,74 @@ services:
         remove_params:
           - temperature
 
-# Model-specific configurations and parameter overrides
+  replicate:
+    api_key: "${REPLICATE_API_KEY}"
+
+# Model-specific configurations organized by modality
 models:
-  - id: openai/gpt-4o
-    service:
-      provider: openai
-      model_id: gpt-4o
+  text:
+    - id: openai/gpt-4.1
+      service:
+        provider: openai
+        model_id: gpt-4.1
 
-  - id: openai/o1
-    service:
-      provider: openai
-      model_id: o1
+    - id: openai/o3
+      service:
+        provider: openai
+        model_id: o3
 
-  # "virtual model" that wraps the o1 model with high-effort reasoning
-  - id: openai/o1-high
-    service:
-      provider: openai
-      model_id: o1
-    name: o1-high
-    description: o1-high applies high-effort reasoning for the o1 model
-    override_params:
-      reasoning_effort: high
+    # "virtual model" that wraps the o3 model with high-effort reasoning
+    - id: openai/o3-high
+      service:
+        provider: openai
+        model_id: o3
+      name: o3-high
+      description: o3-high applies high-effort reasoning for the o3 model
+      override_params:
+        reasoning_effort: high
 
-  - id: anthropic/claude-sonnet-4
-    service:
-      provider: anthropic
-      model_id: claude-sonnet-4-0
+    - id: anthropic/claude-sonnet-4
+      service:
+        provider: anthropic
+        model_id: claude-sonnet-4-0
 
-  # "virtual model" that wraps the claude-sonnet-4-0 model with reasoning
-  - id: anthropic/claude-sonnet-4-reasoning
-    service:
-      provider: anthropic
-      model_id: claude-sonnet-4-0
-    name: Claude-3.7 Sonnet R
-    description: "Claude-3.7 Sonnet with reasoning capabilities."
-    override_params:
-      thinking:
-        budget_tokens: 1024
+    # "virtual model" that wraps the claude-sonnet-4-0 model with reasoning
+    - id: anthropic/claude-sonnet-4-reasoning
+      service:
+        provider: anthropic
+        model_id: claude-sonnet-4-0
+      name: Claude-4 Sonnet R
+      description: "Claude-4 Sonnet with reasoning capabilities."
+      override_params:
+        thinking:
+          budget_tokens: 1024
+
+  image:
+    - id: openai/gpt-image-1
+      service:
+        provider: openai
+        model_id: gpt-image-1
+
+    - id: openai/dall-e-3
+      service:
+        provider: openai
+        model_id: dall-e-3
+
+    - id: black-forest-labs/flux-dev
+      service:
+        provider: replicate
+        model_id: black-forest-labs/flux-dev
+      default_params:
+        disable_safety_checker: true
+
+    - id: stability-ai/sd-3.5-large
+      service:
+        provider: replicate
+        model_id: stability-ai/stable-diffusion-3.5-large
 
 # Models merge mode for loading data from JSON files: "merge" (default), "replace", or "extend"
 # - merge: User models override defaults, new models are added
-# - replace: Only use user models (ignore defualt models file)
+# - replace: Only use user models (ignore default models file)
 # - extend: Add user models to defaults, error on conflicts
 models_merge_mode: merge
 
@@ -431,7 +489,6 @@ make lint
 - [Deployment Guide](deployment/README.md) - Instructions for deploying to Kubernetes and other platforms
 
 ## Roadmap
-- **Image Model Support**: Add explicit support for image generation models and include leading image models in the default model registry.
 - **Pydantic Schema Validation**: Implement validation of parameters against Pydantic schemas representing the full API of the provider's model
 - **TTS and ASR Model Support**: Include leading Text-to-Speech (TTS) and Automatic Speech Recognition (ASR) models in the default model registry, with endpoints for fetching models filtered by modality (for modality-specific return typing) and schemas for these modalities.
 - **Video Generation Model Support**: Add video generation models, similarly to the afformentioned modalities, with an explicit endpoint and schemas.

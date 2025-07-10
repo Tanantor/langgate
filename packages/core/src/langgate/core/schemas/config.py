@@ -12,6 +12,7 @@ from pydantic import (
 )
 
 from langgate.core.fields import UrlOrEnvVar
+from langgate.core.models import Modality
 
 
 class ServiceModelPatternConfig(BaseModel):
@@ -60,6 +61,7 @@ class ModelConfig(BaseModel):
 
     id: str
     service: ModelServiceConfig
+    modality: Modality | None = None
     name: str | None = None
     description: str | None = None
     api_format: str | None = None
@@ -76,7 +78,7 @@ class ConfigSchema(BaseModel):
 
     default_params: dict[str, Any] = Field(default_factory=dict)
     services: dict[str, ServiceConfig] = Field(default_factory=dict)
-    models: list[ModelConfig] = Field(default_factory=list)
+    models: dict[str, list[ModelConfig]] = Field(default_factory=dict)
     app_config: dict[str, Any] = Field(default_factory=dict)
     models_merge_mode: Literal["merge", "replace", "extend"] = "merge"
 
@@ -85,11 +87,12 @@ class ConfigSchema(BaseModel):
         """Validate that all model service providers exist in the services configuration."""
         available_providers = set(self.services.keys())
 
-        for model in self.models:
-            if model.service.provider not in available_providers:
-                raise ValueError(
-                    f"Model '{model.id}' references service provider '{model.service.provider}' "
-                    f"which is not defined in services. Available providers: {sorted(available_providers)}"
-                )
+        for modality, model_list in self.models.items():
+            for model in model_list:
+                if model.service.provider not in available_providers:
+                    raise ValueError(
+                        f"Model '{model.id}' in modality '{modality}' references service provider '{model.service.provider}' "
+                        f"which is not defined in services. Available providers: {sorted(available_providers)}"
+                    )
 
         return self

@@ -210,28 +210,29 @@ class RegistryConfig:
         # Process model mappings
         self._process_model_mappings(config.models)
 
-    def _process_model_mappings(self, models_config) -> None:
+    def _process_model_mappings(self, models_config: dict[str, list]) -> None:
         """Process model mappings from validated configuration.
 
         Args:
-            models_config: List of validated model configurations
+            models_config: Dict of modality to list of model configurations
         """
         self.model_mappings = {}
 
-        for model_config in models_config:
-            model_data = model_config.model_dump(exclude_none=True)
-            model_id = model_data["id"]
-            service = model_data["service"]
+        for _, model_list in models_config.items():
+            for model_config in model_list:
+                model_data = model_config.model_dump(exclude_none=True)
+                model_id = model_data["id"]
+                service = model_data["service"]
 
-            # Store mapping info with proper type handling
-            self.model_mappings[model_id] = {
-                "service_provider": service["provider"],
-                "service_model_id": service["model_id"],
-                "override_params": model_data.get("override_params", {}),
-                "remove_params": model_data.get("remove_params", []),
-                "rename_params": model_data.get("rename_params", {}),
-                "name": model_data.get("name"),
-                "model_provider": model_data.get("model_provider"),
-                "model_provider_name": model_data.get("model_provider_name"),
-                "description": model_data.get("description"),
-            }
+                # Store mapping info with proper type handling
+                self.model_mappings[model_id] = {
+                    "service_provider": service["provider"],
+                    "service_model_id": service["model_id"],
+                    "override_params": model_data.get("override_params", {}),
+                    "remove_params": model_data.get("remove_params", []),
+                    "rename_params": model_data.get("rename_params", {}),
+                    "name": model_data.get("name"),
+                    "model_provider": model_data.get("model_provider"),
+                    "model_provider_name": model_data.get("model_provider_name"),
+                    "description": model_data.get("description"),
+                }
