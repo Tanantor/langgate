@@ -408,6 +408,11 @@ models:
         provider: fireworks_ai
         model_id: accounts/fireworks/models/qwen3-30b-a3b
 
+    - id: xai/grok-4
+      service:
+        provider: xai
+        model_id: grok-4-latest
+
     - id: xai/grok-3
       service:
         provider: xai
