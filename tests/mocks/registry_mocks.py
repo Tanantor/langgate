@@ -11,10 +11,18 @@ class CustomLLMInfo(LLMInfo):
     custom_field: str = "custom_value"
 
 
-class CustomLocalRegistryClient(BaseLocalRegistryClient[CustomLLMInfo, ImageModelInfo]):
+class CustomImageModelInfo(ImageModelInfo):
+    """Custom ImageModelInfo class for testing subclass handling."""
+
+    custom_field: str = "custom_value"
+
+
+class CustomLocalRegistryClient(
+    BaseLocalRegistryClient[CustomLLMInfo, CustomImageModelInfo]
+):
     """Custom LocalRegistryClient implementation for testing.
 
-    This is a non-singleton client that uses the CustomLLMInfo schema and default ImageModelInfo.
+    This is a non-singleton client that uses custom schemas for both LLM and image models.
     """
 
 
