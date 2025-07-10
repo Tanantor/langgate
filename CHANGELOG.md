@@ -7,6 +7,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.0] - 2025-07-10
+
+### Added
+- Image model support:
+  - Support for image generation models with new modality-based model organization
+  - Support for multiple modalities in model registry (text, image)
+  - New image model schemas and endpoints
+  - Image model integration in client implementations
+- Grok 4 language model in default models configuration
+
+### Changed
+- Refactored model registry to support multiple modalities
+- Updated protocols and client implementations for multi-modality handling
+- Restructured configuration to categorize models by modality
+- Updated `ModelConfig` to include optional `modality` field
+- Modified `ConfigSchema` to store models as dictionary keyed by modality
+- Enhanced model processing methods in `RegistryConfig` and `LocalTransformerClient`
+- Updated example notebooks to include image usage and new Generic signature
+- Updated READMEs with image model documentation
+
+
 ## [0.1.9] - 2025-07-03
 
 ### Added
