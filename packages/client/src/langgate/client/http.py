@@ -90,8 +90,8 @@ class BaseHTTPRegistryClient(
             "initialized_base_http_registry_client",
             base_url=self.base_url,
             api_key=self.api_key,
-            llm_info_cls=self.llm_info_cls,
-            image_info_cls=self.image_info_cls,
+            llm_info_cls=getattr(self, "llm_info_cls", None),
+            image_info_cls=getattr(self, "image_info_cls", None),
         )
 
     def __init_subclass__(cls, **kwargs):

@@ -6,86 +6,86 @@ from unittest import mock
 import pytest
 from httpx import AsyncClient
 
-MODELS_URL = "/models"
+LLMS_URL = "/models/llms"
 
 
 @pytest.mark.asyncio
 async def test_get_models(registry_api_client: AsyncClient) -> None:
-    """Test retrieving all models."""
-    response = await registry_api_client.get(MODELS_URL)
+    """Test retrieving all LLMs."""
+    response = await registry_api_client.get(LLMS_URL)
     assert response.status_code == 200
 
     data = response.json()
     assert isinstance(data, list)
     assert len(data) > 0
 
-    for model in data:
-        assert isinstance(model, dict)
-        assert "id" in model
-        assert "name" in model
-        assert "provider" in model
-        assert "costs" in model
-        assert "capabilities" in model
-        assert "context_window" in model
+    for llm in data:
+        assert isinstance(llm, dict)
+        assert "id" in llm
+        assert "name" in llm
+        assert "provider" in llm
+        assert "costs" in llm
+        assert "capabilities" in llm
+        assert "context_window" in llm
 
-        provider = model["provider"]
+        provider = llm["provider"]
         assert "id" in provider
         assert "name" in provider
 
 
 @pytest.mark.asyncio
 async def test_get_model_by_id(registry_api_client: AsyncClient) -> None:
-    """Test retrieving a specific model by ID."""
-    # First get all models
-    response = await registry_api_client.get(MODELS_URL)
+    """Test retrieving a specific LLM by ID."""
+    # First get all LLMs
+    response = await registry_api_client.get(LLMS_URL)
     assert response.status_code == 200
 
-    models = response.json()
-    assert len(models) > 0
-    test_model = models[0]
+    llms = response.json()
+    assert len(llms) > 0
+    test_llm = llms[0]
 
-    # Test API response for specific model
-    response = await registry_api_client.get(f"{MODELS_URL}/{test_model['id']}")
+    # Test API response for specific LLM
+    response = await registry_api_client.get(f"{LLMS_URL}/{test_llm['id']}")
     assert response.status_code == 200
 
-    model = response.json()
-    assert model["id"] == test_model["id"]
-    assert model["name"] == test_model["name"]
-    assert model["provider"]["id"] == test_model["provider"]["id"]
+    llm = response.json()
+    assert llm["id"] == test_llm["id"]
+    assert llm["name"] == test_llm["name"]
+    assert llm["provider"]["id"] == test_llm["provider"]["id"]
 
-    # Test with non-existent model
-    response = await registry_api_client.get(f"{MODELS_URL}/non-existent-model")
+    # Test with non-existent LLM
+    response = await registry_api_client.get(f"{LLMS_URL}/non-existent-llm")
     assert response.status_code == 404
 
 
 @pytest.mark.asyncio
 async def test_model_schema(registry_api_client: AsyncClient) -> None:
-    """Test that the model schema validation works correctly."""
-    # Get models to verify schema
-    response = await registry_api_client.get(MODELS_URL)
+    """Test that the LLM schema validation works correctly."""
+    # Get LLMs to verify schema
+    response = await registry_api_client.get(LLMS_URL)
     assert response.status_code == 200
 
-    models = response.json()
-    assert len(models) > 0
+    llms = response.json()
+    assert len(llms) > 0
 
-    # Attempt to validate model structure using Pydantic
-    for model_data in models:
+    # Attempt to validate LLM structure using Pydantic
+    for llm_data in llms:
         # We can't directly validate here, but we should check key fields
-        assert isinstance(model_data["id"], str)
-        assert isinstance(model_data["name"], str)
+        assert isinstance(llm_data["id"], str)
+        assert isinstance(llm_data["name"], str)
 
         # Check costs structure
-        costs = model_data["costs"]
+        costs = llm_data["costs"]
         assert any(k.startswith("input_") for k in costs)
         assert any(k.startswith("output_") for k in costs)
 
         # Check capabilities structure
-        capabilities = model_data["capabilities"]
+        capabilities = llm_data["capabilities"]
         if capabilities:
             assert all(k.startswith("supports_") for k in capabilities)
 
         # Check context window
-        context = model_data["context_window"]
+        context = llm_data["context_window"]
         assert "max_input_tokens" in context
         assert "max_output_tokens" in context
 
@@ -94,7 +94,7 @@ async def test_model_schema(registry_api_client: AsyncClient) -> None:
 async def test_models_api_works_without_env_file(
     registry_api_client: AsyncClient,
 ) -> None:
-    """Test that the models API endpoints work without env files."""
+    """Test that the LLMs API endpoints work without env files."""
     # Make Path.exists return False for .env files
     with mock.patch.object(Path, "exists") as mock_exists:
 
@@ -104,16 +104,16 @@ async def test_models_api_works_without_env_file(
 
         mock_exists.side_effect = side_effect
 
-        # Test the models route still returns successfully
-        response = await registry_api_client.get(MODELS_URL)
+        # Test the LLMs route still returns successfully
+        response = await registry_api_client.get(LLMS_URL)
         assert response.status_code == 200
 
-        # Test that we can get one of the models by ID
-        models = response.json()
-        assert models, "No models found in registry"
-        test_model = models[0]
-        model_id = test_model["id"]
+        # Test that we can get one of the LLMs by ID
+        llms = response.json()
+        assert llms, "No LLMs found in registry"
+        test_llm = llms[0]
+        llm_id = test_llm["id"]
 
-        response = await registry_api_client.get(f"{MODELS_URL}/{model_id}")
+        response = await registry_api_client.get(f"{LLMS_URL}/{llm_id}")
         assert response.status_code == 200
-        assert response.json()["id"] == model_id
+        assert response.json()["id"] == llm_id

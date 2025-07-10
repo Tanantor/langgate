@@ -137,7 +137,7 @@ def test_registry_config_without_env_file(mock_registry_files: dict[str, Path]):
         registry = ModelRegistry()
 
         # Verify models loaded correctly
-        models = registry.list_models()
+        models = registry.list_llms()
         assert len(models) > 0
         assert any(model.id for model in models)
 

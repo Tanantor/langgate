@@ -84,14 +84,29 @@ class TestDefaultConfig:
         config = load_yaml_config(default_config_path, ConfigSchema)
 
         assert config is not None, "Config should load successfully"
-        assert len(config.models) > 0, "Config should have at least one model"
+        assert isinstance(config.models, dict), (
+            "Config models should be a dictionary organized by modality"
+        )
+
+        # Check that at least one modality has models
+        total_models = sum(len(models) for models in config.models.values())
+        assert total_models > 0, (
+            "Config should have at least one model across all modalities"
+        )
 
         # Check that all models have required fields
-        for model in config.models:
-            assert model.id, "Each model should have an id"
-            assert model.service, "Each model should have a service configuration"
-            assert model.service.provider, "Each model service should have a provider"
-            assert model.service.model_id, "Each model service should have a model_id"
+        for modality, models in config.models.items():
+            for model in models:
+                assert model.id, f"Each {modality} model should have an id"
+                assert model.service, (
+                    f"Each {modality} model should have a service configuration"
+                )
+                assert model.service.provider, (
+                    f"Each {modality} model service should have a provider"
+                )
+                assert model.service.model_id, (
+                    f"Each {modality} model service should have a model_id"
+                )
 
     def test_default_config_app_config_section(self, default_config_path: Path) -> None:
         """Test that the app_config section is valid."""
@@ -111,15 +126,17 @@ class TestDefaultConfig:
                     "base_url": "https://api.openai.com/v1",
                 }
             },
-            "models": [
-                {
-                    "id": "test/invalid-model",
-                    "service": {
-                        "provider": "invalid_provider",
-                        "model_id": "test-model",
-                    },
-                }
-            ],
+            "models": {
+                "text": [
+                    {
+                        "id": "test/invalid-model",
+                        "service": {
+                            "provider": "invalid_provider",
+                            "model_id": "test-model",
+                        },
+                    }
+                ]
+            },
         }
 
         # Write config to temporary file
@@ -153,12 +170,14 @@ class TestDefaultConfig:
                     "base_url": "https://api.openai.com/v1",
                 }
             },
-            "models": [
-                {
-                    "id": "test/valid-model",
-                    "service": {"provider": "openai", "model_id": "test-model"},
-                }
-            ],
+            "models": {
+                "text": [
+                    {
+                        "id": "test/valid-model",
+                        "service": {"provider": "openai", "model_id": "test-model"},
+                    }
+                ]
+            },
         }
 
         # Write config to temporary file
@@ -170,8 +189,8 @@ class TestDefaultConfig:
             # Should load successfully without errors
             config = load_yaml_config(temp_path, ConfigSchema)
             assert config is not None
-            assert len(config.models) == 1
-            assert config.models[0].service.provider == "openai"
+            assert len(config.models["text"]) == 1
+            assert config.models["text"][0].service.provider == "openai"
 
         finally:
             # Clean up temporary file

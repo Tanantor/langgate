@@ -73,8 +73,12 @@ async def test_transformer_config_loading(
     assert "openai" in local_transformer_client._service_config
     assert "anthropic" in local_transformer_client._service_config
 
-    # Check global defaults are loaded
-    assert "temperature" in local_transformer_client._global_config["default_params"]
+    # Check global defaults are loaded (now modality-specific)
+    assert "text" in local_transformer_client._global_config["default_params"]
+    assert (
+        "temperature"
+        in local_transformer_client._global_config["default_params"]["text"]
+    )
 
     # Check model mappings are processed
     assert "gpt-4o" in local_transformer_client._model_mappings
@@ -359,26 +363,34 @@ async def test_api_format_precedence_hierarchy():
                 "default_params": {},
             }
         },
-        "models": [
-            {
-                "id": "test/model-with-override",
-                "service": {"provider": "custom_service", "model_id": "actual-model"},
-                "api_format": "model_override",  # Model-level override (highest precedence)
-                "default_params": {},
-                "override_params": {},
-                "remove_params": [],
-                "rename_params": {},
-            },
-            {
-                "id": "test/model-without-override",
-                "service": {"provider": "custom_service", "model_id": "another-model"},
-                # No model-level api_format, should use service-level
-                "default_params": {},
-                "override_params": {},
-                "remove_params": [],
-                "rename_params": {},
-            },
-        ],
+        "models": {
+            "text": [
+                {
+                    "id": "test/model-with-override",
+                    "service": {
+                        "provider": "custom_service",
+                        "model_id": "actual-model",
+                    },
+                    "api_format": "model_override",  # Model-level override (highest precedence)
+                    "default_params": {},
+                    "override_params": {},
+                    "remove_params": [],
+                    "rename_params": {},
+                },
+                {
+                    "id": "test/model-without-override",
+                    "service": {
+                        "provider": "custom_service",
+                        "model_id": "another-model",
+                    },
+                    # No model-level api_format, should use service-level
+                    "default_params": {},
+                    "override_params": {},
+                    "remove_params": [],
+                    "rename_params": {},
+                },
+            ]
+        },
         "app_config": {},
     }
 
@@ -414,20 +426,22 @@ async def test_api_format_provider_name_fallback():
                 "default_params": {},
             }
         },
-        "models": [
-            {
-                "id": "test/fallback-model",
-                "service": {
-                    "provider": "fallback_provider",
-                    "model_id": "fallback-model",
+        "models": {
+            "text": [
+                {
+                    "id": "test/fallback-model",
+                    "service": {
+                        "provider": "fallback_provider",
+                        "model_id": "fallback-model",
+                    },
+                    # No api_format specified at model level
+                    "default_params": {},
+                    "override_params": {},
+                    "remove_params": [],
+                    "rename_params": {},
                 },
-                # No api_format specified at model level
-                "default_params": {},
-                "override_params": {},
-                "remove_params": [],
-                "rename_params": {},
-            },
-        ],
+            ]
+        },
         "app_config": {},
     }
 

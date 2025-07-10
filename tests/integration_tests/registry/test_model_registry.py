@@ -15,4 +15,4 @@ def test_model_registry_singleton_instance():
         # Test singleton behavior
         assert registry1 is registry2
         # Both instances should share the same state
-        assert id(registry1._models_cache) == id(registry2._models_cache)
+        assert id(registry1._model_caches) == id(registry2._model_caches)

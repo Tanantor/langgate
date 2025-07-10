@@ -95,7 +95,9 @@ def mock_config_yaml(tmp_path: Path) -> Generator[Path]:
             "HTTPS": False,
         },
         "default_params": {
-            "temperature": 0.7,
+            "text": {
+                "temperature": 0.7,
+            },
         },
         "services": {
             "openai": {
@@ -153,77 +155,79 @@ def mock_config_yaml(tmp_path: Path) -> Generator[Path]:
                 "base_url": "https://api.mistral.ai/v1",
             },
         },
-        "models": [
-            {
-                "id": "gpt-4o",
-                "name": "GPT-4o",
-                "service": {
-                    "provider": "openai",
-                    "model_id": "gpt-4o",
+        "models": {
+            "text": [
+                {
+                    "id": "gpt-4o",
+                    "name": "GPT-4o",
+                    "service": {
+                        "provider": "openai",
+                        "model_id": "gpt-4o",
+                    },
                 },
-            },
-            {
-                "id": "anthropic/claude-sonnet-4",
-                "name": "Claude-3.7 Sonnet",
-                "service": {
-                    "provider": "anthropic",
-                    "model_id": "claude-sonnet-4",
+                {
+                    "id": "anthropic/claude-sonnet-4",
+                    "name": "Claude-3.7 Sonnet",
+                    "service": {
+                        "provider": "anthropic",
+                        "model_id": "claude-sonnet-4",
+                    },
+                    "remove_params": ["response_format", "reasoning"],
+                    "rename_params": {"stop": "stop_sequences"},
                 },
-                "remove_params": ["response_format", "reasoning"],
-                "rename_params": {"stop": "stop_sequences"},
-            },
-            {
-                "id": "anthropic/claude-sonnet-4-reasoning",
-                "name": "Claude-3.7 Sonnet R",
-                "description": "Claude 3.7 Sonnet with reasoning",
-                "service": {
-                    "provider": "anthropic",
-                    "model_id": "claude-sonnet-4",
+                {
+                    "id": "anthropic/claude-sonnet-4-reasoning",
+                    "name": "Claude-3.7 Sonnet R",
+                    "description": "Claude 3.7 Sonnet with reasoning",
+                    "service": {
+                        "provider": "anthropic",
+                        "model_id": "claude-sonnet-4",
+                    },
+                    "remove_params": ["response_format"],
+                    "rename_params": {"stop": "stop_sequences"},
+                    "override_params": {
+                        "thinking": {
+                            "budget_tokens": 1024,
+                        }
+                    },
                 },
-                "remove_params": ["response_format"],
-                "rename_params": {"stop": "stop_sequences"},
-                "override_params": {
-                    "thinking": {
-                        "budget_tokens": 1024,
-                    }
+                {
+                    "id": "google/gemma-3-27b-it",
+                    "service": {
+                        "provider": "openrouter",
+                        "model_id": "google/gemma-3-27b-it:free",
+                    },
                 },
-            },
-            {
-                "id": "google/gemma-3-27b-it",
-                "service": {
-                    "provider": "openrouter",
-                    "model_id": "google/gemma-3-27b-it:free",
+                {
+                    "id": "xai/grok-3",
+                    "service": {
+                        "provider": "xai",
+                        "model_id": "grok-3-latest",
+                    },
                 },
-            },
-            {
-                "id": "xai/grok-3",
-                "service": {
-                    "provider": "xai",
-                    "model_id": "grok-3-latest",
+                {
+                    "id": "deepseek/deepseek-r1",
+                    "service": {
+                        "provider": "fireworks_ai",
+                        "model_id": "accounts/fireworks/models/deepseek-r1",
+                    },
                 },
-            },
-            {
-                "id": "deepseek/deepseek-r1",
-                "service": {
-                    "provider": "fireworks_ai",
-                    "model_id": "accounts/fireworks/models/deepseek-r1",
+                {
+                    "id": "google/gemini-2.5-pro",
+                    "service": {
+                        "provider": "gemini",
+                        "model_id": "gemini-2.5-pro-preview",
+                    },
                 },
-            },
-            {
-                "id": "google/gemini-2.5-pro",
-                "service": {
-                    "provider": "gemini",
-                    "model_id": "gemini-2.5-pro-preview",
+                {
+                    "id": "mistralai/magistral-medium-latest",
+                    "service": {
+                        "provider": "mistralai",
+                        "model_id": "magistral-medium-latest",
+                    },
                 },
-            },
-            {
-                "id": "mistralai/magistral-medium-latest",
-                "service": {
-                    "provider": "mistralai",
-                    "model_id": "magistral-medium-latest",
-                },
-            },
-        ],
+            ]
+        },
     }
     config_yaml_path = tmp_path / "langgate_config.yaml"
     with open(config_yaml_path, "w") as f:
@@ -411,7 +415,7 @@ def base_config_data() -> dict:
             },
             "custom": {"api_key": "test-key", "base_url": "https://api.custom.com"},
         },
-        "models": [],
+        "models": {"text": []},
         "app_config": {},
     }
 

@@ -15,14 +15,14 @@ async def test_local_registry_client_get_model(
 ):
     """Test getting a model from the registry via the client."""
     # First list all models
-    models = await local_registry_client.list_models()
+    models = await local_registry_client.list_llms()
     assert len(models) > 0
 
     # Pick the first model
     first_model = models[0]
 
     # Then get that specific model by ID
-    model = await local_registry_client.get_model_info(first_model.id)
+    model = await local_registry_client.get_llm_info(first_model.id)
 
     assert model.id == first_model.id
     assert model.name == first_model.name
@@ -35,7 +35,7 @@ async def test_local_registry_client_list_models(
     local_registry_client: LocalRegistryClient,
 ):
     """Test listing all models from the registry."""
-    models = await local_registry_client.list_models()
+    models = await local_registry_client.list_llms()
 
     assert len(models) > 0
 
@@ -62,28 +62,28 @@ async def test_local_registry_client_caching(
     assert last_cache_refresh is None
 
     # Initial request populates cache
-    models = await local_registry_client.list_models()
+    models = await local_registry_client.list_llms()
     assert len(models) > 0
 
     # Verify cache state
     assert local_registry_client._last_cache_refresh is not None
     last_cache_refresh = local_registry_client._last_cache_refresh
-    assert len(local_registry_client._model_cache) > 0
+    assert len(local_registry_client._llm_cache) > 0
 
     # Get a specific model ID to test
     model_id = models[0].id
 
     # This should use the cache
-    model = await local_registry_client.get_model_info(model_id)
+    model = await local_registry_client.get_llm_info(model_id)
 
     assert model.id == model_id
 
     # Verify it's the same object reference (from cache)
-    assert model is local_registry_client._model_cache[model_id]
+    assert model is local_registry_client._llm_cache[model_id]
     assert last_cache_refresh == local_registry_client._last_cache_refresh
 
     # Fetch the same model again
-    model2 = await local_registry_client.get_model_info(model_id)
+    model2 = await local_registry_client.get_llm_info(model_id)
     assert model2.id == model_id
     assert model2 is model
 
@@ -96,12 +96,12 @@ async def test_local_registry_client_caching(
     local_registry_client._last_cache_refresh = expired_last_refresh
 
     # Fetch the model again, which should refresh the cache
-    model3 = await local_registry_client.get_model_info(model_id)
+    model3 = await local_registry_client.get_llm_info(model_id)
     assert model3.id == model_id
     # for the default local registry client, we expect refreshing to still return the same objects
     # which are perpetually cached in the ModelRegistry.
     assert model3 is model
-    assert model3 is local_registry_client._model_cache[model_id]
+    assert model3 is local_registry_client._llm_cache[model_id]
 
     # Verify cache state
     assert local_registry_client._last_cache_refresh > expired_last_refresh
@@ -114,7 +114,7 @@ async def test_custom_local_registry_client(
 ):
     """Test using a custom client with a custom schema."""
     # List models with the custom client
-    models = await custom_local_registry_client.list_models()
+    models = await custom_local_registry_client.list_llms()
     assert len(models) > 0
 
     # Verify custom model type
@@ -124,7 +124,7 @@ async def test_custom_local_registry_client(
 
     # Get a specific model
     first_model = models[0]
-    model = await custom_local_registry_client.get_model_info(first_model.id)
+    model = await custom_local_registry_client.get_llm_info(first_model.id)
 
     # Verify it's the correct custom type
     assert isinstance(model, CustomLLMInfo)
@@ -142,28 +142,28 @@ async def test_custom_local_registry_client_caching(
     assert last_cache_refresh is None
 
     # Initial request populates cache
-    models = await custom_local_registry_client.list_models()
+    models = await custom_local_registry_client.list_llms()
     assert len(models) > 0
 
     # Verify cache state
     assert custom_local_registry_client._last_cache_refresh is not None
     last_cache_refresh = custom_local_registry_client._last_cache_refresh
-    assert len(custom_local_registry_client._model_cache) > 0
+    assert len(custom_local_registry_client._llm_cache) > 0
 
     # Get a specific model ID to test
     model_id = models[0].id
 
     # This should use the cache
-    model = await custom_local_registry_client.get_model_info(model_id)
+    model = await custom_local_registry_client.get_llm_info(model_id)
 
     assert model.id == model_id
 
     # Verify it's the same object reference (from cache)
-    assert model is custom_local_registry_client._model_cache[model_id]
+    assert model is custom_local_registry_client._llm_cache[model_id]
     assert last_cache_refresh == custom_local_registry_client._last_cache_refresh
 
     # Fetch the same model again
-    model2 = await custom_local_registry_client.get_model_info(model_id)
+    model2 = await custom_local_registry_client.get_llm_info(model_id)
     assert model2.id == model_id
     assert model2 is model
 
@@ -176,12 +176,12 @@ async def test_custom_local_registry_client_caching(
     custom_local_registry_client._last_cache_refresh = expired_last_refresh
 
     # Fetch the model again, which should refresh the cache
-    model3 = await custom_local_registry_client.get_model_info(model_id)
+    model3 = await custom_local_registry_client.get_llm_info(model_id)
     assert model3.id == model_id
     # for a custom local registry client, we expect refreshing to return new objects
     # as they will be revalidated against the custom schema.
     assert model3 is not model
-    assert model3 is custom_local_registry_client._model_cache[model_id]
+    assert model3 is custom_local_registry_client._llm_cache[model_id]
 
     # Verify cache state
     assert custom_local_registry_client._last_cache_refresh > expired_last_refresh
