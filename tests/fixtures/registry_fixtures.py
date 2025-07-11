@@ -142,14 +142,18 @@ def mock_config_yaml(tmp_path: Path) -> Generator[Path]:
                 "api_key": "${OPENAI_API_KEY}",
                 "base_url": "https://api.openai.com/v1",
                 "default_params": {
-                    "max_tokens": 1000,
+                    "text": {
+                        "max_tokens": 1000,
+                    },
                 },
             },
             "anthropic": {
                 "api_key": "${ANTHROPIC_API_KEY}",
                 "base_url": "https://api.anthropic.com",
                 "default_params": {
-                    "max_tokens": 2000,
+                    "text": {
+                        "max_tokens": 2000,
+                    },
                 },
                 "model_patterns": {
                     "reasoning": {
@@ -169,7 +173,9 @@ def mock_config_yaml(tmp_path: Path) -> Generator[Path]:
                 "base_url": "https://api.openrouter.ai/v1",
                 "api_format": "openai",
                 "default_params": {
-                    "tiktoken_model_name": "gpt-4o",
+                    "text": {
+                        "tiktoken_model_name": "gpt-4o",
+                    },
                 },
             },
             "xai": {
@@ -182,7 +188,9 @@ def mock_config_yaml(tmp_path: Path) -> Generator[Path]:
                 "base_url": "https://api.fireworks.ai/inference/v1",
                 "api_format": "openai",
                 "default_params": {
-                    "tiktoken_model_name": "gpt-4o",
+                    "text": {
+                        "tiktoken_model_name": "gpt-4o",
+                    },
                 },
             },
             "gemini": {

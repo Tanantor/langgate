@@ -174,6 +174,138 @@ async def test_transformer_model_pattern_renames(
     assert "temperature" not in result
 
 
+async def test_transformer_modality_specific_service_defaults(
+    tmp_path: Path,
+):
+    """Test that service-level default_params are applied by modality."""
+    import yaml
+
+    # Create configuration with modality-specific service defaults
+    config_data = {
+        "default_params": {
+            "text": {"global_temperature": 0.7},
+            "image": {"global_size": "1024x1024"},
+        },
+        "services": {
+            "test_service": {
+                "api_key": "${TEST_API_KEY}",
+                "base_url": "https://api.test.com/v1",
+                "default_params": {
+                    "text": {
+                        "max_tokens": 2000,
+                        "stream_usage": True,
+                    },
+                    "image": {
+                        "quality": "hd",
+                        "style": "vivid",
+                    },
+                },
+            },
+        },
+        "models": {
+            "text": [
+                {
+                    "id": "test_service/text-model",
+                    "service": {
+                        "provider": "test_service",
+                        "model_id": "actual-text-model",
+                    },
+                }
+            ],
+            "image": [
+                {
+                    "id": "test_service/image-model",
+                    "service": {
+                        "provider": "test_service",
+                        "model_id": "actual-image-model",
+                    },
+                }
+            ],
+        },
+    }
+
+    # Create temporary config file
+    config_file = tmp_path / "config.yaml"
+    with open(config_file, "w") as f:
+        yaml.dump(config_data, f)
+
+    # Create transformer client with test config
+    transformer_client = LocalTransformerClient(config_path=config_file)
+
+    # Test text model gets text-specific service defaults
+    _, text_result = await transformer_client.get_params("test_service/text-model", {})
+    assert text_result["max_tokens"] == 2000
+    assert text_result["stream_usage"] is True
+    assert text_result["global_temperature"] == 0.7
+    # Should not have image-specific defaults
+    assert "quality" not in text_result
+    assert "style" not in text_result
+    assert "global_size" not in text_result
+
+    # Test image model gets image-specific service defaults
+    _, image_result = await transformer_client.get_params(
+        "test_service/image-model", {}
+    )
+    assert image_result["quality"] == "hd"
+    assert image_result["style"] == "vivid"
+    assert image_result["global_size"] == "1024x1024"
+    # Should not have text-specific defaults
+    assert "max_tokens" not in image_result
+    assert "stream_usage" not in image_result
+    assert "global_temperature" not in image_result
+
+
+async def test_transformer_flat_service_defaults_compatibility(
+    tmp_path: Path,
+):
+    """Test that flat service default_params work for services that apply to all models."""
+    import yaml
+
+    # Create configuration with flat service defaults (applies to all models)
+    config_data = {
+        "default_params": {
+            "text": {"global_temperature": 0.7},
+        },
+        "services": {
+            "universal_service": {
+                "api_key": "${UNIVERSAL_API_KEY}",
+                "base_url": "https://api.universal.com/v1",
+                "default_params": {
+                    "user": "langgate-user",  # Applies to all models
+                    "timeout": 30,
+                },
+            },
+        },
+        "models": {
+            "text": [
+                {
+                    "id": "universal_service/text-model",
+                    "service": {
+                        "provider": "universal_service",
+                        "model_id": "actual-text-model",
+                    },
+                }
+            ],
+        },
+    }
+
+    # Create temporary config file
+    config_file = tmp_path / "config.yaml"
+    with open(config_file, "w") as f:
+        yaml.dump(config_data, f)
+
+    # Create transformer client with test config
+    transformer_client = LocalTransformerClient(config_path=config_file)
+
+    # Test text model gets flat service defaults
+    _, text_result = await transformer_client.get_params(
+        "universal_service/text-model", {}
+    )
+    assert text_result["user"] == "langgate-user"
+    assert text_result["timeout"] == 30
+    assert text_result["global_temperature"] == 0.7
+
+
 @pytest.mark.asyncio
 async def test_transformer_model_specific_overrides(
     local_transformer_client: LocalTransformerClient,
@@ -354,7 +486,7 @@ async def test_api_format_precedence_hierarchy():
 
     # Custom configuration to test precedence
     custom_config = {
-        "default_params": {"temperature": 0.7},
+        "default_params": {"text": {"temperature": 0.7}},
         "services": {
             "custom_service": {
                 "api_key": "${CUSTOM_API_KEY}",
@@ -417,7 +549,7 @@ async def test_api_format_provider_name_fallback():
 
     # Custom configuration with no api_format specified
     custom_config = {
-        "default_params": {"temperature": 0.7},
+        "default_params": {"text": {"temperature": 0.7}},
         "services": {
             "fallback_provider": {
                 "api_key": "${FALLBACK_API_KEY}",
