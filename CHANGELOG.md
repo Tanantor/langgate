@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.1] - 2025-07-11
+
+### Added
+- Support for modality-specific service defaults in LocalTransformerClient
+
+
 ## [0.2.0] - 2025-07-10
 
 ### Added
@@ -33,6 +39,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Support for updating default model provider metadata in YAML mappings
 
+
 ## [0.1.7] - 2025-07-01
 
 ### Added
@@ -48,6 +55,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Models merge mode support for user-defined models JSON file
 
+
 ## [0.1.5] - 2025-06-18
 
 ### Added
@@ -62,10 +70,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Deprecated LLMs form the default config
 - Mdels that are no longer supported from the default registry JSON file
 
+
 ## [0.1.3] - 2025-04-09
 
 ## Fixed
 - Update version bump script to include dependency constraints between the monorepo's packages
+
 
 ## [0.1.2] - 2025-04-09
 
@@ -75,11 +85,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Load environment variables from .env file in `LocalTransformerClient` initialisation - necessary when the registry and transformer clients are running in separate processes
 
+
 ## [0.1.1] - 2025-04-09
 
 ### Changed
 - Synchronized published package versions with the current repository state.
 - Validated and tested automated release workflows (PyPI, Docker, Helm).
+
 
 ## [0.1.0] - 2025-04-08
 

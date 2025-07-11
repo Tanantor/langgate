@@ -1,6 +1,6 @@
 [project]
 name = "langgate-transform"
-version = "0.2.0"
+version = "0.2.1"
 description = "Parameter transformation utilities for LangGate"
 readme = "README.md"
 requires-python = ">=3.13"
@@ -8,7 +8,7 @@ authors = [{ name = "Tanantor Ltd." }]
 maintainers = [{ name = "Saran Connoly", email = "saran@tanantor.com" }]
 license = { text = "MIT" }
 dependencies = [
-    "langgate-core (==0.2.0)",
+    "langgate-core (==0.2.1)",
     "pyyaml (>=6.0.1,<7.0.0)"
 ]
 
