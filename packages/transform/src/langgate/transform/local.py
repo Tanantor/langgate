@@ -9,6 +9,7 @@ from dotenv import load_dotenv
 from pydantic import SecretStr
 
 from langgate.core.logging import get_logger
+from langgate.core.models import Modality
 from langgate.core.schemas.config import ConfigSchema, ModelConfig
 from langgate.core.utils.config_utils import load_yaml_config, resolve_path
 from langgate.transform.protocol import TransformerClientProtocol
@@ -190,10 +191,27 @@ class LocalTransformerClient(TransformerClientProtocol):
         transformer.with_defaults(mapping.get("default_params", {}))
         for defaults in reversed(matching_pattern_defaults):
             transformer.with_defaults(defaults)
-        transformer.with_defaults(service_config.get("default_params", {}))
+
+        # Apply service-level defaults
+        service_defaults = service_config.get("default_params", {})
+        model_modality = mapping.get("modality")
+        if service_defaults:
+            # Check if service_defaults is structured by modality
+            is_modality_structured = any(
+                key in [m.value for m in Modality] for key in service_defaults
+            )
+
+            if is_modality_structured and model_modality:
+                # Apply modality-specific defaults if available
+                modality_defaults = service_defaults.get(model_modality, {})
+                if modality_defaults:
+                    transformer.with_defaults(modality_defaults)
+            elif not is_modality_structured:
+                # Apply flat defaults directly
+                transformer.with_defaults(service_defaults)
+
         # Apply modality-specific global defaults
         global_defaults = self._global_config.get("default_params", {})
-        model_modality = mapping.get("modality")
         modality_defaults = (
             global_defaults.get(model_modality, {}) if model_modality else {}
         )
