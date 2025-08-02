@@ -2029,7 +2029,7 @@
     "description": "SDXL is a text-to-image generative AI model from Stability AI that creates beautiful images.",
     "costs": {
       "image_generation": {
-        "flat_rate": 0.0042
+        "flat_rate": 0.0052
       }
     }
   },
@@ -2055,7 +2055,7 @@
     "description": "Imagen 4 Ultra, Google's flagship text-to-image generation model, optimized higher quality at the expense of speed and cost.",
     "costs": {
       "image_generation": {
-        "flat_rate": 0.04
+        "flat_rate": 0.06
       }
     }
   },
@@ -2081,7 +2081,7 @@
     "description": "Imagen 4 Fast, Google's flagship text-to-image generation model, optimized for speed and cost efficiency.",
     "costs": {
       "image_generation": {
-        "flat_rate": 0.04
+        "flat_rate": 0.02
       }
     }
   },
@@ -2224,7 +2224,7 @@
     "description": "Easel Advanced Face Swap allows swapping faces of one or two people at once, while preserving body and scene details.",
     "costs": {
       "image_generation": {
-        "flat_rate": 0.07
+        "flat_rate": 0.05
       }
     }
   },
