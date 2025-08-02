@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.2] - 2025-08-02
+
+### Changed
+- Updated Replicate model pricing for SDXL, Imagen 4, and Easel Advanced Face Swap models
+
+
 ## [0.2.1] - 2025-07-11
 
 ### Added
