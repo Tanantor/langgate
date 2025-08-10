@@ -2008,7 +2008,7 @@
     }
   },
   "replicate/stability-ai/stable-diffusion-3.5-medium": {
-    "name": "Stable Diffusion 3.5 Medium",
+    "name": "SD 3.5 Medium",
     "mode": "image",
     "service_provider": "replicate",
     "model_provider": "stability-ai",
