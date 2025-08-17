@@ -16,6 +16,146 @@
     "description": "Eleutheria's flagship language model, trained to respond without bias or censorship.",
     "source": "https://eleutheria.ai/pricing"
   },
+  "openai/gpt-5-chat-latest": {
+    "name": "ChatGPT-5",
+    "mode": "chat",
+    "service_provider": "openai",
+    "model_provider": "openai",
+    "model_provider_name": "OpenAI",
+    "description": "ChatGPT-5 from OpenAI is designed for advanced, natural, multimodal, and context-aware conversations.",
+    "context": {
+      "max_input_tokens": 400000,
+      "max_output_tokens": 128000
+    },
+    "costs": {
+      "input_cost_per_token": "0.00000125",
+      "output_cost_per_token": "0.00001",
+      "cache_read_input_token_cost": "0.000000125"
+    },
+    "capabilities": {
+      "supports_tools": false,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_prompt_caching": true,
+      "supports_response_schema": true,
+      "supports_max_tokens": true,
+      "supports_files": true,
+      "supports_seed": true
+    }
+  },
+  "openai/gpt-5": {
+    "mode": "chat",
+    "service_provider": "openai",
+    "model_provider": "openai",
+    "model_provider_name": "OpenAI",
+    "name": "GPT-5",
+    "description": "GPT-5 is OpenAI's most advanced model, offering major improvements in reasoning, code quality, and user experience. It is optimized for complex tasks that require step-by-step reasoning, instruction following, and accuracy in high-stakes use cases. It supports user-specified intent like \"think hard about this.\" Improvements include reductions in hallucination, sycophancy, and better performance in coding, writing, and health-related tasks.",
+    "context": {
+      "max_input_tokens": 400000,
+      "max_output_tokens": 128000
+    },
+    "costs": {
+      "input_cost_per_token": "0.00000125",
+      "output_cost_per_token": "0.00001",
+      "cache_read_input_token_cost": "0.000000125"
+    },
+    "capabilities": {
+      "supports_tools": true,
+      "supports_parallel_tool_calls": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_prompt_caching": true,
+      "supports_response_schema": true,
+      "supports_tool_choice": true,
+      "supports_structured_outputs": true,
+      "supports_max_tokens": true,
+      "supports_files": true,
+      "supports_seed": true
+    }
+  },
+  "openai/gpt-5-mini": {
+    "mode": "chat",
+    "service_provider": "openai",
+    "model_provider": "openai",
+    "model_provider_name": "OpenAI",
+    "name": "GPT-5 mini",
+    "description": "GPT-5 mini is a compact version of GPT-5, designed to handle lighter-weight reasoning tasks. It provides the same instruction-following and safety-tuning benefits as GPT-5, but with reduced latency and cost.",
+    "context": {
+      "max_input_tokens": 400000,
+      "max_output_tokens": 128000
+    },
+    "costs": {
+      "input_cost_per_token": "0.00000025",
+      "output_cost_per_token": "0.000002",
+      "cache_read_input_token_cost": "0.000000025"
+    },
+    "capabilities": {
+      "supports_tools": true,
+      "supports_parallel_tool_calls": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_prompt_caching": true,
+      "supports_response_schema": true,
+      "supports_tool_choice": true,
+      "supports_structured_outputs": true,
+      "supports_max_tokens": true,
+      "supports_files": true,
+      "supports_seed": true
+    }
+  },
+  "openai/gpt-5-nano": {
+    "mode": "chat",
+    "service_provider": "openai",
+    "model_provider": "openai",
+    "model_provider_name": "OpenAI",
+    "name": "GPT-5 nano",
+    "description": "GPT-5-Nano is the smallest and fastest variant in the GPT-5 system, optimized for developer tools, rapid interactions, and ultra-low latency environments. While limited in reasoning depth compared to its larger counterparts, it retains key instruction-following and safety features. It is the successor to GPT-4.1-nano and offers a lightweight option for cost-sensitive or real-time applications.",
+        "context": {
+      "max_input_tokens": 400000,
+      "max_output_tokens": 128000
+    },
+    "costs": {
+      "input_cost_per_token": "0.00000005",
+      "output_cost_per_token": "0.0000004",
+      "cache_read_input_token_cost": "0.000000005"
+    },
+    "capabilities": {
+      "supports_tools": true,
+      "supports_parallel_tool_calls": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_prompt_caching": true,
+      "supports_response_schema": true,
+      "supports_tool_choice": true,
+      "supports_structured_outputs": true,
+      "supports_max_tokens": true,
+      "supports_files": true,
+      "supports_seed": true
+    }
+  },
+  "openrouter/openai/gpt-oss-120b": {
+    "mode": "chat",
+    "service_provider": "openai",
+    "model_provider": "openai",
+    "model_provider_name": "OpenAI",
+    "name": "GPT-OSS 120b",
+    "description": "GPT-OSS 120b is an open-weight, 117B-parameter Mixture-of-Experts (MoE) language model from OpenAI designed for high-reasoning, agentic, and general-purpose production use cases. It activates 5.1B parameters per forward pass. The model supports configurable reasoning depth, chain-of-thought access, native tool use, browsing, and generating structured output.",
+    "context": {
+      "max_input_tokens": 131072,
+      "max_output_tokens": 131072
+    },
+    "costs": {
+      "input_cost_per_token": "0.00000007256312",
+      "output_cost_per_token": "0.0000002903936"
+    },
+    "capabilities": {
+      "supports_tools": true,
+      "supports_prompt_caching": true,
+      "supports_response_schema": true,
+      "supports_tool_choice": true
+    },
+    "_data_source": "openrouter"
+  },
   "openai/gpt-4o": {
     "name": "GPT-4o",
     "mode": "chat",
@@ -581,6 +721,38 @@
     "_last_updated": "2025-07-01T16:47:00.877539+00:00",
     "_data_source": "openrouter",
     "_last_updated_from_id": "anthropic/claude-sonnet-4"
+  },
+    "anthropic/claude-opus-4-1": {
+    "name": "Claude-4.1 Opus",
+    "mode": "chat",
+    "service_provider": "anthropic",
+    "model_provider": "anthropic",
+    "model_provider_name": "Anthropic",
+    "capabilities": {
+      "supports_tools": true,
+      "supports_vision": true,
+      "supports_prompt_caching": true,
+      "supports_reasoning": true,
+      "supports_response_schema": true,
+      "supports_assistant_prefill": true,
+      "supports_tool_choice": true
+    },
+    "context": {
+      "max_input_tokens": 200000,
+      "max_output_tokens": 32000
+    },
+    "costs": {
+      "input_cost_per_token": "0.000015",
+      "output_cost_per_token": "0.000075",
+      "cache_read_input_token_cost": "0.0000015",
+      "cache_creation_input_token_cost": "0.00001875",
+      "input_cost_per_image": "0.024"
+    },
+    "description": "Claude-4 Opus is Anthropic's most advanced model, featuring superior reasoning, analysis, and complex task capabilities.",
+    "openrouter_model_id": "anthropic/claude-opus-4",
+    "_last_updated": "2025-07-01T16:47:00.877727+00:00",
+    "_data_source": "openrouter",
+    "_last_updated_from_id": "anthropic/claude-opus-4"
   },
   "anthropic/claude-opus-4-0": {
     "name": "Claude-4 Opus",
