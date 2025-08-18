@@ -124,7 +124,7 @@ class LLMInfoBase(BaseModelInfo):
 class LLMInfo(LLMInfoBase):
     """Information about a language model."""
 
-    id: str = Field(default=...)  # "gpt-4o"
+    id: str = Field(default=...)  # "gpt-5"
     name: str = Field(default=...)
     provider_id: ModelProviderId = Field(default=...)
 

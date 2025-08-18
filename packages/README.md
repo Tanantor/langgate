@@ -93,7 +93,7 @@ llms = await client.list_llms()
 image_models = await client.list_image_models()
 
 # Get LLM information
-llm_info = await client.get_llm_info("openai/gpt-4o")
+llm_info = await client.get_llm_info("openai/gpt-5")
 
 # Get image model information
 image_info = await client.get_image_model_info("openai/dall-e-3")
@@ -111,7 +111,7 @@ transformer = LocalTransformerClient()
 
 # Transform parameters for a specific model
 transformed_params = await transformer.get_params(
-    "openai/gpt-4o",
+    "openai/gpt-5",
     {"temperature": 0.7, "stream": True}
 )
 ```
@@ -126,9 +126,9 @@ client = LangGateLocal()
 
 # Access both registry and transformer functions for LLMs
 llms = await client.list_llms()
-llm_info = await client.get_llm_info("openai/gpt-4o")
+llm_info = await client.get_llm_info("openai/gpt-5")
 transformed_params = await client.get_params(
-    "openai/gpt-4o",
+    "openai/gpt-5",
     {"temperature": 0.7, "stream": True}
 )
 
@@ -151,7 +151,7 @@ client = HTTPRegistryClient("https://langgate.example.com/api/v1")
 
 # Use the same interface as the local client
 llms = await client.list_llms()
-llm_info = await client.get_llm_info("openai/gpt-4o")
+llm_info = await client.get_llm_info("openai/gpt-5")
 
 # Access image models
 image_models = await client.list_image_models()
