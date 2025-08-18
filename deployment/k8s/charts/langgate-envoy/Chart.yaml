@@ -1,10 +1,10 @@
 apiVersion: v2
 name: langgate-envoy
 description: Envoy proxy component for LangGate AI Gateway
-version: 0.2.2
-appVersion: "0.2.2"
+version: 0.3.0
+appVersion: "0.3.0"
 
 dependencies:
   - name: langgate-helpers
     repository: file://../library/langgate-helpers
-    version: 0.2.2
+    version: 0.3.0
