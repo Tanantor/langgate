@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 
-## [0.3.0] - 2025-08-02
+## [0.3.1] - 2025-08-02
 
 ### Added
 - GPT-5, GPT-OSS 120b, and Claude Opus 4.1 to package default models
