@@ -84,9 +84,9 @@ for model in image_models[:3]:
 ```
 ```text
 Available LLMs: 5
-- openai/gpt-4.1: GPT-4.1
-- openai/o3: o3
-- openai/o3-high: o3-high
+- openai/gpt-5-chat: ChatGPT-5
+- openai/gpt-5: GPT-5
+- openai/gpt-5-high: GPT-5 high
 - anthropic/claude-sonnet-4: Claude-4 Sonnet
 - anthropic/claude-sonnet-4-reasoning: Claude-4 Sonnet R
 
@@ -256,18 +256,20 @@ class ModelFactory:
 ```
 ```py
 model_factory = ModelFactory()
-model_id = "openai/gpt-4o"
+model_id = "openai/gpt-5"
 model = await model_factory.create_model(model_id, {"temperature": 0.7})
 model
 ```
 ```text
 API format: openai
+
 {'api_key': SecretStr('**********'),
  'base_url': 'https://api.openai.com/v1',
- 'model': 'gpt-4o',
- 'streaming': True,
- 'temperature': 0.7}
-ChatOpenAI(client=<openai.resources.chat.completions.completions.Completions object at 0x121f66210>, async_client=<openai.resources.chat.completions.completions.AsyncCompletions object at 0x121f72210>, root_client=<openai.OpenAI object at 0x121f56210>, root_async_client=<openai.AsyncOpenAI object at 0x121f66350>, model_name='gpt-4o', temperature=0.7, model_kwargs={}, openai_api_key=SecretStr('**********'), openai_api_base='https://api.openai.com/v1', streaming=True)
+ 'include_reasoning': True,
+ 'model': 'gpt-5',
+ 'streaming': True}
+
+ChatOpenAI(client=<openai.resources.chat.completions.completions.Completions object at 0x10cbacec0>, async_client=<openai.resources.chat.completions.completions.AsyncCompletions object at 0x10cbad940>, root_client=<openai.OpenAI object at 0x10c40e270>, root_async_client=<openai.AsyncOpenAI object at 0x10cbad6a0>, model_name='gpt-5', model_kwargs={'include_reasoning': True}, openai_api_key=SecretStr('**********'), openai_api_base='https://api.openai.com/v1', streaming=True)
 ```
 If you want to use the LangGate Envoy proxy instead of `LangGateLocal`,  you can switch to the `HTTPRegistryClient` with minimal code changes.
 
@@ -324,23 +326,25 @@ services:
 # Model-specific configurations organized by modality
 models:
   text:
-    - id: openai/gpt-4.1
+    - id: openai/gpt-5-chat
       service:
         provider: openai
-        model_id: gpt-4.1
+        model_id: gpt-5-chat-latest
 
-    - id: openai/o3
+    - id: openai/gpt-5
       service:
         provider: openai
-        model_id: o3
+        model_id: gpt-5
+      override_params:
+        include_reasoning: true
 
-    # "virtual model" that wraps the o3 model with high-effort reasoning
-    - id: openai/o3-high
+    # "virtual model" that wraps the gpt-5 model with high-effort reasoning
+    - id: openai/gpt-5-high
       service:
         provider: openai
-        model_id: o3
-      name: o3-high
-      description: o3-high applies high-effort reasoning for the o3 model
+        model_id: gpt-5
+      name: GPT-5 high
+      description: gpt-5-high applies high-effort reasoning for the gpt-5 model
       override_params:
         reasoning_effort: high
 
