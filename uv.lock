@@ -595,7 +595,7 @@ wheels = [
 
 [[package]]
 name = "langgate"
-version = "0.3.1"
+version = "0.3.2"
 source = { editable = "." }
 dependencies = [
     { name = "langgate-core", marker = "sys_platform == 'darwin' or sys_platform == 'linux'" },
@@ -699,7 +699,7 @@ provides-extras = ["client", "registry", "transform", "processor", "server", "sd
 
 [[package]]
 name = "langgate-client"
-version = "0.3.1"
+version = "0.3.2"
 source = { editable = "packages/client" }
 dependencies = [
     { name = "httpx", marker = "sys_platform == 'darwin' or sys_platform == 'linux'" },
@@ -714,7 +714,7 @@ requires-dist = [
 
 [[package]]
 name = "langgate-core"
-version = "0.3.1"
+version = "0.3.2"
 source = { editable = "packages/core" }
 dependencies = [
     { name = "pydantic", marker = "sys_platform == 'darwin' or sys_platform == 'linux'" },
@@ -729,7 +729,7 @@ requires-dist = [
 
 [[package]]
 name = "langgate-processor"
-version = "0.3.1"
+version = "0.3.2"
 source = { editable = "packages/processor" }
 dependencies = [
     { name = "fastapi", marker = "sys_platform == 'darwin' or sys_platform == 'linux'" },
@@ -759,7 +759,7 @@ provides-extras = ["dev"]
 
 [[package]]
 name = "langgate-registry"
-version = "0.3.1"
+version = "0.3.2"
 source = { editable = "packages/registry" }
 dependencies = [
     { name = "aiofiles", marker = "sys_platform == 'darwin' or sys_platform == 'linux'" },
@@ -784,7 +784,7 @@ requires-dist = [
 
 [[package]]
 name = "langgate-sdk"
-version = "0.3.1"
+version = "0.3.2"
 source = { editable = "packages/sdk" }
 dependencies = [
     { name = "langgate-core", marker = "sys_platform == 'darwin' or sys_platform == 'linux'" },
@@ -801,7 +801,7 @@ requires-dist = [
 
 [[package]]
 name = "langgate-server"
-version = "0.3.1"
+version = "0.3.2"
 source = { editable = "packages/server" }
 dependencies = [
     { name = "fastapi", marker = "sys_platform == 'darwin' or sys_platform == 'linux'" },
@@ -824,7 +824,7 @@ requires-dist = [
 
 [[package]]
 name = "langgate-transform"
-version = "0.3.1"
+version = "0.3.2"
 source = { editable = "packages/transform" }
 dependencies = [
     { name = "langgate-core", marker = "sys_platform == 'darwin' or sys_platform == 'linux'" },

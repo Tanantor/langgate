@@ -8,6 +8,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 
+## [0.3.2] - 2025-08-26
+
+### Added
+- Support for overriding model metadata in the YAML configuration file
+
+
 ## [0.3.1] - 2025-08-02
 
 ### Added
