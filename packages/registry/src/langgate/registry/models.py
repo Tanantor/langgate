@@ -191,16 +191,26 @@ class ModelRegistry:
 
         generic_metadata = self._get_model_metadata(model_id, mapping, model_data)
 
-        # Extract context window if available
-        context_window = ContextWindow.model_validate(model_data.get("context", {}))
+        # Extract context window - prefer YAML config over JSON data
+        context_data = model_data.get("context", {})
+        if mapping.get("context"):
+            # Merge YAML overrides with JSON defaults
+            context_data = {**context_data, **mapping["context"]}
+        context_window = ContextWindow.model_validate(context_data)
 
-        # Extract capabilities if available
-        capabilities = ModelCapabilities.model_validate(
-            model_data.get("capabilities", {})
-        )
+        # Extract capabilities - prefer YAML config over JSON data
+        capabilities_data = model_data.get("capabilities", {})
+        if mapping.get("capabilities"):
+            # Merge YAML overrides with JSON defaults
+            capabilities_data = {**capabilities_data, **mapping["capabilities"]}
+        capabilities = ModelCapabilities.model_validate(capabilities_data)
 
-        # Extract costs if available
-        costs = TokenCosts.model_validate(model_data.get("costs", {}))
+        # Extract costs - prefer YAML config over JSON data
+        costs_data = model_data.get("costs", {})
+        if mapping.get("costs"):
+            # Merge YAML overrides with JSON defaults
+            costs_data = {**costs_data, **mapping["costs"]}
+        costs = TokenCosts.model_validate(costs_data)
 
         # Create complete model info
         return LLMInfo(
@@ -225,8 +235,18 @@ class ModelRegistry:
 
         generic_metadata = self._get_model_metadata(model_id, mapping, model_data)
 
-        # Extract and validate image model costs
+        # Extract and validate image model costs - prefer YAML config over JSON data
         costs_data = model_data.get("costs", {})
+        if mapping.get("costs"):
+            # For image models, we need to handle nested cost structure differently
+            # Check if YAML provides complete override or partial
+            yaml_costs = mapping["costs"]
+            if "image_generation" in yaml_costs:
+                # Replace image generation costs entirely
+                costs_data = {**costs_data, **yaml_costs}
+            else:
+                # Merge at top level
+                costs_data = {**costs_data, **yaml_costs}
 
         # Handle token costs if present (for hybrid models like gpt-image-1)
         token_costs = None

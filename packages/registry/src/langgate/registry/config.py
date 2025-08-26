@@ -225,6 +225,7 @@ class RegistryConfig:
                 service = model_data["service"]
 
                 # Store mapping info with proper type handling
+                # Include all metadata fields that can override JSON data
                 self.model_mappings[model_id] = {
                     "service_provider": service["provider"],
                     "service_model_id": service["model_id"],
@@ -235,4 +236,7 @@ class RegistryConfig:
                     "model_provider": model_data.get("model_provider"),
                     "model_provider_name": model_data.get("model_provider_name"),
                     "description": model_data.get("description"),
+                    "capabilities": model_data.get("capabilities"),
+                    "context": model_data.get("context"),
+                    "costs": model_data.get("costs"),
                 }
