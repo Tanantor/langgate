@@ -2436,5 +2436,18 @@
       }
     },
     "description": "Grok-2 Image from xAI transforms text prompts into high-qiality images."
+  },
+    "replicate/google/nano-banana": {
+    "name": "Nano Banana",
+    "mode": "image",
+    "service_provider": "replicate",
+    "model_provider": "google",
+    "model_provider_name": "Google",
+    "description": "Gemini 2.5 Flash Image (aka nano-banana), Google's state-of-the-art image generation and editing model, enables you to blend multiple images into a single image, maintain character consistency for rich storytelling, and make targeted transformations using natural language.",
+    "costs": {
+      "image_generation": {
+        "flat_rate": 0.039
+      }
+    }
   }
 }
