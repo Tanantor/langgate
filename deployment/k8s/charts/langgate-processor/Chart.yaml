@@ -1,10 +1,10 @@
 apiVersion: v2
 name: langgate-processor
 description: Processor component for LangGate AI Gateway
-version: 0.3.2
-appVersion: "0.3.2"
+version: 0.3.3
+appVersion: "0.3.3"
 
 dependencies:
   - name: langgate-helpers
     repository: file://../library/langgate-helpers
-    version: 0.3.2
+    version: 0.3.3

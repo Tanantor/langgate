@@ -8,6 +8,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 
+## [0.3.3] - 2025-08-26
+### Added
+- Added Google Nano Banana image generation model to default models
+
+
 ## [0.3.2] - 2025-08-26
 
 ### Added

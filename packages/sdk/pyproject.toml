@@ -1,6 +1,6 @@
 [project]
 name = "langgate-sdk"
-version = "0.3.2"
+version = "0.3.3"
 description = "Convenience SDK for LangGate AI Gateway"
 readme = "README.md"
 requires-python = ">=3.13"
@@ -8,9 +8,9 @@ authors = [{ name = "Tanantor Ltd." }]
 maintainers = [{ name = "Saran Connoly", email = "saran@tanantor.com" }]
 license = { text = "MIT" }
 dependencies = [
-    "langgate-core (==0.3.2)",
-    "langgate-registry (==0.3.2)",
-    "langgate-transform (==0.3.2)",
+    "langgate-core (==0.3.3)",
+    "langgate-registry (==0.3.3)",
+    "langgate-transform (==0.3.3)",
 ]
 
 [tool.uv.sources]
