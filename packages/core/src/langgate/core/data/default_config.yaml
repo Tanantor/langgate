@@ -193,27 +193,27 @@ models:
         provider: openrouter
         model_id: openai/gpt-oss-120b
 
-    - id: anthropic/claude-sonnet-4
+    - id: anthropic/claude-sonnet-4.5
       service:
         provider: anthropic
-        model_id: claude-sonnet-4-0
+        model_id: claude-sonnet-4-5
 
-    - id: anthropic/claude-sonnet-4-reasoning
+    - id: anthropic/claude-sonnet-4.5-reasoning
       service:
         provider: anthropic
-        model_id: claude-sonnet-4-0
-      name: Claude-4 Sonnet R
-      description: "Claude 4 Sonnet with standard reasoning capabilities optimized for complex problem-solving."
+        model_id: claude-sonnet-4-5
+      name: Claude Sonnet 4.5 R
+      description: "Claude Sonnet 4.5 with standard reasoning capabilities optimized for complex problem-solving."
       override_params:
         thinking:
           budget_tokens: 1024
 
-    - id: anthropic/claude-sonnet-4-reasoning-high
+    - id: anthropic/claude-sonnet-4.5-reasoning-high
       service:
         provider: anthropic
-        model_id: claude-sonnet-4-0
-      name: Claude-4 Sonnet R High
-      description: "Claude-4 Sonnet with high reasoning effort for superior accuracy in complex tasks at the expense of higher latency and cost."
+        model_id: claude-sonnet-4-5
+      name: Claude Sonnet 4.5 R High
+      description: "Claude Sonnet 4.5 with high reasoning effort for superior accuracy in complex tasks at the expense of higher latency and cost."
       override_params:
         thinking:
           budget_tokens: 10000
@@ -441,48 +441,27 @@ models:
         provider: xai
         model_id: grok-4-latest
 
-    - id: xai/grok-3
+    - id: xai/grok-4-high
       service:
         provider: xai
-        model_id: grok-3-latest
-
-    - id: xai/grok-3-fast
-      service:
-        provider: xai
-        model_id: grok-3-fast
-
-    - id: xai/grok-3-mini
-      service:
-        provider: xai
-        model_id: grok-3-mini
-
-    - id: xai/grok-3-mini-high
-      service:
-        provider: xai
-        model_id: grok-3-mini
-      name: Grok 3 Mini High
-      description: "Grok 3 Mini with high-effort reasoning settings applied. It spends more time and resources to improve accuracy for complex tasks."
+        model_id: grok-4-latest
       override_params:
         reasoning_effort: high
 
-    - id: xai/grok-3-mini-fast
+    - id: xai/grok-4-fast-r
       service:
         provider: xai
-        model_id: grok-3-mini-fast
+        model_id: grok-4-fast
 
-    - id: xai/grok-3-mini-fast-high
+    - id: xai/grok-4-fast
       service:
         provider: xai
-        model_id: grok-3-mini-fast
-      name: Grok 3 Mini Fast High
-      description: "Grok 3 Mini Fast with high-effort reasoning settings applied. It spends more time and resources to improve accuracy for complex tasks."
-      override_params:
-        reasoning_effort: high
+        model_id: grok-4-fast-non-reasoning
 
-    - id: xai/grok-2-vision
+    - id: xai/grok-code-fast-1
       service:
         provider: xai
-        model_id: grok-2-vision-latest
+        model_id: grok-code-fast-1
 
   # Image models
   image:
