@@ -1,6 +1,6 @@
 [project]
 name = "langgate-core"
-version = "0.3.3"
+version = "0.4.0"
 description = "Core models and utilities for LangGate"
 readme = "README.md"
 requires-python = ">=3.13"
