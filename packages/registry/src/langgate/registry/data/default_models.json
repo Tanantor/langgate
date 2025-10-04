@@ -494,7 +494,7 @@
     "_last_updated_from_id": "openai/chatgpt-4o-latest"
   },
   "anthropic/claude-3-7-sonnet-latest": {
-    "name": "Claude-3.7 Sonnet",
+    "name": "Claude Sonnet 3.7",
     "mode": "chat",
     "service_provider": "anthropic",
     "model_provider": "anthropic",
@@ -519,14 +519,14 @@
       "cache_creation_input_token_cost": "0.00000375",
       "input_cost_per_image": "0.0048"
     },
-    "description": "Claude 3.7 Sonnet is Anthropic's hybrid reasoning model, featuring new 'extended thinking' capabilities. It excels at complex coding, STEM tasks, and multimodal data analysis with large context windows.",
+    "description": "Claude Sonnet 3.7 is Anthropic's hybrid reasoning model, featuring new 'extended thinking' capabilities. It excels at complex coding, STEM tasks, and multimodal data analysis with large context windows.",
     "openrouter_model_id": "anthropic/claude-3.7-sonnet",
     "_last_updated": "2025-07-01T16:47:00.876401+00:00",
     "_data_source": "openrouter",
     "_last_updated_from_id": "anthropic/claude-3.7-sonnet"
   },
   "anthropic/claude-3-5-sonnet-latest": {
-    "name": "Claude-3.5 Sonnet",
+    "name": "Claude Sonnet 3.5",
     "mode": "chat",
     "service_provider": "anthropic",
     "model_provider": "anthropic",
@@ -550,7 +550,7 @@
       "cache_creation_input_token_cost": "0.00000375",
       "input_cost_per_image": "0.0048"
     },
-    "description": "Claude 3.5 Sonnet strikes the ideal balance between intelligence and speed, particularly for enterprise workloads. It delivers strong performance at a lower cost compared to its peers, and is engineered for high endurance in large-scale AI deployments.",
+    "description": "Claude Sonnet 3.5 strikes the ideal balance between intelligence and speed, particularly for enterprise workloads. It delivers strong performance at a lower cost compared to its peers, and is engineered for high endurance in large-scale AI deployments.",
     "deprecation_date": "2025-06-01",
     "tool_use_system_prompt_tokens": 159,
     "openrouter_model_id": "anthropic/claude-3.5-sonnet",
@@ -559,7 +559,7 @@
     "_last_updated_from_id": "anthropic/claude-3.5-sonnet"
   },
   "anthropic/claude-3-5-sonnet-20240620": {
-    "name": "Claude-3.5 Sonnet",
+    "name": "Claude Sonnet 3.5",
     "mode": "chat",
     "service_provider": "anthropic",
     "model_provider": "anthropic",
@@ -583,7 +583,7 @@
       "cache_creation_input_token_cost": "0.00000375",
       "input_cost_per_image": "0.0048"
     },
-    "description": "Claude 3.5 Sonnet strikes the ideal balance between intelligence and speed, particularly for enterprise workloads. It delivers strong performance at a lower cost compared to its peers, and is engineered for high endurance in large-scale AI deployments.",
+    "description": "Claude Sonnet 3.5 strikes the ideal balance between intelligence and speed, particularly for enterprise workloads. It delivers strong performance at a lower cost compared to its peers, and is engineered for high endurance in large-scale AI deployments.",
     "deprecation_date": "2025-06-01",
     "tool_use_system_prompt_tokens": 159,
     "openrouter_model_id": "anthropic/claude-3.5-sonnet-20240620",
@@ -592,7 +592,7 @@
     "_last_updated_from_id": "anthropic/claude-3.5-sonnet-20240620"
   },
   "anthropic/claude-3-5-haiku-latest": {
-    "name": "Claude 3.5 Haiku",
+    "name": "Claude Haiku 3.5",
     "mode": "chat",
     "service_provider": "anthropic",
     "model_provider": "anthropic",
@@ -625,7 +625,7 @@
     "_last_updated_from_id": "anthropic/claude-3.5-haiku"
   },
   "anthropic/claude-3-5-haiku-20241022": {
-    "name": "Claude 3.5 Haiku",
+    "name": "Claude Haiku 3.5",
     "mode": "chat",
     "service_provider": "anthropic",
     "model_provider": "anthropic",
@@ -649,7 +649,7 @@
       "cache_creation_input_token_cost": "0.00000125",
       "input_cost_per_image": "0.0004"
     },
-    "description": "Claude 3 Haiku is Anthropic's fastest model yet, designed for enterprise workloads which often involve longer prompts. Haiku quickly analyzes large volumes of documents, such as quarterly filings, contracts, or legal cases, for half the cost of other models in its performance tier.",
+    "description": "Claude Haiku 3.5 is Anthropic's fastest model yet, designed for enterprise workloads which often involve longer prompts. Haiku quickly analyzes large volumes of documents, such as quarterly filings, contracts, or legal cases, for half the cost of other models in its performance tier.",
     "deprecation_date": "2025-10-01",
     "tool_use_system_prompt_tokens": 264,
     "openrouter_model_id": "anthropic/claude-3.5-haiku-20241022",
@@ -658,7 +658,7 @@
     "_last_updated_from_id": "anthropic/claude-3.5-haiku-20241022"
   },
   "anthropic/claude-3-opus-latest": {
-    "name": "Claude 3 Opus",
+    "name": "Claude Opus 3",
     "mode": "chat",
     "service_provider": "anthropic",
     "model_provider": "anthropic",
@@ -682,7 +682,7 @@
       "cache_creation_input_token_cost": "0.00001875",
       "input_cost_per_image": "0.024"
     },
-    "description": "Claude 3 Opus is Anthropic's most intelligent model, with best-in-market performance on highly complex tasks. It navigates open-ended prompts and sight-unseen scenarios with remarkable fluency and human-like understanding, showcasing the outer limits of generative AI.",
+    "description": "Claude Opus 3 is Anthropic's most intelligent model, with best-in-market performance on highly complex tasks. It navigates open-ended prompts and sight-unseen scenarios with remarkable fluency and human-like understanding, showcasing the outer limits of generative AI.",
     "deprecation_date": "2025-03-01",
     "tool_use_system_prompt_tokens": 395,
     "openrouter_model_id": "anthropic/claude-3-opus",
@@ -691,7 +691,7 @@
     "_last_updated_from_id": "anthropic/claude-3-opus"
   },
   "anthropic/claude-sonnet-4-0": {
-    "name": "Claude-4 Sonnet",
+    "name": "Claude Sonnet 4",
     "mode": "chat",
     "service_provider": "anthropic",
     "model_provider": "anthropic",
@@ -716,14 +716,46 @@
       "cache_creation_input_token_cost": "0.00000375",
       "input_cost_per_image": "0.0048"
     },
-    "description": "Claude 4 Sonnet is Anthropic's latest flagship model offering enhanced reasoning capabilities and improved performance across all domains.",
+    "description": "Claude Sonnet 4 from Anthropic offers enhanced reasoning capabilities and improved performance across all domains.",
     "openrouter_model_id": "anthropic/claude-sonnet-4",
     "_last_updated": "2025-07-01T16:47:00.877539+00:00",
     "_data_source": "openrouter",
     "_last_updated_from_id": "anthropic/claude-sonnet-4"
   },
+    "anthropic/claude-sonnet-4-5": {
+    "name": "Claude Sonnet 4.5",
+    "mode": "chat",
+    "service_provider": "anthropic",
+    "model_provider": "anthropic",
+    "model_provider_name": "Anthropic",
+    "capabilities": {
+      "supports_tools": true,
+      "supports_vision": true,
+      "supports_prompt_caching": true,
+      "supports_reasoning": true,
+      "supports_response_schema": true,
+      "supports_assistant_prefill": true,
+      "supports_tool_choice": true
+    },
+    "context": {
+      "max_input_tokens": 1000000,
+      "max_output_tokens": 64000
+    },
+    "costs": {
+      "input_cost_per_token": "0.000003",
+      "output_cost_per_token": "0.000015",
+      "cache_read_input_token_cost": "3E-7",
+      "cache_creation_input_token_cost": "0.00000375",
+      "input_cost_per_image": "0.0048"
+    },
+    "description": "Claude Sonnet 4.5 is Anthropic's latest flagship model offering enhanced reasoning and agentic capabilities and improved performance across all domains, especially coding and STEM.",
+    "openrouter_model_id": "anthropic/claude-sonnet-4",
+    "_last_updated": "2025-07-01T16:47:00.877539+00:00",
+    "_data_source": "openrouter",
+    "_last_updated_from_id": "anthropic/claude-sonnet-4.5"
+  },
     "anthropic/claude-opus-4-1": {
-    "name": "Claude-4.1 Opus",
+    "name": "Claude Opus 4.1",
     "mode": "chat",
     "service_provider": "anthropic",
     "model_provider": "anthropic",
@@ -748,14 +780,14 @@
       "cache_creation_input_token_cost": "0.00001875",
       "input_cost_per_image": "0.024"
     },
-    "description": "Claude-4 Opus is Anthropic's most advanced model, featuring superior reasoning, analysis, and complex task capabilities.",
+    "description": "Claude Opus 4.1 is Anthropic's most advanced model, featuring superior reasoning, analysis, and complex task capabilities.",
     "openrouter_model_id": "anthropic/claude-opus-4",
     "_last_updated": "2025-07-01T16:47:00.877727+00:00",
     "_data_source": "openrouter",
-    "_last_updated_from_id": "anthropic/claude-opus-4"
+    "_last_updated_from_id": "anthropic/claude-opus-4.1"
   },
   "anthropic/claude-opus-4-0": {
-    "name": "Claude-4 Opus",
+    "name": "Claude Opus 4",
     "mode": "chat",
     "service_provider": "anthropic",
     "model_provider": "anthropic",
@@ -780,7 +812,7 @@
       "cache_creation_input_token_cost": "0.00001875",
       "input_cost_per_image": "0.024"
     },
-    "description": "Claude-4 Opus is Anthropic's most advanced model, featuring superior reasoning, analysis, and complex task capabilities.",
+    "description": "Claude Opus 4 is Anthropic's most advanced model, featuring superior reasoning, analysis, and complex task capabilities.",
     "openrouter_model_id": "anthropic/claude-opus-4",
     "_last_updated": "2025-07-01T16:47:00.877727+00:00",
     "_data_source": "openrouter",
@@ -1631,6 +1663,84 @@
     },
     "description": "Grok-4 is the latest groundbreaking reasoning model from xAI. Grok models are known to have a sense of humour and xAI CEO Elon Musk says Grok is intended to be \"a maximum truth-seeking AI that tries to understand the nature of the universe.\" Grok 4 is xAI's latest reasoning model with a 256k context window. It supports parallel tool calling, structured outputs, and both image and text inputs.",
     "openrouter_model_id": "x-ai/grok-4"
+  },
+  "xai/grok-4-fast-non-reasoning": {
+    "name": "Grok 4 Fast",
+    "mode": "chat",
+    "service_provider": "xai",
+    "model_provider": "xai",
+    "model_provider_name": "xAI",
+    "capabilities": {
+      "supports_tools": true,
+      "supports_tool_choice": true,
+      "supports_reasoning": false,
+      "supports_response_schema": true,
+      "supports_vision": true
+    },
+    "context": {
+      "max_input_tokens": 2000000,
+      "max_output_tokens": 30000
+    },
+    "costs": {
+      "input_cost_per_token": "0.0000002",
+      "output_cost_per_token": "0.0000005",
+      "cache_input_token_cost": "0.00000005",
+      "cache_output_token_cost": "0.0000005"
+    },
+    "description": "Grok 4 Fast is xAI's latest fast Grok variant with a 2 million token context window, offering exceptional value with only slightly lower preformance than Grok-4 across benchmarks.",
+    "openrouter_model_id": "x-ai/grok-4-fast"
+  },
+    "xai/grok-4-fast": {
+    "name": "Grok 4 Fast R",
+    "mode": "chat",
+    "service_provider": "xai",
+    "model_provider": "xai",
+    "model_provider_name": "xAI",
+    "capabilities": {
+      "supports_tools": true,
+      "supports_tool_choice": true,
+      "supports_reasoning": true,
+      "supports_response_schema": true,
+      "supports_vision": true
+    },
+    "context": {
+      "max_input_tokens": 2000000,
+      "max_output_tokens": 30000
+    },
+    "costs": {
+      "input_cost_per_token": "0.0000002",
+      "output_cost_per_token": "0.0000005",
+      "cache_input_token_cost": "0.00000005",
+      "cache_output_token_cost": "0.0000005"
+    },
+    "description": "Grok 4 Fast Reasoning is xAI's latest fast Grok variant with a 2 million token context window, offering exceptional value with only slightly lower preformance than Grok-4 across benchmarks.",
+    "openrouter_model_id": "x-ai/grok-4-fast"
+  },
+    "xai/grok-code-fast-1": {
+    "name": "Grok Code Fast 1",
+    "mode": "chat",
+    "service_provider": "xai",
+    "model_provider": "xai",
+    "model_provider_name": "xAI",
+    "capabilities": {
+      "supports_tools": true,
+      "supports_tool_choice": true,
+      "supports_reasoning": true,
+      "supports_response_schema": true,
+      "supports_vision": true
+    },
+    "context": {
+      "max_input_tokens": 256000,
+      "max_output_tokens": 10000
+    },
+    "costs": {
+      "input_cost_per_token": "0.0000002",
+      "output_cost_per_token": "0.0000015",
+      "cache_input_token_cost": "0.00000002",
+      "cache_output_token_cost": "0.0000015"
+    },
+    "description": "Grok 4 Fast Reasoning is xAI's speedy and economical reasoning model that excels at agentic coding tasks.",
+    "openrouter_model_id": "x-ai/grok-code-fast-1"
   },
   "minimax/MiniMax-Text-01": {
     "name": "MiniMax-01",
