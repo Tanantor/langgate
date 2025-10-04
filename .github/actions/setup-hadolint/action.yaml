@@ -5,7 +5,7 @@ inputs:
   version:
     description: Hadolint version to install
     required: false
-    default: v2.12.0
+    default: v2.14.0
 
 runs:
   using: "composite"
