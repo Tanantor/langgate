@@ -497,7 +497,7 @@ models:
       default_params:
         safety_filter_level: "block_only_high"
 
-    - id: google/nano-banana
+    - id: google/imagen-4-fast
       service:
         provider: replicate
         model_id: google/imagen-4-fast
@@ -508,6 +508,11 @@ models:
       service:
         provider: replicate
         model_id: google/nano-banana
+
+    - id: google/nano-banana-pro
+      service:
+        provider: replicate
+        model_id: google/nano-banana-pro
 
     # Black Forest Labs (Flux)
     - id: black-forest-labs/flux-kontext-max
