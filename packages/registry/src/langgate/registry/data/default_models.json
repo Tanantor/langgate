@@ -1308,7 +1308,7 @@
     "_data_source": "openrouter",
     "_last_updated_from_id": "google/gemini-flash-1.5-8b"
   },
-    "gemini/gemini-3-pro-preview-20251117": {
+  "gemini/gemini-3-pro-preview": {
     "name": "Gemini 3 Pro",
     "mode": "chat",
     "service_provider": "gemini",
@@ -2598,9 +2598,8 @@
     "costs": {
       "image_generation": {
         "quality_tiers": {
-          "1k": { "default": 0.14 },
-          "2k": { "default": 0.14 },
-          "4k": { "default": 0.24 }
+          "4mp": { "default": 0.14 },
+          "16mp": { "default": 0.24 }
         }
       }
     }

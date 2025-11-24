@@ -303,7 +303,7 @@ models:
     - id: google/gemini-3-pro
       service:
         provider: gemini
-        model_id: gemini-3-pro-preview-20251117
+        model_id: gemini-3-pro-preview
       override_params:
         thinking_budget: -1
         include_thoughts: true
