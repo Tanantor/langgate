@@ -2,6 +2,49 @@ apiVersion: v1
 entries:
   langgate:
   - apiVersion: v2
+    appVersion: 0.4.1
+    created: "2025-11-24T22:34:41.206507594Z"
+    dependencies:
+    - name: langgate-helpers
+      repository: file://../library/langgate-helpers
+      version: 0.4.1
+    - alias: langgate_envoy
+      condition: langgate_envoy.enabled
+      name: langgate-envoy
+      repository: file://../langgate-envoy
+      version: 0.4.1
+    - alias: langgate_processor
+      condition: langgate_processor.enabled
+      name: langgate-processor
+      repository: file://../langgate-processor
+      version: 0.4.1
+    - alias: langgate_server
+      condition: langgate_server.enabled
+      name: langgate-server
+      repository: file://../langgate-server
+      version: 0.4.1
+    description: LangGate AI Gateway - A lightweight, high-performance AI model inference
+      gateway
+    digest: 3002ddce848e2e26c49f3ef0523c126277e58c56a802379eb69a5b372db2a84d
+    home: https://github.com/Tanantor/langgate
+    icon: https://raw.githubusercontent.com/Tanantor/langgate/main/docs/assets/logo.png
+    keywords:
+    - langgate
+    - ai
+    - llm
+    - gateway
+    - proxy
+    maintainers:
+    - email: saran@tanantor.com
+      name: Tanantor
+    name: langgate
+    sources:
+    - https://github.com/Tanantor/langgate
+    type: application
+    urls:
+    - https://github.com/Tanantor/langgate/releases/download/langgate-0.4.1/langgate-0.4.1.tgz
+    version: 0.4.1
+  - apiVersion: v2
     appVersion: 0.4.0
     created: "2025-10-04T16:15:29.224239384Z"
     dependencies:
@@ -734,6 +777,19 @@ entries:
     version: 0.1.0
   langgate-envoy:
   - apiVersion: v2
+    appVersion: 0.4.1
+    created: "2025-11-24T22:34:41.365144993Z"
+    dependencies:
+    - name: langgate-helpers
+      repository: file://../library/langgate-helpers
+      version: 0.4.1
+    description: Envoy proxy component for LangGate AI Gateway
+    digest: 44556566ca377cd172f18f9ec740a23f1377e7d8d90d51f2a181f67414b0d15f
+    name: langgate-envoy
+    urls:
+    - https://github.com/Tanantor/langgate/releases/download/langgate-envoy-0.4.1/langgate-envoy-0.4.1.tgz
+    version: 0.4.1
+  - apiVersion: v2
     appVersion: 0.4.0
     created: "2025-10-04T16:15:29.387440907Z"
     dependencies:
@@ -962,6 +1018,19 @@ entries:
     - https://github.com/Tanantor/langgate/releases/download/langgate-envoy-0.1.0/langgate-envoy-0.1.0.tgz
     version: 0.1.0
   langgate-processor:
+  - apiVersion: v2
+    appVersion: 0.4.1
+    created: "2025-11-24T22:34:41.498505105Z"
+    dependencies:
+    - name: langgate-helpers
+      repository: file://../library/langgate-helpers
+      version: 0.4.1
+    description: Processor component for LangGate AI Gateway
+    digest: 25645e7ce1da52176f64fef05e0ad30060c89fd386339198136cf82b8a6a1f01
+    name: langgate-processor
+    urls:
+    - https://github.com/Tanantor/langgate/releases/download/langgate-processor-0.4.1/langgate-processor-0.4.1.tgz
+    version: 0.4.1
   - apiVersion: v2
     appVersion: 0.4.0
     created: "2025-10-04T16:15:29.520778696Z"
@@ -1192,6 +1261,19 @@ entries:
     version: 0.1.0
   langgate-server:
   - apiVersion: v2
+    appVersion: 0.4.1
+    created: "2025-11-24T22:34:41.632246365Z"
+    dependencies:
+    - name: langgate-helpers
+      repository: file://../library/langgate-helpers
+      version: 0.4.1
+    description: Server component for LangGate AI Gateway
+    digest: d8a41abeee78ebe8f1b5fbb5fbe13bee2761f32fccabafd1f25a3ec8caef573b
+    name: langgate-server
+    urls:
+    - https://github.com/Tanantor/langgate/releases/download/langgate-server-0.4.1/langgate-server-0.4.1.tgz
+    version: 0.4.1
+  - apiVersion: v2
     appVersion: 0.4.0
     created: "2025-10-04T16:15:29.692250588Z"
     dependencies:
@@ -1419,4 +1501,4 @@ entries:
     urls:
     - https://github.com/Tanantor/langgate/releases/download/langgate-server-0.1.0/langgate-server-0.1.0.tgz
     version: 0.1.0
-generated: "2025-10-04T16:15:29.693060896Z"
+generated: "2025-11-24T22:34:41.632680919Z"
